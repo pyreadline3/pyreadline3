@@ -7,12 +7,13 @@
 #  the file COPYING, distributed as part of this software.
 # *****************************************************************************
 from __future__ import absolute_import, print_function, unicode_literals
+import re, operator, string, sys, os, io
 
 import os
 import sys
 
 from pyreadline3.logger import log
-from pyreadline3.unicode_helper import ensure_str, ensure_unicode
+from pyreadline3.unicode_helper import ensure_str, ensure_unicode, pyreadline_codepage
 
 if "pyreadline3" in sys.modules:
     pyreadline3 = sys.modules["pyreadline3"]
@@ -84,11 +85,12 @@ class LineHistory(object):
         if filename is None:
             filename = self.history_filename
         try:
-            for line in open(filename, 'r', encoding='utf-8'):
-                self.add_history(
-                    lineobj.ReadLineTextBuffer(
-                        ensure_unicode(
-                            line.rstrip())))
+            with io.open(filename, 'rt', encoding=pyreadline_codepage) as fd:
+                for line in fd:
+                    self.add_history(
+                        lineobj.ReadLineTextBuffer(
+                            ensure_unicode(
+                                line.rstrip())))
         except IOError:
             self.history = []
             self.history_cursor = 0
@@ -97,11 +99,10 @@ class LineHistory(object):
         '''Save a readline history file.'''
         if filename is None:
             filename = self.history_filename
-        fp = open(filename, 'wb')
-        for line in self.history[-self.history_length:]:
-            fp.write(ensure_str(line.get_line_text()))
-            fp.write('\n'.encode('ascii'))
-        fp.close()
+        with io.open(filename, 'wb') as fp:
+            for line in self.history[-self.history_length:]:
+                fp.write(ensure_str(line.get_line_text()))
+                fp.write('\n'.encode(pyreadline_codepage))
 
     def add_history(self, line):
         '''Append a line to the history buffer, as if it was the last line typed.'''
