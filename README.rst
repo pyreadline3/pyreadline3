@@ -20,4 +20,6 @@ Features:
  *  ipython_paste, pastes tab-separated data as list of lists or numpy array if all data is numeric
  *  paste_mulitline_code pastes multi line code, removing any empty lines.
 
+ The latest development version is always available at the project  git 	
+ repository_.
 .. _repository: https://github.com/brgirgis/pyreadline3,git
