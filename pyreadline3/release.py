@@ -32,14 +32,14 @@ description = "A python implementation of GNU readline."
 long_description = \
     """
 The `pyreadline3` package is based on the stale package `pyreadline` located
-[here](https://github.com/pyreadline/pyreadline).
+at https://github.com/pyreadline/pyreadline.
 The original `pyreadline` package is a python implementation of GNU `readline`
 functionality.
 It is based on the `ctypes` based UNC `readline` package by Gary Bishop.
 It is not complete.
 It has been tested for use with Windows 10.
 
-Version 3.0 runs on Python 3.8+.
+Version 3.0 runs on Python 3.3+.
 
 Features
 

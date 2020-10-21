@@ -12,8 +12,9 @@
 import glob
 import os
 import sys
-from distutils.core import setup
 from platform import system
+
+from setuptools import setup
 
 _S = system()
 if 'windows' != _S.lower():
@@ -54,10 +55,10 @@ setup(
     version=version,
     description=description,
     long_description=long_description,
-    author=authors["Jorgen"][0],
-    author_email=authors["Jorgen"][1],
-    maintainer=authors["Jorgen"][0],
-    maintainer_email=authors["Jorgen"][1],
+    author=authors["Bassem"][0],
+    author_email=authors["Bassem"][1],
+    maintainer=authors["Bassem"][0],
+    maintainer_email=authors["Bassem"][1],
     license=license,
     classifiers=classifiers,
     url=url,
