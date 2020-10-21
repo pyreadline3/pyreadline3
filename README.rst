@@ -22,4 +22,4 @@ Features:
 
  The latest development version is always available at the project  git 	
  repository_.
-.. _repository: https://github.com/brgirgis/pyreadline3,git
+.. _repository: https://github.com/brgirgis/pyreadline3
