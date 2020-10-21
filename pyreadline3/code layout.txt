@@ -1,4 +1,4 @@
-pyreadline
+pyreadline3
 	rlmain      #contains Readline class 
 	clipboard   #clipboard functions
 	console     #console interface

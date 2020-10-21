@@ -1,22 +1,26 @@
 # -*- coding: utf-8 -*-
 #
-# pyreadline documentation build configuration file, created by
+# pyreadline3 documentation build configuration file, created by
 # sphinx-quickstart on Sat Jun 21 17:27:19 2008.
 #
 # This file is execfile()d with the current directory set to its containing dir.
 #
 # The contents of this file are pickled, so don't put values in the namespace
-# that aren't pickleable (module imports are okay, they're removed automatically).
+# that aren't pickleable (module imports are okay, they're removed
+# automatically).
 #
 # All configuration values have a default value; values that are commented out
 # serve to show the default value.
 
-import sys, os, pyreadline.release
+import os
+import sys
+
+import pyreadline3.release
 
 # If your extensions are in another directory, add it here. If the directory
 # is relative to the documentation root, use os.path.abspath to make it
 # absolute, like shown here.
-#sys.path.append(os.path.abspath('some/directory'))
+# sys.path.append(os.path.abspath('some/directory'))
 
 # General configuration
 # ---------------------
@@ -35,16 +39,16 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General substitutions.
-project = 'pyreadline'
+project = 'pyreadline3'
 copyright = '2008, J. Stenarson'
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
 #
 # The short X.Y version.
-version = pyreadline.release.version.rsplit(".",1)[0]
+version = pyreadline3.release.version.rsplit(".", 1)[0]
 # The full version, including alpha/beta/rc tags.
-release = pyreadline.release.version
+release = pyreadline3.release.version
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
@@ -157,7 +161,11 @@ htmlhelp_basename = 'pyreadlinedoc'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, document class [howto/manual]).
 latex_documents = [
-  ('index', 'pyreadline.tex', 'pyreadline Documentation', 'J. Stenarson', 'manual'),
+    ('index',
+     'pyreadline3.tex',
+     'pyreadline3 Documentation',
+     'J. Stenarson',
+     'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of

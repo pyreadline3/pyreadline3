@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
-#*****************************************************************************
+# *****************************************************************************
 #       Copyright (C) 2003-2006 Jack Trainor.
-#       Copyright (C) 2006  Jorgen Stenarson. <jorgen.stenarson@bostream.nu>
+#       Copyright (C) 2006-2020 Jorgen Stenarson. <jorgen.stenarson@bostream.nu>
+#       Copyright (C) 2020 Bassem Girgis. <brgirgis@gmail.com>
 #
 #  Distributed under the terms of the BSD License.  The full license is in
 #  the file COPYING, distributed as part of this software.
-#*****************************************************************************
+# *****************************************************************************
 ###################################
 #
 # Based on recipe posted to ctypes-users
@@ -14,7 +15,7 @@
 #
 #
 
-###################################################################################
+##########################################################################
 #
 # The Python win32clipboard lib functions work well enough ... except that they
 # can only cut and paste items from within one application, not across
@@ -30,14 +31,15 @@
 # in and out of functions is tricky.  More sample code would have been helpful,
 # hence this contribution.
 #
-###################################################################################
-from __future__ import print_function, unicode_literals, absolute_import
+##########################################################################
+from __future__ import absolute_import, print_function, unicode_literals
 
 import ctypes
 import ctypes.wintypes as wintypes
 from ctypes import *
-from pyreadline.keysyms.winconstants import CF_UNICODETEXT, GHND
-from pyreadline.unicode_helper import ensure_unicode,ensure_str
+
+from pyreadline3.keysyms.winconstants import CF_UNICODETEXT, GHND
+from pyreadline3.unicode_helper import ensure_str, ensure_unicode
 
 OpenClipboard = windll.user32.OpenClipboard
 OpenClipboard.argtypes = [wintypes.HWND]
@@ -84,23 +86,26 @@ def enum():
         q = EnumClipboardFormats(q)
     CloseClipboard()
 
+
 def getformatname(format):
-    buffer = c_buffer(" "*100)
+    buffer = c_buffer(" " * 100)
     bufferSize = sizeof(buffer)
     OpenClipboard(0)
     GetClipboardFormatName(format, buffer, bufferSize)
     CloseClipboard()
     return buffer.value
 
+
 def GetClipboardText():
     text = ""
     if OpenClipboard(0):
         hClipMem = GetClipboardData(CF_UNICODETEXT)
-        if hClipMem:        
+        if hClipMem:
             text = wstring_at(GlobalLock(hClipMem))
             GlobalUnlock(hClipMem)
         CloseClipboard()
     return text
+
 
 def SetClipboardText(text):
     buffer = create_unicode_buffer(ensure_unicode(text))
@@ -116,6 +121,7 @@ def SetClipboardText(text):
         EmptyClipboard()
         SetClipboardData(CF_UNICODETEXT, hGlobalMem)
         CloseClipboard()
+
 
 if __name__ == '__main__':
     txt = GetClipboardText()                            # display last text clipped

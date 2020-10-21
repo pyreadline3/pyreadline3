@@ -42,7 +42,7 @@ a python syntax is used instead. The available commands are:
       Turn on debug output (on|off). Not implemented yet.
 
     disable_readline
-      Disable pyreadline completely (True|False).
+      Disable pyreadline3 completely (True|False).
 
     allow_ctrl_c
       Allows use of ctrl-c as copy key, still propagate keyboardinterrupt when not waiting for input.
@@ -60,26 +60,26 @@ a python syntax is used instead. The available commands are:
       
     
 
-Here is the example config file shipped with pyreadline:
+Here is the example config file shipped with pyreadline3:
 
-.. literalinclude:: ../../pyreadline/configuration/pyreadlineconfig.ini
+.. literalinclude:: ../../pyreadline3/configuration/pyreadlineconfig.ini
 
-pyreadline with python interpreter
+pyreadline3 with python interpreter
 ----------------------------------
 
 In your startup file (pointed to by environment variable PYTHONSTARTUP) add:
 
-.. literalinclude:: ../../pyreadline/configuration/startup.py
+.. literalinclude:: ../../pyreadline3/configuration/startup.py
 
 This file is included in the doc directory of the distribution.
 
-pyreadline with IronPython
+pyreadline3 with IronPython
 --------------------------
 
 *THIS HAS NOT BEEN TESTED FOR A WHILE*
 
 Pyreadline can be used together with IronPython. Unfortunately the binary
-installs of IronPython can not run pyreadline directly. You need to patch the
+installs of IronPython can not run pyreadline3 directly. You need to patch the
 source code to make PythonCommandLine a public class that we can override.
 
 * In PythonCommandLine.cs you need to change class PythonCommandLine to public class PythonCommandLine and recompile.
@@ -87,10 +87,10 @@ source code to make PythonCommandLine a public class that we can override.
 * Copy rlcompleter.py from a standard python install to your ironpython path (this file is not included with fepy).
 
 
-pyreadline with IPython
+pyreadline3 with IPython
 -----------------------
 
-In IPython pyreadline is automatically used if available.
+In IPython pyreadline3 is automatically used if available.
 
 Clipboard
 ---------
@@ -119,7 +119,7 @@ There are three different paste functions that can be bound.
 International characters
 ------------------------
 
-The pyreadline package now supports international characters. However using
+The pyreadline3 package now supports international characters. However using
 international characters in the interactive prompt can be annoying on windows
 since the default codepage for the terminal is an ascii codepage (850 on
 swedish systems) but the filesystem often uses some other codepage (1252 on

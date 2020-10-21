@@ -3,12 +3,12 @@ python setup.py build_sphinx
 rem python setup.py build_sphinx -b latex
 
 rem pushd build\sphinx\latex
-rem pdflatex pyreadline.tex
-rem pdflatex pyreadline.tex
-rem pdflatex pyreadline.tex
+rem pdflatex pyreadline3.tex
+rem pdflatex pyreadline3.tex
+rem pdflatex pyreadline3.tex
 rem popd
 
 mkdir dist
-copy build\sphinx\latex\pyreadline.pdf dist\pyreadline-%VERSION%.pdf
+copy build\sphinx\latex\pyreadline3.pdf dist\pyreadline3-%VERSION%.pdf
 
-xcopy /S /I build\sphinx\html dist\pyreadline-htmldoc-%VERSION%
+xcopy /S /I build\sphinx\html dist\pyreadline3-htmldoc-%VERSION%

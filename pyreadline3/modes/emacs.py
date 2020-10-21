@@ -1,20 +1,26 @@
 # -*- coding: utf-8 -*-
-#*****************************************************************************
+# *****************************************************************************
 #       Copyright (C) 2003-2006 Gary Bishop.
-#       Copyright (C) 2006  Jorgen Stenarson. <jorgen.stenarson@bostream.nu>
+#       Copyright (C) 2006-2020 Jorgen Stenarson. <jorgen.stenarson@bostream.nu>
+#       Copyright (C) 2020 Bassem Girgis. <brgirgis@gmail.com>
 #
 #  Distributed under the terms of the BSD License.  The full license is in
 #  the file COPYING, distributed as part of this software.
-#*****************************************************************************
-from __future__ import print_function, unicode_literals, absolute_import
-import os, sys, time
-import pyreadline.logger as logger
-from   pyreadline.logger import log
-from pyreadline.lineeditor.lineobj import Point
-import pyreadline.lineeditor.lineobj as lineobj
-import pyreadline.lineeditor.history as history
+# *****************************************************************************
+from __future__ import absolute_import, print_function, unicode_literals
+
+import os
+import sys
+import time
+
+import pyreadline3.lineeditor.history as history
+import pyreadline3.lineeditor.lineobj as lineobj
+import pyreadline3.logger as logger
+from pyreadline3.lineeditor.lineobj import Point
+from pyreadline3.logger import log
+from pyreadline3.unicode_helper import ensure_unicode
+
 from . import basemode
-from pyreadline.unicode_helper import ensure_unicode
 
 
 def format(keyinfo):
@@ -22,7 +28,8 @@ def format(keyinfo):
         k = keyinfo + (-1,)
     else:
         k = keyinfo + (ord(keyinfo[-1]),)
-    return "(%s,%s,%s,%s,%x)"%k
+    return "(%s,%s,%s,%s,%x)" % k
+
 
 in_ironpython = "IronPython" in sys.version
 
@@ -42,9 +49,8 @@ class IncrementalSearchPromptMode(object):
                 revtuples.append(ktuple)
             elif func == self.forward_search_history:
                 fwdtuples.append(ktuple)
-        
-        
-        log("IncrementalSearchPromptMode %s %s"%(keyinfo, keytuple))
+
+        log("IncrementalSearchPromptMode %s %s" % (keyinfo, keytuple))
         if keyinfo.keyname == 'backspace':
             self.subsearch_query = self.subsearch_query[:-1]
             if len(self.subsearch_query) > 0:
@@ -75,7 +81,8 @@ class IncrementalSearchPromptMode(object):
             self.line = self.subsearch_fun(self.subsearch_query)
         else:
             pass
-        self.prompt = self.subsearch_prompt%(self._history.history_cursor, self.subsearch_query)
+        self.prompt = self.subsearch_prompt % (
+            self._history.history_cursor, self.subsearch_query)
         self.l_buffer.set_line(self.line)
 
     def _init_incremental_search(self, searchfun, init_event):
@@ -92,7 +99,7 @@ class IncrementalSearchPromptMode(object):
         self.subsearch_oldprompt = self.prompt
 
         if (self.previous_func != self.reverse_search_history and
-            self.previous_func != self.forward_search_history):
+                self.previous_func != self.forward_search_history):
             self.subsearch_query = self.l_buffer[0:Point].get_line_text()
 
         if self.subsearch_fun == self.reverse_search_history:
@@ -100,7 +107,7 @@ class IncrementalSearchPromptMode(object):
         else:
             self.subsearch_prompt = "forward-i-search%d`%s': "
 
-        self.prompt = self.subsearch_prompt%(self._history.history_cursor, "")
+        self.prompt = self.subsearch_prompt % (self._history.history_cursor, "")
 
         if self.subsearch_query:
             self.line = self._process_incremental_search_keyevent(init_event)
@@ -114,7 +121,7 @@ class SearchPromptMode(object):
 
     def _process_non_incremental_search_keyevent(self, keyinfo):
         keytuple = keyinfo.tuple()
-        log("SearchPromptMode %s %s"%(keyinfo, keytuple))
+        log("SearchPromptMode %s %s" % (keyinfo, keytuple))
         history = self._history
 
         if keyinfo.keyname == 'backspace':
@@ -175,9 +182,9 @@ class DigitArgumentMode(object):
         pass
 
     def _process_digit_argument_keyevent(self, keyinfo):
-        log("DigitArgumentMode.keyinfo %s"%keyinfo)
+        log("DigitArgumentMode.keyinfo %s" % keyinfo)
         keytuple = keyinfo.tuple()
-        log("DigitArgumentMode.keytuple %s %s"%(keyinfo, keytuple))
+        log("DigitArgumentMode.keytuple %s %s" % (keyinfo, keytuple))
         if keyinfo.keyname in ['return']:
             self.prompt = self._digit_argument_oldprompt
             self.process_keyevent_queue = self.process_keyevent_queue[:-1]
@@ -187,12 +194,12 @@ class DigitArgumentMode(object):
         elif (keyinfo.char in "0123456789" and
               keyinfo.control == False and
               keyinfo.meta == False):
-            log("arg %s %s"%(self.argument, keyinfo.char))
+            log("arg %s %s" % (self.argument, keyinfo.char))
             self.argument = self.argument * 10 + int(keyinfo.char)
         else:
             self.prompt = self._digit_argument_oldprompt
             raise LeaveModeTryNext
-        self.prompt = "(arg: %s) "%self.argument
+        self.prompt = "(arg: %s) " % self.argument
 
     def _init_digit_argument(self, keyinfo):
         """Initialize search prompt
@@ -208,9 +215,9 @@ class DigitArgumentMode(object):
             self.argument = -1
         elif keyinfo.char in "0123456789":
             self.argument = int(keyinfo.char)
-        log("<%s> %s"%(self.argument, type(self.argument)))
-        self.prompt = "(arg: %s) "%self.argument
-        log("arg-init %s %s"%(self.argument, keyinfo.char))
+        log("<%s> %s" % (self.argument, type(self.argument)))
+        self.prompt = "(arg: %s) " % self.argument
+        log("arg-init %s %s" % (self.argument, keyinfo.char))
 
 
 class EmacsMode(DigitArgumentMode, IncrementalSearchPromptMode,
@@ -235,7 +242,7 @@ class EmacsMode(DigitArgumentMode, IncrementalSearchPromptMode,
 
     def add_key_logger(self, logfun):
         """logfun should be function that takes disp_fun and line_"""\
-        """buffer object """
+            """buffer object """
         self._keylog = logfun
 
     def process_keyevent(self, keyinfo):
@@ -252,8 +259,8 @@ class EmacsMode(DigitArgumentMode, IncrementalSearchPromptMode,
     def _process_keyevent(self, keyinfo):
         """return True when line is final
         """
-        #Process exit keys. Only exit on empty line
-        log("_process_keyevent <%s>"%keyinfo)
+        # Process exit keys. Only exit on empty line
+        log("_process_keyevent <%s>" % keyinfo)
 
         def nop(e):
             pass
@@ -270,7 +277,7 @@ class EmacsMode(DigitArgumentMode, IncrementalSearchPromptMode,
 
         if keytuple in self.exit_dispatch:
             pars = (self.l_buffer, lineobj.EndOfLine(self.l_buffer))
-            log("exit_dispatch:<%s, %s>"%pars)
+            log("exit_dispatch:<%s, %s>" % pars)
             if lineobj.EndOfLine(self.l_buffer) == 0:
                 raise EOFError
         if keyinfo.keyname or keyinfo.control or keyinfo.meta:
@@ -279,7 +286,7 @@ class EmacsMode(DigitArgumentMode, IncrementalSearchPromptMode,
             default = self.self_insert
         dispatch_func = self.key_dispatch.get(keytuple, default)
 
-        log("readline from keyboard:<%s,%s>"%(keytuple, dispatch_func))
+        log("readline from keyboard:<%s,%s>" % (keytuple, dispatch_func))
 
         r = None
         if dispatch_func:
@@ -290,7 +297,7 @@ class EmacsMode(DigitArgumentMode, IncrementalSearchPromptMode,
         self.previous_func = dispatch_func
         return r
 
-#########  History commands
+# History commands
     def previous_history(self, e):  # (C-p)
         '''Move back through the history list, fetching the previous
         command. '''
@@ -335,7 +342,7 @@ class EmacsMode(DigitArgumentMode, IncrementalSearchPromptMode,
         between the start of the current line and the point. This is a
         non-incremental search. By default, this command is unbound.'''
         if (self.previous_func and
-            hasattr(self._history, self.previous_func.__name__)):
+                hasattr(self._history, self.previous_func.__name__)):
             self._history.lastcommand = getattr(self._history,
                                                 self.previous_func.__name__)
         else:
@@ -350,7 +357,7 @@ class EmacsMode(DigitArgumentMode, IncrementalSearchPromptMode,
         between the start of the current line and the point. This is a
         non-incremental search. By default, this command is unbound.'''
         if (self.previous_func and
-            hasattr(self._history, self.previous_func.__name__)):
+                hasattr(self._history, self.previous_func.__name__)):
             self._history.lastcommand = getattr(self._history,
                                                 self.previous_func.__name__)
         else:
@@ -606,7 +613,7 @@ class EmacsMode(DigitArgumentMode, IncrementalSearchPromptMode,
         '''Add this digit to the argument already accumulating, or start a
         new argument. M-- starts a negative argument.'''
         self._init_digit_argument(e)
-        #Should not finalize
+        # Should not finalize
 
     def universal_argument(self, e):  # ()
         '''This is another way to specify an argument. If this command is
@@ -620,9 +627,9 @@ class EmacsMode(DigitArgumentMode, IncrementalSearchPromptMode,
         executing this function the first time makes the argument count
         four, a second time makes the argument count sixteen, and so on. By
         default, this is not bound to a key.'''
-        #Should not finalize
+        # Should not finalize
 
-    #Create key bindings:
+    # Create key bindings:
     def init_editing_mode(self, e):  # (C-e)
         '''When in vi command mode, this causes a switch to emacs editing
         mode.'''
@@ -630,58 +637,58 @@ class EmacsMode(DigitArgumentMode, IncrementalSearchPromptMode,
         self._bind_exit_key('Control-z')
 
         # I often accidentally hold the shift or control while typing space
-        self._bind_key('space',       self.self_insert)
-        self._bind_key('Shift-space',       self.self_insert)
-        self._bind_key('Control-space',     self.self_insert)
-        self._bind_key('Return',            self.accept_line)
-        self._bind_key('Left',              self.backward_char)
-        self._bind_key('Control-b',         self.backward_char)
-        self._bind_key('Right',             self.forward_char)
-        self._bind_key('Control-f',         self.forward_char)
-        self._bind_key('Control-h',         self.backward_delete_char)
-        self._bind_key('BackSpace',         self.backward_delete_char)
+        self._bind_key('space', self.self_insert)
+        self._bind_key('Shift-space', self.self_insert)
+        self._bind_key('Control-space', self.self_insert)
+        self._bind_key('Return', self.accept_line)
+        self._bind_key('Left', self.backward_char)
+        self._bind_key('Control-b', self.backward_char)
+        self._bind_key('Right', self.forward_char)
+        self._bind_key('Control-f', self.forward_char)
+        self._bind_key('Control-h', self.backward_delete_char)
+        self._bind_key('BackSpace', self.backward_delete_char)
         self._bind_key('Control-BackSpace', self.backward_delete_word)
 
-        self._bind_key('Home',              self.beginning_of_line)
-        self._bind_key('End',               self.end_of_line)
-        self._bind_key('Delete',            self.delete_char)
-        self._bind_key('Control-d',         self.delete_char)
-        self._bind_key('Clear',             self.clear_screen)
-        self._bind_key('Alt-f',             self.forward_word)
-        self._bind_key('Alt-b',             self.backward_word)
-        self._bind_key('Control-l',         self.clear_screen)
-        self._bind_key('Control-p',         self.previous_history)
-        self._bind_key('Up',                self.history_search_backward)
-        self._bind_key('Control-n',         self.next_history)
-        self._bind_key('Down',              self.history_search_forward)
-        self._bind_key('Control-a',         self.beginning_of_line)
-        self._bind_key('Control-e',         self.end_of_line)
-        self._bind_key('Alt-<',             self.beginning_of_history)
-        self._bind_key('Alt->',             self.end_of_history)
-        self._bind_key('Control-r',         self.reverse_search_history)
-        self._bind_key('Control-s',         self.forward_search_history)
-        self._bind_key('Control-Shift-r',         self.forward_search_history)
+        self._bind_key('Home', self.beginning_of_line)
+        self._bind_key('End', self.end_of_line)
+        self._bind_key('Delete', self.delete_char)
+        self._bind_key('Control-d', self.delete_char)
+        self._bind_key('Clear', self.clear_screen)
+        self._bind_key('Alt-f', self.forward_word)
+        self._bind_key('Alt-b', self.backward_word)
+        self._bind_key('Control-l', self.clear_screen)
+        self._bind_key('Control-p', self.previous_history)
+        self._bind_key('Up', self.history_search_backward)
+        self._bind_key('Control-n', self.next_history)
+        self._bind_key('Down', self.history_search_forward)
+        self._bind_key('Control-a', self.beginning_of_line)
+        self._bind_key('Control-e', self.end_of_line)
+        self._bind_key('Alt-<', self.beginning_of_history)
+        self._bind_key('Alt->', self.end_of_history)
+        self._bind_key('Control-r', self.reverse_search_history)
+        self._bind_key('Control-s', self.forward_search_history)
+        self._bind_key('Control-Shift-r', self.forward_search_history)
         self._bind_key('Alt-p',
                        self.non_incremental_reverse_search_history)
         self._bind_key('Alt-n',
                        self.non_incremental_forward_search_history)
-        self._bind_key('Control-z',         self.undo)
-        self._bind_key('Control-_',         self.undo)
-        self._bind_key('Escape',            self.kill_whole_line)
-        self._bind_key('Meta-d',            self.kill_word)
-        self._bind_key('Control-Delete',       self.forward_delete_word)
-        self._bind_key('Control-w',         self.unix_word_rubout)
+        self._bind_key('Control-z', self.undo)
+        self._bind_key('Control-_', self.undo)
+        self._bind_key('Escape', self.kill_whole_line)
+        self._bind_key('Meta-d', self.kill_word)
+        self._bind_key('Control-Delete', self.forward_delete_word)
+        self._bind_key('Control-w', self.unix_word_rubout)
         #self._bind_key('Control-Shift-v',   self.quoted_insert)
-        self._bind_key('Control-v',         self.paste)
-        self._bind_key('Alt-v',             self.ipython_paste)
-        self._bind_key('Control-y',         self.yank)
-        self._bind_key('Control-k',         self.kill_line)
-        self._bind_key('Control-m',         self.set_mark)
-        self._bind_key('Control-q',         self.copy_region_to_clipboard)
+        self._bind_key('Control-v', self.paste)
+        self._bind_key('Alt-v', self.ipython_paste)
+        self._bind_key('Control-y', self.yank)
+        self._bind_key('Control-k', self.kill_line)
+        self._bind_key('Control-m', self.set_mark)
+        self._bind_key('Control-q', self.copy_region_to_clipboard)
 #        self._bind_key('Control-shift-k',  self.kill_whole_line)
-        self._bind_key('Control-Shift-v',   self.paste_mulitline_code)
-        self._bind_key("Control-Right",     self.forward_word_end)
-        self._bind_key("Control-Left",      self.backward_word)
+        self._bind_key('Control-Shift-v', self.paste_mulitline_code)
+        self._bind_key("Control-Right", self.forward_word_end)
+        self._bind_key("Control-Left", self.backward_word)
         self._bind_key("Shift-Right",
                        self.forward_char_extend_selection)
         self._bind_key("Shift-Left",
@@ -694,25 +701,25 @@ class EmacsMode(DigitArgumentMode, IncrementalSearchPromptMode,
                        self.beginning_of_line_extend_selection)
         self._bind_key("Shift-End",
                        self.end_of_line_extend_selection)
-        self._bind_key("numpad0",           self.self_insert)
-        self._bind_key("numpad1",           self.self_insert)
-        self._bind_key("numpad2",           self.self_insert)
-        self._bind_key("numpad3",           self.self_insert)
-        self._bind_key("numpad4",           self.self_insert)
-        self._bind_key("numpad5",           self.self_insert)
-        self._bind_key("numpad6",           self.self_insert)
-        self._bind_key("numpad7",           self.self_insert)
-        self._bind_key("numpad8",           self.self_insert)
-        self._bind_key("numpad9",           self.self_insert)
-        self._bind_key("add",               self.self_insert)
-        self._bind_key("subtract",          self.self_insert)
-        self._bind_key("multiply",          self.self_insert)
-        self._bind_key("divide",            self.self_insert)
-        self._bind_key("vk_decimal",        self.self_insert)
+        self._bind_key("numpad0", self.self_insert)
+        self._bind_key("numpad1", self.self_insert)
+        self._bind_key("numpad2", self.self_insert)
+        self._bind_key("numpad3", self.self_insert)
+        self._bind_key("numpad4", self.self_insert)
+        self._bind_key("numpad5", self.self_insert)
+        self._bind_key("numpad6", self.self_insert)
+        self._bind_key("numpad7", self.self_insert)
+        self._bind_key("numpad8", self.self_insert)
+        self._bind_key("numpad9", self.self_insert)
+        self._bind_key("add", self.self_insert)
+        self._bind_key("subtract", self.self_insert)
+        self._bind_key("multiply", self.self_insert)
+        self._bind_key("divide", self.self_insert)
+        self._bind_key("vk_decimal", self.self_insert)
         log("RUNNING INIT EMACS")
         for i in range(0, 10):
-            self._bind_key("alt-%d"%i,      self.digit_argument)
-        self._bind_key("alt--",             self.digit_argument)
+            self._bind_key("alt-%d" % i, self.digit_argument)
+        self._bind_key("alt--", self.digit_argument)
 
 
 # make it case insensitive

@@ -1,5 +1,7 @@
-from __future__ import print_function, unicode_literals, absolute_import
-import glob, sys
+from __future__ import absolute_import, print_function, unicode_literals
+
+import glob
+import sys
 
 success = False
 in_ironpython = "IronPython" in sys.version
@@ -20,4 +22,4 @@ else:
 
 if not success:
     raise ImportError(
-            "Could not find a console implementation for your platform")
+        "Could not find a console implementation for your platform")

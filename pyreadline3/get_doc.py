@@ -1,20 +1,27 @@
-from __future__ import print_function, unicode_literals, absolute_import
-import sys, textwrap
+from __future__ import absolute_import, print_function, unicode_literals
+
+import sys
+import textwrap
+
 from .py3k_compat import callable
 
 rlmain = sys.modules["readline"]
 rl = rlmain.rl
 
-def get_doc(rl):
-    methods = [(x, getattr(rl, x)) for x in dir(rl) if callable(getattr(rl, x))]
-    return [ (x, m.__doc__ )for x, m in methods if m.__doc__]
-    
-    
-def get_rest(rl):
-    q = get_doc(rl)
+
+def get_doc(rl_):
+    methods = [
+        (x, getattr(rl_, x))
+        for x in dir(rl_) if callable(getattr(rl_, x))
+    ]
+    return [(x, m.__doc__)for x, m in methods if m.__doc__]
+
+
+def get_rest(rl_):
+    q = get_doc(rl_)
     out = []
     for funcname, doc in q:
         out.append(funcname)
         out.append("\n".join(textwrap.wrap(doc, 80, initial_indent="   ")))
         out.append("")
-    return out     
+    return out

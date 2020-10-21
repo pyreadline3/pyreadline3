@@ -1,10 +1,11 @@
-from __future__ import print_function, unicode_literals, absolute_import
+from __future__ import absolute_import, print_function, unicode_literals
 
 import sys
 
+from . import winconstants
+
 success = False
 in_ironpython = "IronPython" in sys.version
-from . import winconstants
 
 if in_ironpython:
     try:
@@ -18,6 +19,6 @@ else:
         success = True
     except ImportError as x:
         pass
-    
+
 if not success:
     raise ImportError("Could not import keysym for local pythonversion", x)

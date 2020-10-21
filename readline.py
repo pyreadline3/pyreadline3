@@ -1,33 +1,36 @@
 # -*- coding: UTF-8 -*-
-#this file is needed in site-packages to emulate readline
-#necessary for rlcompleter since it relies on the existance
-#of a readline module
-from __future__ import print_function, unicode_literals, absolute_import
-from pyreadline.rlmain import Readline
+# this file is needed in site-packages to emulate readline
+# necessary for rlcompleter since it relies on the existance
+# of a readline module
+from __future__ import absolute_import, print_function, unicode_literals
 
-__all__ = [ 'parse_and_bind',
-            'get_line_buffer',
-            'insert_text',
-            'clear_history',
-            'read_init_file',
-            'read_history_file',
-            'write_history_file',
-            'get_current_history_length',
-            'get_history_length',
-            'get_history_item',
-            'set_history_length',
-            'set_startup_hook',
-            'set_pre_input_hook',
-            'set_completer',
-            'get_completer',
-            'get_begidx',
-            'get_endidx',
-            'set_completer_delims',
-            'get_completer_delims',
-            'add_history',
-            'callback_handler_install',
-            'callback_handler_remove',
-            'callback_read_char',] #Some other objects are added below
+from pyreadline3.rlmain import Readline
+
+__all__ = [
+    'parse_and_bind',
+    'get_line_buffer',
+    'insert_text',
+    'clear_history',
+    'read_init_file',
+    'read_history_file',
+    'write_history_file',
+    'get_current_history_length',
+    'get_history_length',
+    'get_history_item',
+    'set_history_length',
+    'set_startup_hook',
+    'set_pre_input_hook',
+    'set_completer',
+    'get_completer',
+    'get_begidx',
+    'get_endidx',
+    'set_completer_delims',
+    'get_completer_delims',
+    'add_history',
+    'callback_handler_install',
+    'callback_handler_remove',
+    'callback_read_char',
+]  # Some other objects are added below
 
 
 # create a Readline object to contain the state
@@ -40,11 +43,12 @@ if rl.disable_readline:
         globals()[funk] = dummy
 else:
     def GetOutputFile():
-        '''Return the console object used by readline so that it can be used for printing in color.'''
+        '''Return the console object used by readline so that it can be
+        used for printing in color.'''
         return rl.console
     __all__.append("GetOutputFile")
 
-    import pyreadline.console as console
+    import pyreadline3.console as console
 
     # make these available so this looks like the python readline module
     read_init_file = rl.read_init_file
@@ -71,9 +75,9 @@ else:
     set_pre_input_hook = rl.set_pre_input_hook
     set_startup_hook = rl.set_startup_hook
 
-    callback_handler_install=rl.callback_handler_install
-    callback_handler_remove=rl.callback_handler_remove
-    callback_read_char=rl.callback_read_char
+    callback_handler_install = rl.callback_handler_install
+    callback_handler_remove = rl.callback_handler_remove
+    callback_read_char = rl.callback_read_char
 
     console.install_readline(rl.readline)
 

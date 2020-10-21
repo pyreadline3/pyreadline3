@@ -1,15 +1,15 @@
-Install instructions for pyreadline
+Install instructions for pyreadline3
 ===================================
 
-The pyreadline package is based on the readline package by Gary Bishop. It is
-not a complete replacement for GNU readline. The pyreadline package is
-currently only for the win32 platform. The pyreadline package tries to improve
+The pyreadline3 package is based on the readline package by Gary Bishop. It is
+not a complete replacement for GNU readline. The pyreadline3 package is
+currently only for the win32 platform. The pyreadline3 package tries to improve
 the integration with the win32 platform by including such things as copy
 paste.
 
-The pyreadline package installs as pyreadline, you may want to add readline.py
+The pyreadline3 package installs as pyreadline3, you may want to add readline.py
 containing the line: 
-from pyreadline import *
+from pyreadline3 import *
 
 Dependencies
 ------------

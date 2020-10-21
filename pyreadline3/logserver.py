@@ -1,16 +1,20 @@
 # -*- coding: utf-8 -*-
-#*****************************************************************************
-#       Copyright (C) 2006  Jorgen Stenarson. <jorgen.stenarson@bostream.nu>
+# *****************************************************************************
+#       Copyright (C) 2006-2020 Jorgen Stenarson. <jorgen.stenarson@bostream.nu>
+#       Copyright (C) 2020 Bassem Girgis. <brgirgis@gmail.com>
 #
 #  Distributed under the terms of the BSD License.  The full license is in
 #  the file COPYING, distributed as part of this software.
-#*****************************************************************************
-from __future__ import print_function, unicode_literals, absolute_import
+# *****************************************************************************
+from __future__ import absolute_import, print_function, unicode_literals
 
 import logging
 import logging.handlers
-import struct, socket
-from pyreadline.unicode_helper import ensure_unicode
+import socket
+import struct
+
+from pyreadline3.unicode_helper import ensure_unicode
+
 try:
     import msvcrt
 except ImportError:
@@ -20,6 +24,7 @@ except ImportError:
 
 port = logging.handlers.DEFAULT_TCP_LOGGING_PORT
 host = 'localhost'
+
 
 def check_key():
     if msvcrt is None:
@@ -31,7 +36,8 @@ def check_key():
     return ""
 
 
-singleline=False
+singleline = False
+
 
 def main():
     print("Starting TCP logserver on port:", port)
@@ -41,7 +47,7 @@ def main():
 
     s.bind(("", port))
     s.settimeout(1)
-    while 1:
+    while True:
         try:
             data, addr = s.recvfrom(100000)
             print(data, end="")
@@ -51,7 +57,8 @@ def main():
                 print("Quitting logserver")
                 break
             elif "c" == key:
-                print("\n" * 100)  
+                print("\n" * 100)
+
 
 if __name__ == "__main__":
     main()

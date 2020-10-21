@@ -1,6 +1,6 @@
 build
 dist
-pyreadline.egg-info/
+pyreadline3.egg-info/
 __pycache__/
 *.bak
 MANIFEST
