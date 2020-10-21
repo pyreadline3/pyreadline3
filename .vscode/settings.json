@@ -1,0 +1,82 @@
+{
+  "editor.tabSize": 4,
+  "editor.rulers": [
+    80
+  ],
+  "python.pythonPath": ".venv\\Scripts\\python.exe",
+  "python.autoComplete.addBrackets": false,
+  "python.formatting.provider": "autopep8",
+  "python.formatting.autopep8Args": [
+    "-a",
+    "-a",
+    "--max-line-length",
+    "80"
+  ],
+  "python.sortImports.args": [
+    "--multi-line=3",
+    "--line-width=80",
+    "--trailing-comma"
+  ],
+  "[python]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true
+    }
+  },
+  "python.linting.enabled": true,
+  "python.linting.pylintEnabled": true,
+  "python.linting.pylintArgs": [
+    "--enable=W0614",
+    "--disable=missing-docstring",
+    "--disable=invalid-name",
+    "--disable=no-self-use"
+  ],
+  "python.linting.flake8Enabled": true,
+  "python.linting.flake8Args": [
+    "--max-line-length",
+    "80"
+  ],
+  "files.exclude": {
+    "**/__pycache__": true
+  },
+  "python.testing.unittestEnabled": false,
+  "python.testing.nosetestsEnabled": false,
+  "python.testing.pytestEnabled": false,
+  "python.testing.promptToConfigure": false,
+  "cSpell.enableFiletypes": [
+    "asciidoc",
+    "c",
+    "cpp",
+    "csharp",
+    "css",
+    "git-commit",
+    "go",
+    "handlebars",
+    "haskell",
+    "html",
+    "jade",
+    "java",
+    "javascript",
+    "javascriptreact",
+    "json",
+    "jsonc",
+    "latex",
+    "less",
+    "markdown",
+    "php",
+    "plaintext",
+    "pug",
+    "restructuredtext",
+    "rust",
+    "scala",
+    "scss",
+    "text",
+    "typescript",
+    "typescriptreact",
+    "yaml",
+    "yml"
+  ],
+  "terminal.integrated.scrollback": 1000000,
+  "cSpell.words": [
+    "pyreadline3"
+  ],
+}
