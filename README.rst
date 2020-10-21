@@ -1,13 +1,14 @@
 ==========
-pyreadline
+pyreadline3
 ==========
 
 
+The pyreadline3 package is based on pyreadline.
 The pyreadline package is a python implementation of GNU readline functionality
 it is based on the ctypes based UNC readline package by Gary Bishop. 
-It is not complete. It has been tested for use with windows 2000 and windows xp.
+It is not complete. It has been tested for use with Windows 10.
 
-Version 2.0 runs on Python 2.6, 2.7, and >3.2 using the same code.
+Version 3.0 runs on Python 3.8+.
 
 Features:
  *  keyboard text selection and copy/paste
@@ -18,9 +19,5 @@ Features:
  *  paste pastes first line of content on clipboard. 
  *  ipython_paste, pastes tab-separated data as list of lists or numpy array if all data is numeric
  *  paste_mulitline_code pastes multi line code, removing any empty lines.
- 
- 
- The latest development version is always available at the IPython git 
- repository_.
 
-.. _repository: https://github.com/pyreadline/pyreadline.git
+.. _repository: https://github.com/brgirgis/pyreadline3,git
