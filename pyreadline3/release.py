@@ -25,7 +25,7 @@ name = 'pyreadline3'
 
 branch = ''
 
-version = '3.0'
+version = '3.1'
 
 description = "A python implementation of GNU readline."
 
@@ -39,7 +39,7 @@ It is based on the `ctypes` based UNC `readline` package by Gary Bishop.
 It is not complete.
 It has been tested for use with Windows 10.
 
-Version 3.0 runs on Python 3.3+.
+Version 3.0+ or pyreadline3 runs on Python 3.3+.
 
 Features
 

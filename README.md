@@ -8,7 +8,7 @@ It is based on the `ctypes` based UNC `readline` package by Gary Bishop.
 It is not complete.
 It has been tested for use with Windows 10.
 
-Version 3.0 runs on Python 3.8+.
+Version 3.0+ of pyreadline3 runs on Python 3.8+.
 
 ## Features
 
