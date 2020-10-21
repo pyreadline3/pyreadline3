@@ -4,9 +4,15 @@ import sys
 if sys.version_info[0] >= 3:
     import collections
     PY3 = True
+
+    if sys.version_info[1] >= 3:
+        _Callable = collections.abc.Callable
+    else:
+        _Callable = collections.Callable
+
     def callable(x):
-        return isinstance(x, collections.Callable)
-    
+        return isinstance(x, _Callable)
+
     def execfile(fname, glob, loc=None):
         loc = loc if (loc is not None) else glob
         with open(fname) as fil:
@@ -22,5 +28,5 @@ else:
     execfile = execfile
     bytes = str
     unicode = unicode
-    
+
     from StringIO import StringIO
