@@ -81,6 +81,7 @@
     "Stenarson",
     "ctypes",
     "pyreadline",
-    "pyreadline3"
+    "pyreadline3",
+    "readline"
   ],
 }
