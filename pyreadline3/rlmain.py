@@ -430,6 +430,9 @@ class BaseReadline(object):
                 print(x, file=sys.stderr)
                 raise ReadlineError("Error reading .pyinputrc")
 
+    def redisplay(self):
+        pass
+
 
 class Readline(BaseReadline):
     """Baseclass for readline based on a console
@@ -608,3 +611,6 @@ class Readline(BaseReadline):
         else:
             raise KeyboardInterrupt
         return event
+
+    def redisplay(self):
+        BaseReadline.redisplay(self)

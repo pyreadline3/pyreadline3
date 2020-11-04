@@ -30,6 +30,7 @@ __all__ = [
     'callback_handler_install',
     'callback_handler_remove',
     'callback_read_char',
+    'redisplay',
 ]  # Some other objects are added below
 
 
@@ -78,6 +79,8 @@ else:
     callback_handler_install = rl.callback_handler_install
     callback_handler_remove = rl.callback_handler_remove
     callback_read_char = rl.callback_read_char
+
+    redisplay = rl.redisplay
 
     console.install_readline(rl.readline)
 
