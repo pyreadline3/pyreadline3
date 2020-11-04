@@ -1,6 +1,8 @@
-![Upload Python Package](https://github.com/brgirgis/pyreadline3/workflows/Upload%20Python%20Package/badge.svg)
 
 # pyreadline3
+
+![Publish](https://github.com/brgirgis/pyreadline3/workflows/Publish/badge.svg)
+![Test](https://github.com/brgirgis/pyreadline3/workflows/Test/badge.svg)
 
 The `pyreadline3` package is based on the stale package `pyreadline` located
 [here](https://github.com/pyreadline/pyreadline).
