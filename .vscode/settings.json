@@ -77,6 +77,10 @@
   ],
   "terminal.integrated.scrollback": 1000000,
   "cSpell.words": [
+    "Girgis",
+    "Stenarson",
+    "ctypes",
+    "pyreadline",
     "pyreadline3"
   ],
 }

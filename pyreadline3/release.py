@@ -79,9 +79,20 @@ keywords = [
 ]
 
 classifiers = [
+    # How mature is this project? Common values are
+    #   3 - Alpha
+    #   4 - Beta
+    #   5 - Production/Stable
     'Development Status :: 5 - Production/Stable',
+
     'Environment :: Console',
+
     'Operating System :: Microsoft :: Windows',
+
     'License :: OSI Approved :: BSD License',
+
+    'Programming Language :: Python :: 3.6',
+    'Programming Language :: Python :: 3.7',
     'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
 ]
