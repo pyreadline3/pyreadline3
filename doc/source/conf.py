@@ -12,8 +12,8 @@
 # All configuration values have a default value; values that are commented out
 # serve to show the default value.
 
-import os
-import sys
+#import os
+#import sys
 
 import pyreadline3.release
 

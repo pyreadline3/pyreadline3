@@ -10,6 +10,18 @@ import glob
 
 from setuptools import find_packages, setup
 
+
+name = 'UNKNOWN'
+version = 'NONE'
+description = 'NONE'
+long_description = 'NONE'
+authors = {}
+license = 'NONE'
+classifiers = 'NONE'
+url = 'NONE'
+platforms='NONE'
+keywords='NONE'
+
 exec(
     compile(
         open('pyreadline3/release.py').read(),
@@ -23,8 +35,8 @@ setup(
     long_description=long_description,
     author=authors["Jorgen"][0],
     author_email=authors["Jorgen"][1],
-    maintainer=authors["Jorgen"][0],
-    maintainer_email=authors["Jorgen"][1],
+    maintainer=authors["Bassem"][0],
+    maintainer_email=authors["Bassem"][1],
     license=license,
     classifiers=classifiers,
     url=url,
