@@ -9,7 +9,7 @@ set PROJECT_ROOT_DIR=%CD%
 popd
 
 :: make sure python 3.8.6 is installed in the default location
-set PROJECT_PYTHON_BASE_EXE=C:\Python\3.8.6_x64\python.exe
+set PROJECT_PYTHON_BASE_EXE=C:\Python\3.10.0_x64\python.exe
 
 if not exist "%PROJECT_PYTHON_BASE_EXE%" (
     echo BUILD ERROR: Cannot find python installation: "%PROJECT_PYTHON_BASE_EXE%"

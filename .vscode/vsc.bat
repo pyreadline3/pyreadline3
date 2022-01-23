@@ -9,4 +9,4 @@ set PROJECT_ROOT_DIR=%CD%
 popd
 
 :: start VS Code: assume it is installed
-Start "" /D """%PROJECT_ROOT_DIR%""" "Code" .
+Start "" /D """%PROJECT_ROOT_DIR%""" "C:\Program Files\VSCodium\VSCodium.exe" .

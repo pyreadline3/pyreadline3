@@ -8,25 +8,27 @@
 # *****************************************************************************
 import glob
 
-from setuptools import find_packages, setup
-
+from setuptools import setup
 
 name = 'UNKNOWN'
 version = 'NONE'
 description = 'NONE'
 long_description = 'NONE'
 authors = {}
-license = 'NONE'
+license_name = 'NONE'
 classifiers = 'NONE'
 url = 'NONE'
-platforms='NONE'
-keywords='NONE'
+platforms = 'NONE'
+keywords = 'NONE'
 
 exec(
     compile(
-        open('pyreadline3/release.py').read(),
+        open('pyreadline3/release.py', 'r', encoding="utf-8").read(),
         'pyreadline3/release.py',
-        'exec'))
+        'exec'
+    )
+)
+
 
 setup(
     name=name,
@@ -37,7 +39,7 @@ setup(
     author_email=authors["Bassem"][1],
     maintainer=authors["Bassem"][0],
     maintainer_email=authors["Bassem"][1],
-    license=license,
+    license=license_name,
     classifiers=classifiers,
     url=url,
     platforms=platforms,

@@ -77,6 +77,8 @@
     "ctypes",
     "Girgis",
     "ipython",
+    "keydescr",
+    "keysyms",
     "mulitline",
     "numpy",
     "PYPI",

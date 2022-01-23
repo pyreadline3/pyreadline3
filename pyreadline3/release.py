@@ -46,17 +46,19 @@ Features
 - keyboard text selection and copy/paste
 - Shift-arrowkeys for text selection
 - Control-c can be used for copy activate with allow_ctrl_c(True) in config file
-- Double tapping ctrl-c will raise a KeyboardInterrupt, use ctrl_c_tap_time_interval(x)
+- Double tapping ctrl-c will raise a KeyboardInterrupt, use
+  ctrl_c_tap_time_interval(x)
 - where x is your preferred tap time window, default 0.3 s.
 - paste pastes first line of content on clipboard.
-- ipython_paste, pastes tab-separated data as list of lists or numpy array if all data is numeric
+- ipython_paste, pastes tab-separated data as list of lists or numpy array if
+  all data is numeric
 - paste_mulitline_code pastes multi line code, removing any empty lines.
 
 The latest development version is always available at the project git
 repository https://github.com/pyreadline3/pyreadline3
 """
 
-license = 'BSD'
+license_name = 'BSD'
 
 authors = {
     'Bassem': ('Bassem Girgis', 'brgirgis@gmail.com'),

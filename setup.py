@@ -9,9 +9,7 @@
 #  the file COPYING, distributed as part of this software.
 # *****************************************************************************
 
-import glob
 import os
-import sys
 from platform import system
 
 from setuptools import setup
@@ -31,7 +29,7 @@ version = 'NONE'
 description = 'NONE'
 long_description = 'NONE'
 authors = {}
-license = 'NONE'
+license_name = 'NONE'
 classifiers = 'NONE'
 url = 'NONE'
 download_url = 'NONE'
@@ -40,9 +38,11 @@ keywords = 'NONE'
 
 exec(
     compile(
-        open('pyreadline3/release.py').read(),
+        open('pyreadline3/release.py', 'r', encoding="utf-8").read(),
         'pyreadline3/release.py',
-        'exec'))
+        'exec'
+    )
+)
 
 try:
     import sphinx
@@ -71,7 +71,7 @@ setup(
     author_email=authors["Bassem"][1],
     maintainer=authors["Bassem"][0],
     maintainer_email=authors["Bassem"][1],
-    license=license,
+    license=license_name,
     classifiers=classifiers,
     url=url,
     download_url=download_url,
