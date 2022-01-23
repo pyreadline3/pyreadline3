@@ -17,10 +17,10 @@ Follow the instructions for configuration below.
 Development version
 -------------------
 
-The devopment is hosted at https://github.com/brgirgis/pyreadline3
+The development is hosted at https://github.com/pyreadline3/pyreadline3
 
 The current trunk version can be cloned with git, :command:`git clone
-https://github.com/brgirgis/pyreadline3.git`.
+https://github.com/pyreadline3/pyreadline3.git`.
 
 Install with the usual :command:`python setup.py install` from the pyreadline3
 folder.

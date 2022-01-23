@@ -1,8 +1,6 @@
 {
   "editor.tabSize": 4,
-  "editor.rulers": [
-    80
-  ],
+  "editor.rulers": [80],
   "python.pythonPath": ".venv\\Scripts\\python.exe",
   "python.autoComplete.addBrackets": false,
   "python.formatting.provider": "autopep8",
@@ -31,10 +29,7 @@
     "--disable=no-self-use"
   ],
   "python.linting.flake8Enabled": true,
-  "python.linting.flake8Args": [
-    "--max-line-length",
-    "80"
-  ],
+  "python.linting.flake8Args": ["--max-line-length", "80"],
   "files.exclude": {
     "**/__pycache__": true
   },
@@ -77,11 +72,20 @@
   ],
   "terminal.integrated.scrollback": 1000000,
   "cSpell.words": [
-    "Girgis",
-    "Stenarson",
+    "arrowkeys",
+    "bdist",
     "ctypes",
+    "Girgis",
+    "ipython",
+    "mulitline",
+    "numpy",
+    "PYPI",
     "pyreadline",
     "pyreadline3",
-    "readline"
-  ],
+    "pytest",
+    "readline",
+    "sdist",
+    "setuptools",
+    "Stenarson"
+  ]
 }

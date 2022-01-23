@@ -25,7 +25,7 @@ name = 'pyreadline3'
 
 branch = ''
 
-version = '3.3'
+version = '3.4'
 
 description = "A python implementation of GNU readline."
 
@@ -53,7 +53,7 @@ Features
 - paste_mulitline_code pastes multi line code, removing any empty lines.
 
 The latest development version is always available at the project git
-repository https://github.com/brgirgis/pyreadline3
+repository https://github.com/pyreadline3/pyreadline3
 """
 
 license = 'BSD'

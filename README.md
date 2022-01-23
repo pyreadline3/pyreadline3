@@ -1,8 +1,7 @@
-
 # pyreadline3
 
-![Publish](https://github.com/brgirgis/pyreadline3/workflows/Publish/badge.svg)
-![Test](https://github.com/brgirgis/pyreadline3/workflows/Test/badge.svg)
+![Publish](https://github.com/pyreadline3/pyreadline3/workflows/Publish/badge.svg)
+![Test](https://github.com/pyreadline3/pyreadline3/workflows/Test/badge.svg)
 
 The `pyreadline3` package is based on the stale package `pyreadline` located
 [here](https://github.com/pyreadline/pyreadline).
@@ -26,4 +25,4 @@ Version 3.0+ of pyreadline3 runs on Python 3.8+.
 - paste_mulitline_code pastes multi line code, removing any empty lines.
 
 The latest development version is always available at the project git
-[repository](https://github.com/brgirgis/pyreadline3)
+[repository](https://github.com/pyreadline3/pyreadline3)
