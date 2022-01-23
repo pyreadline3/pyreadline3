@@ -8,10 +8,7 @@
 # *****************************************************************************
 from __future__ import absolute_import, print_function, unicode_literals
 
-import operator
 import os
-import re
-import string
 import sys
 
 from pyreadline3.logger import log
@@ -87,7 +84,7 @@ class LineHistory(object):
         if filename is None:
             filename = self.history_filename
         try:
-            for line in open(filename, 'r'):
+            for line in open(filename, 'r', encoding="utf-8"):
                 self.add_history(
                     lineobj.ReadLineTextBuffer(
                         ensure_unicode(
@@ -184,7 +181,7 @@ class LineHistory(object):
             startpos = min(
                 self.history_cursor, max(
                     0, self.get_current_history_length() - 1))
-        origpos = startpos
+        # origpos = startpos
 
         result = lineobj.ReadLineTextBuffer("")
 
@@ -195,7 +192,8 @@ class LineHistory(object):
 
         # If we get a new search without change in search term it means
         # someone pushed ctrl-r and we should find the next match
-        if self.last_search_for == searchfor and startpos < self.get_current_history_length() - 1:
+        if self.last_search_for == searchfor and \
+                startpos < self.get_current_history_length() - 1:
             startpos += 1
             for idx, line in list(enumerate(self.history))[startpos:]:
                 if searchfor in line:
@@ -255,16 +253,14 @@ class LineHistory(object):
         '''Search forward through the history for the string of characters
         between the start of the current line and the point. This is a
         non-incremental search. By default, this command is unbound.'''
-        q = self._search(1, partial)
-        return q
+        return self._search(1, partial)
 
     def history_search_backward(self, partial):  # ()
         '''Search backward through the history for the string of characters
         between the start of the current line and the point. This is a
         non-incremental search. By default, this command is unbound.'''
 
-        q = self._search(-1, partial)
-        return q
+        return self._search(-1, partial)
 
 
 if __name__ == "__main__":

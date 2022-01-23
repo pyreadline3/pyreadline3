@@ -8,12 +8,7 @@
 # *****************************************************************************
 from __future__ import absolute_import, print_function, unicode_literals
 
-import operator
-import re
-import sys
-
 import pyreadline3.clipboard as clipboard
-from pyreadline3.logger import log
 from pyreadline3.unicode_helper import biter, ensure_unicode
 
 from . import wordmatcher
@@ -30,7 +25,7 @@ def quote_char(c):
     if ord(c) > 0:
         return c
 
-############## Line positioner ########################
+# ############# Line positioner ########################
 
 
 class LinePositioner(object):
@@ -188,7 +183,7 @@ all_positioners = sorted([(value.__class__.__name__, value)
                           for key, value in globals().items()
                           if isinstance(value, LinePositioner)])
 
-############### LineSlice #################
+# ############## LineSlice #################
 
 
 class LineSlice(object):
@@ -236,7 +231,7 @@ class PointSlice(LineSlice):
 PointSlice = PointSlice()
 
 
-###############  TextLine  ######################
+# ##############  TextLine  ######################
 
 class TextLine(object):
     def __init__(self, txtstr, point=None, mark=None):
@@ -273,8 +268,8 @@ class TextLine(object):
         self.prev_end_segment = wordmatcher.prev_end_segment
 
     def push_undo(self):
-        ltext = self.get_line_text()
-        if self.undo_stack and ltext == self.undo_stack[-1].get_line_text():
+        l_text = self.get_line_text()
+        if self.undo_stack and l_text == self.undo_stack[-1].get_line_text():
             self.undo_stack[-1].point = self.point
         else:
             self.undo_stack.append(self.copy())
@@ -317,15 +312,19 @@ class TextLine(object):
     point = property(get_point, set_point)
 
     def visible_line_width(self, position=Point):
-        """Return the visible width of the text in line buffer up to position."""
+        """Return the visible width of the text up to position."""
         extra_char_width = len(
-            [None for c in self[:position].line_buffer if 0x2013 <= ord(c) <= 0xFFFD])
+            [
+                None
+                for c in self[:position].line_buffer
+                if 0x2013 <= ord(c) <= 0xFFFD
+            ]
+        )
         return len(self[:position].quoted_text()) + \
             self[:position].line_buffer.count("\t") * 7 + extra_char_width
 
     def quoted_text(self):
         quoted = [quote_char(c) for c in self.line_buffer]
-        self.line_char_width = [len(c) for c in quoted]
         return ''.join(map(ensure_unicode, quoted))
 
     def get_line_text(self):
@@ -368,7 +367,7 @@ class TextLine(object):
             if key.step is None:
                 pass
             else:
-                raise Error
+                raise RuntimeError('step is not "None"')
             if key.start is None:
                 start = StartOfLine(self)
             elif isinstance(key.start, LinePositioner):
@@ -465,15 +464,6 @@ class TextLine(object):
         return txt in self.get_line_text()
 
 
-lines = [TextLine("abc"),
-         TextLine("abc def"),
-         TextLine("abc def  ghi"),
-         TextLine("  abc  def  "),
-         ]
-l = lines[2]
-l.point = 5
-
-
 class ReadLineTextBuffer(TextLine):
     def __init__(self, txtstr, point=None, mark=None):
         super(ReadLineTextBuffer, self).__init__(txtstr, point, mark)
@@ -496,7 +486,7 @@ class ReadLineTextBuffer(TextLine):
         if self.enable_win32_clipboard:
             clipboard.set_clipboard_text(self.get_line_text())
 
-# Movement
+    # Movement
 
     def beginning_of_line(self):
         self.selection_mark = -1
@@ -510,45 +500,45 @@ class ReadLineTextBuffer(TextLine):
         if argument < 0:
             self.backward_char(-argument)
         self.selection_mark = -1
-        for x in range(argument):
+        for _ in range(argument):
             self.point = NextChar
 
     def backward_char(self, argument=1):
         if argument < 0:
             self.forward_char(-argument)
         self.selection_mark = -1
-        for x in range(argument):
+        for _ in range(argument):
             self.point = PrevChar
 
     def forward_word(self, argument=1):
         if argument < 0:
             self.backward_word(-argument)
         self.selection_mark = -1
-        for x in range(argument):
+        for _ in range(argument):
             self.point = NextWordStart
 
     def backward_word(self, argument=1):
         if argument < 0:
             self.forward_word(-argument)
         self.selection_mark = -1
-        for x in range(argument):
+        for _ in range(argument):
             self.point = PrevWordStart
 
     def forward_word_end(self, argument=1):
         if argument < 0:
             self.backward_word_end(-argument)
         self.selection_mark = -1
-        for x in range(argument):
+        for _ in range(argument):
             self.point = NextWordEnd
 
     def backward_word_end(self, argument=1):
         if argument < 0:
             self.forward_word_end(-argument)
         self.selection_mark = -1
-        for x in range(argument):
+        for _ in range(argument):
             self.point = NextWordEnd
 
-# Movement select
+    # Movement select
     def beginning_of_line_extend_selection(self):
         if self.enable_selection and self.selection_mark < 0:
             self.selection_mark = self.point
@@ -564,7 +554,7 @@ class ReadLineTextBuffer(TextLine):
             self.backward_char_extend_selection(-argument)
         if self.enable_selection and self.selection_mark < 0:
             self.selection_mark = self.point
-        for x in range(argument):
+        for _ in range(argument):
             self.point = NextChar
 
     def backward_char_extend_selection(self, argument=1):
@@ -572,7 +562,7 @@ class ReadLineTextBuffer(TextLine):
             self.forward_char_extend_selection(-argument)
         if self.enable_selection and self.selection_mark < 0:
             self.selection_mark = self.point
-        for x in range(argument):
+        for _ in range(argument):
             self.point = PrevChar
 
     def forward_word_extend_selection(self, argument=1):
@@ -580,7 +570,7 @@ class ReadLineTextBuffer(TextLine):
             self.backward_word_extend_selection(-argument)
         if self.enable_selection and self.selection_mark < 0:
             self.selection_mark = self.point
-        for x in range(argument):
+        for _ in range(argument):
             self.point = NextWordStart
 
     def backward_word_extend_selection(self, argument=1):
@@ -588,7 +578,7 @@ class ReadLineTextBuffer(TextLine):
             self.forward_word_extend_selection(-argument)
         if self.enable_selection and self.selection_mark < 0:
             self.selection_mark = self.point
-        for x in range(argument):
+        for _ in range(argument):
             self.point = PrevWordStart
 
     def forward_word_end_extend_selection(self, argument=1):
@@ -596,7 +586,7 @@ class ReadLineTextBuffer(TextLine):
             self.backward_word_end_extend_selection(-argument)
         if self.enable_selection and self.selection_mark < 0:
             self.selection_mark = self.point
-        for x in range(argument):
+        for _ in range(argument):
             self.point = NextWordEnd
 
     def backward_word_end_extend_selection(self, argument=1):
@@ -604,12 +594,10 @@ class ReadLineTextBuffer(TextLine):
             self.forward_word_end_extend_selection(-argument)
         if self.enable_selection and self.selection_mark < 0:
             self.selection_mark = self.point
-        for x in range(argument):
+        for _ in range(argument):
             self.point = PrevWordEnd
 
-
-# delete
-
+    # delete
 
     def delete_selection(self):
         if self.enable_selection and self.selection_mark >= 0:
@@ -629,7 +617,7 @@ class ReadLineTextBuffer(TextLine):
             self.backward_delete_char(-argument)
         if self.delete_selection():
             argument -= 1
-        for x in range(argument):
+        for _ in range(argument):
             del self[Point]
 
     def backward_delete_char(self, argument=1):
@@ -637,7 +625,7 @@ class ReadLineTextBuffer(TextLine):
             self.delete_char(-argument)
         if self.delete_selection():
             argument -= 1
-        for x in range(argument):
+        for _ in range(argument):
             if self.point > 0:
                 self.backward_char()
                 self.delete_char()
@@ -647,7 +635,7 @@ class ReadLineTextBuffer(TextLine):
             self.backward_delete_word(-argument)
         if self.delete_selection():
             argument -= 1
-        for x in range(argument):
+        for _ in range(argument):
             del self[Point:NextWordStart]
 
     def backward_delete_word(self, argument=1):
@@ -655,7 +643,7 @@ class ReadLineTextBuffer(TextLine):
             self.forward_delete_word(-argument)
         if self.delete_selection():
             argument -= 1
-        for x in range(argument):
+        for _ in range(argument):
             del self[PrevWordStart:Point]
 
     def delete_current_word(self):
@@ -667,7 +655,7 @@ class ReadLineTextBuffer(TextLine):
         if self[Point] in " \t":
             del self[PrevWordEnd:NextWordStart]
         self.selection_mark = -1
-# Case
+    # Case
 
     def upcase_word(self):
         p = self.point
@@ -692,7 +680,7 @@ class ReadLineTextBuffer(TextLine):
             self.point = p
         except NotAWordError:
             pass
-# Transpose
+    # Transpose
 
     def transpose_chars(self):
         p2 = Point(self)
@@ -721,9 +709,7 @@ class ReadLineTextBuffer(TextLine):
         self[start1:stop1] = word2[Point:NextWordEnd]
         self.point = stop2
 
-
-# Kill
-
+    # Kill
 
     def kill_line(self):
         self.add_to_kill_ring(self[self.point:])
@@ -738,7 +724,6 @@ class ReadLineTextBuffer(TextLine):
 
     def unix_line_discard(self):
         del self[StartOfLine:Point]
-        pass
 
     def kill_word(self):
         """Kills to next word ending"""
@@ -779,7 +764,7 @@ class ReadLineTextBuffer(TextLine):
     def yank_pop(self):
         pass
 
-# Mark
+    # Mark
 
     def set_mark(self):
         self.mark = self.point
@@ -801,7 +786,8 @@ class ReadLineTextBuffer(TextLine):
 
     def copy_selection_to_clipboard(self):  # ()
         '''Copy the text in the region to the windows clipboard.'''
-        if self.enable_win32_clipboard and self.enable_selection and self.selection_mark >= 0:
+        if self.enable_win32_clipboard and self.enable_selection and \
+                self.selection_mark >= 0:
             selection_mark = min(self.selection_mark, len(self.line_buffer))
             cursor = min(self.point, len(self.line_buffer))
             if self.selection_mark == -1:
@@ -814,10 +800,9 @@ class ReadLineTextBuffer(TextLine):
     def cut_selection_to_clipboard(self):  # ()
         self.copy_selection_to_clipboard()
         self.delete_selection()
-# Paste
+    # Paste
 
-
-# Kill ring
+    # Kill ring
 
     def add_to_kill_ring(self, txt):
         self.kill_ring = [txt]
@@ -835,14 +820,14 @@ q = TextLine("asff asFArw  ewrWErhg", point=8)
 
 
 def show_pos(buff, pos, chr="."):
-    l = len(buff.line_buffer)
+    l_n = len(buff.line_buffer)
 
-    def choice(bool):
-        if bool:
+    def choice(is_bool):
+        if is_bool:
             return chr
         else:
             return " "
-    return "".join([choice(pos == idx) for idx in range(l + 1)])
+    return "".join([choice(pos == idx) for idx in range(l_n + 1)])
 
 
 def test_positioner(buff, points, positioner):
@@ -867,10 +852,10 @@ if __name__ == "__main__":
     print('%-15s "%s"' % ("Position", q.get_line_text()))
     print('%-15s "%s"' % ("Point", show_pos(q, q.point)))
 
-    for name, positioner in all_positioners:
-        pos = positioner(q)
-        []
-        print('%-15s "%s"' % (name, show_pos(q, pos, "^")))
+    for name, positioner_q in all_positioners:
+        pos_q = positioner_q(q)
 
-    l = ReadLineTextBuffer("kjjk asads   asad")
-    l.point = EndOfLine
+        print('%-15s "%s"' % (name, show_pos(q, pos_q, "^")))
+
+    l_t = ReadLineTextBuffer("kjjk asads   asad")
+    l_t.point = EndOfLine
