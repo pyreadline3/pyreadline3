@@ -26,6 +26,18 @@ if os.path.exists('MANIFEST'):
     os.remove('MANIFEST')
 #
 
+name = 'UNKNOWN'
+version = 'NONE'
+description = 'NONE'
+long_description = 'NONE'
+authors = {}
+license = 'NONE'
+classifiers = 'NONE'
+url = 'NONE'
+download_url = 'NONE'
+platforms = 'NONE'
+keywords = 'NONE'
+
 exec(
     compile(
         open('pyreadline3/release.py').read(),
