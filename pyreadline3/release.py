@@ -25,7 +25,7 @@ name = 'pyreadline3'
 
 branch = ''
 
-version = '3.4'
+version = '3.4.0'
 
 description = "A python implementation of GNU readline."
 
