@@ -8,15 +8,17 @@
 # *****************************************************************************
 import sys
 
+#: Also support non-latin chars.
+_pyreadline_fallback_codepage = 'utf-8'
 try:
     pyreadline_codepage = sys.stdout.encoding
 except AttributeError:
     # This error occurs when pdb imports readline and doctest has replaced
     # stdout with stdout collector. We will assume ascii codepage
-    pyreadline_codepage = "ascii"
+    pyreadline_codepage = _pyreadline_fallback_codepage
 
 if pyreadline_codepage is None:
-    pyreadline_codepage = "ascii"
+    pyreadline_codepage = _pyreadline_fallback_codepage
 
 
 def ensure_unicode(text):
