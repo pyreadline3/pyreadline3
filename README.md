@@ -2,6 +2,9 @@
 
 ![Publish](https://github.com/pyreadline3/pyreadline3/workflows/Publish/badge.svg)
 ![Test](https://github.com/pyreadline3/pyreadline3/workflows/Test/badge.svg)
+[![Downloads](https://static.pepy.tech/personalized-badge/pyreadline3?period=week&units=international_system&left_color=black&right_color=orange&left_text=Weekly%20Downloads)](https://pepy.tech/project/pyreadline3)
+[![Downloads](https://static.pepy.tech/personalized-badge/pyreadline3?period=month&units=international_system&left_color=black&right_color=orange&left_text=Monthly)](https://pepy.tech/project/pyreadline3)
+[![Downloads](https://static.pepy.tech/personalized-badge/pyreadline3?period=total&units=international_system&left_color=black&right_color=orange&left_text=Total)](https://pepy.tech/project/pyreadline3)
 
 The `pyreadline3` package is based on the stale package `pyreadline` located
 [here](https://github.com/pyreadline/pyreadline).
