@@ -85,12 +85,11 @@ class LineHistory(object):
         if filename is None:
             filename = self.history_filename
         try:
-            with io.open(filename, 'rt', encoding=pyreadline_codepage) as fd:
+            with io.open(
+                filename, 'rt', encoding=pyreadline_codepage, errors='replace'
+            ) as fd:
                 for line in fd:
-                    self.add_history(
-                        lineobj.ReadLineTextBuffer(
-                            ensure_unicode(
-                                line.rstrip())))
+                    self.add_history(lineobj.ReadLineTextBuffer(line.rstrip()))
         except IOError:
             self.history = []
             self.history_cursor = 0
@@ -99,10 +98,11 @@ class LineHistory(object):
         '''Save a readline history file.'''
         if filename is None:
             filename = self.history_filename
-        with io.open(filename, 'wb') as fp:
+        with io.open(
+            filename, 'wt', encoding=pyreadline_codepage, errors='replace'
+        ) as fp:
             for line in self.history[-self.history_length:]:
-                fp.write(ensure_str(line.get_line_text()))
-                fp.write('\n'.encode(pyreadline_codepage))
+                fp.writeln(line.get_line_text())
 
     def add_history(self, line):
         '''Append a line to the history buffer, as if it was the last line typed.'''
