@@ -38,7 +38,7 @@ keywords = 'NONE'
 
 exec(
     compile(
-        open('pyreadline3/release.py', 'r', encoding="utf-8").read(),
+        open('pyreadline3/release.py', 'r', encoding='utf-8').read(),
         'pyreadline3/release.py',
         'exec'
     )
