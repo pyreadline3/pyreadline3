@@ -22,16 +22,16 @@ import pyreadline3.lineeditor.history as history
 import pyreadline3.lineeditor.lineobj as lineobj
 import pyreadline3.logger as logger
 from pyreadline3.keysyms.common import make_KeyPress_from_keydescr
+from pyreadline3.py3k_compat import is_ironpython
 from pyreadline3.unicode_helper import ensure_str, ensure_unicode
 
 from . import release
 from .error import GetSetError, ReadlineError
 from .logger import log
 from .modes import editingmodes
-from .py3k_compat import callable, execfile
+from .py3k_compat import execfile, is_callable
 
-in_ironpython = "IronPython" in sys.version
-if in_ironpython:  # ironpython does not provide a prompt string to readline
+if is_ironpython:  # ironpython does not provide a prompt string to readline
     import System
     default_prompt = ">>> "
 else:
@@ -213,10 +213,7 @@ class BaseReadline(object):
 
     def get_completer_delims(self):
         '''Get the readline word delimiters for tab-completion.'''
-        if sys.version_info[0] < 3:
-            return self.mode.completer_delims.encode("ascii")
-        else:
-            return self.mode.completer_delims
+        return self.mode.completer_delims
 
     def set_startup_hook(self, function=None):
         '''Set or remove the startup_hook function.
@@ -298,7 +295,7 @@ class BaseReadline(object):
 
         def bind_key(key, name):
             import types
-            if callable(name):
+            if is_callable(name):
                 modes[mode]._bind_key(key, types.MethodType(name, modes[mode]))
             elif hasattr(modes[mode], name):
                 modes[mode]._bind_key(key, getattr(modes[mode], name))

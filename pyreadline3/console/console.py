@@ -38,9 +38,6 @@ try:
 except ImportError:
     raise ImportError("You need ctypes to run this code")
 
-if sys.version_info < (2, 6):
-    bytes = str
-
 
 def nolog(string):
     pass
@@ -242,15 +239,10 @@ class Console(object):
         self.inputHookPtr = c_void_p.from_address(
             addressof(self.pythondll.PyOS_InputHook)).value
 
-        if sys.version_info[:2] > (3, 4):
-            self.pythondll.PyMem_RawMalloc.restype = c_size_t
-            self.pythondll.PyMem_Malloc.argtypes = [c_size_t]
-            setattr(Console, 'PyMem_Malloc', self.pythondll.PyMem_RawMalloc)
-        else:
-            self.pythondll.PyMem_Malloc.restype = c_size_t
-            self.pythondll.PyMem_Malloc.argtypes = [c_size_t]
-            setattr(Console, 'PyMem_Malloc', self.pythondll.PyMem_Malloc)
-
+        self.pythondll.PyMem_RawMalloc.restype = c_size_t
+        self.pythondll.PyMem_RawMalloc.argtypes = [c_size_t]
+        setattr(Console, 'PyMem_Malloc', self.pythondll.PyMem_RawMalloc)
+        
     def __del__(self):
         '''Cleanup the console when finished.'''
         # I don't think this ever gets called

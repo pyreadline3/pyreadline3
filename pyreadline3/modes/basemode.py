@@ -14,19 +14,15 @@ import math
 import os
 import re
 import sys
-import time
 
 import pyreadline3.clipboard as clipboard
 import pyreadline3.lineeditor.history as history
 import pyreadline3.lineeditor.lineobj as lineobj
-import pyreadline3.logger as logger
-from pyreadline3.error import GetSetError, ReadlineError
+from pyreadline3.error import ReadlineError
 from pyreadline3.keysyms.common import make_KeyPress_from_keydescr
 from pyreadline3.logger import log
-from pyreadline3.py3k_compat import callable
+from pyreadline3.py3k_compat import is_callable, is_ironpython
 from pyreadline3.unicode_helper import ensure_str, ensure_unicode
-
-in_ironpython = "IronPython" in sys.version
 
 
 class BaseMode(object):
@@ -94,7 +90,7 @@ class BaseMode(object):
         return val
     argument_reset = property(_argreset)
 
-#used in readline
+    # used in readline
     ctrl_c_tap_time_interval = property(*_gs("ctrl_c_tap_time_interval"))
     allow_ctrl_c = property(*_gs("allow_ctrl_c"))
     _print_prompt = property(_g("_print_prompt"))
@@ -103,16 +99,16 @@ class BaseMode(object):
     prompt_begin_pos = property(_g("prompt_begin_pos"))
     prompt_end_pos = property(_g("prompt_end_pos"))
 
-# used in completer _completions
-#    completer_delims=property(*_gs("completer_delims"))
+    # used in completer _completions
+    # completer_delims=property(*_gs("completer_delims"))
     _bell = property(_g("_bell"))
     bell_style = property(_g("bell_style"))
 
-#used in emacs
+    #used in emacs
     _clear_after = property(_g("_clear_after"))
     _update_prompt_pos = property(_g("_update_prompt_pos"))
 
-#not used in basemode or emacs
+    #not used in basemode or emacs
 
     def process_keyevent(self, keyinfo):
         raise NotImplementedError
@@ -139,9 +135,7 @@ class BaseMode(object):
                 traceback.print_exc()
                 self.pre_input_hook = None
 
-
-####################################
-
+    # ###################################
 
     def finalize(self):
         """Every bindable command should call this function for cleanup.
@@ -178,7 +172,7 @@ class BaseMode(object):
 
     def _bind_key(self, key, func):
         """setup the mapping from key to call the function."""
-        if not callable(func):
+        if not is_callable(func):
             print("Trying to bind non method to keystroke:%s,%s" % (key, func))
             raise ReadlineError(
                 "Trying to bind non method to keystroke:%s,%s,%s,%s" %
@@ -198,7 +192,7 @@ class BaseMode(object):
         mode."""
 
         raise NotImplementedError
-# completion commands
+    # completion commands
 
     def _get_completions(self):
         """Return a list of possible completions for the string ending at the point.
@@ -268,7 +262,7 @@ class BaseMode(object):
                 if i < len(completions):
                     self.console.write(completions[i].ljust(wmax + 1))
             self.console.write('\n')
-        if in_ironpython:
+        if is_ironpython:
             self.prompt = sys.ps1
         self._print_prompt()
 
@@ -378,7 +372,7 @@ class BaseMode(object):
         self.l_buffer.backward_word_end(self.argument_reset)
         self.finalize()
 
-# Movement with extend selection
+    # Movement with extend selection
     def beginning_of_line_extend_selection(self, e):
         """Move to the start of the current line. """
         self.l_buffer.beginning_of_line_extend_selection()
@@ -423,8 +417,7 @@ class BaseMode(object):
         self.l_buffer.forward_word_end_extend_selection(self.argument_reset)
         self.finalize()
 
-
-# Change case
+    # Change case
 
     def upcase_word(self, e):  # (M-u)
         """Uppercase the current (or following) word. With a negative
@@ -444,9 +437,7 @@ class BaseMode(object):
         self.l_buffer.capitalize_word()
         self.finalize()
 
-
-########
-
+    # #######
 
     def clear_screen(self, e):  # (C-l)
         """Clear the screen and redraw the current line, leaving the current
@@ -503,8 +494,7 @@ class BaseMode(object):
             self.insert_text(e.char)
         self.finalize()
 
-
-#   Paste from clipboard
+    # Paste from clipboard
 
     def paste(self, e):
         """Paste windows clipboard.
@@ -538,7 +528,8 @@ class BaseMode(object):
         """Paste windows clipboard. If enable_ipython_paste_list_of_lists is
         True then try to convert tabseparated data to repr of list of lists or
         repr of array.
-        If enable_ipython_paste_for_paths==True then change \\ to / and spaces to \space"""
+        If enable_ipython_paste_for_paths==True then change \\ to / and spaces
+        to \\space"""
         if self.enable_win32_clipboard:
             txt = clipboard.get_clipboard_text_and_convert(
                 self.enable_ipython_paste_list_of_lists)

@@ -9,10 +9,6 @@
 # *****************************************************************************
 from __future__ import absolute_import, print_function, unicode_literals
 
-import os
-import sys
-import time
-
 import pyreadline3.lineeditor.history as history
 import pyreadline3.lineeditor.lineobj as lineobj
 import pyreadline3.logger as logger
@@ -29,9 +25,6 @@ def format(keyinfo):
     else:
         k = keyinfo + (ord(keyinfo[-1]),)
     return "(%s,%s,%s,%s,%x)" % k
-
-
-in_ironpython = "IronPython" in sys.version
 
 
 class IncrementalSearchPromptMode(object):

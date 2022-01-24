@@ -9,13 +9,13 @@ from __future__ import absolute_import, print_function, unicode_literals
 
 import sys
 import unittest
+from io import StringIO
 
 import pyreadline3.logger as logger
 from pyreadline3 import keysyms
 from pyreadline3.lineeditor import lineobj
 from pyreadline3.logger import log
 from pyreadline3.modes.vi import *
-from pyreadline3.py3k_compat import StringIO
 from pyreadline3.test.common import *
 
 sys.path.insert(0, '../..')

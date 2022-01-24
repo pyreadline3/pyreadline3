@@ -8,8 +8,6 @@
 # *****************************************************************************
 import sys
 
-from .py3k_compat import bytes, unicode
-
 try:
     pyreadline_codepage = sys.stdout.encoding
 except AttributeError:
@@ -19,11 +17,6 @@ except AttributeError:
 
 if pyreadline_codepage is None:
     pyreadline_codepage = "ascii"
-
-if sys.version_info < (2, 6):
-    bytes = str
-
-PY3 = (sys.version_info >= (3, 0))
 
 
 def ensure_unicode(text):
@@ -38,7 +31,7 @@ def ensure_unicode(text):
 
 def ensure_str(text):
     """Convert unicode to str using pyreadline_codepage"""
-    if isinstance(text, unicode):
+    if isinstance(text, str):
         try:
             return text.encode(pyreadline_codepage, "replace")
         except (LookupError, TypeError):
@@ -47,7 +40,9 @@ def ensure_str(text):
 
 
 def biter(text):
-    if PY3 and isinstance(text, bytes):
-        return (s.to_bytes(1, 'big') for s in text)
-    else:
-        return iter(text)
+    if isinstance(text, bytes):
+        return (
+            s.to_bytes(1, 'big')
+            for s in text
+        )
+    return iter(text)

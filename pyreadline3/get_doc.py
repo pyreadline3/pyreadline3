@@ -3,7 +3,7 @@ from __future__ import absolute_import, print_function, unicode_literals
 import sys
 import textwrap
 
-from .py3k_compat import callable
+from .py3k_compat import is_callable
 
 rlmain = sys.modules["readline"]
 rl = rlmain.rl
@@ -12,7 +12,7 @@ rl = rlmain.rl
 def get_doc(rl_):
     methods = [
         (x, getattr(rl_, x))
-        for x in dir(rl_) if callable(getattr(rl_, x))
+        for x in dir(rl_) if is_callable(getattr(rl_, x))
     ]
     return [(x, m.__doc__)for x, m in methods if m.__doc__]
 

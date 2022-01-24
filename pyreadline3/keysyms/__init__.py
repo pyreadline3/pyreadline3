@@ -1,12 +1,10 @@
 from __future__ import absolute_import, print_function, unicode_literals
 
-import sys
+from pyreadline3.py3k_compat import is_ironpython
 
 from . import winconstants
 
-in_ironpython = "IronPython" in sys.version
-
-if in_ironpython:
+if is_ironpython:
     try:
         from .ironpython_keysyms import *
     except ImportError as x:

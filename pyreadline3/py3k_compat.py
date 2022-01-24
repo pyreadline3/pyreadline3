@@ -1,33 +1,28 @@
 from __future__ import absolute_import, print_function, unicode_literals
 
 import sys
+from collections.abc import Callable
 
-if sys.version_info[0] >= 3:
-    import collections
-    PY3 = True
+is_ironpython = "IronPython" in sys.version
 
-    if sys.version_info[1] >= 3:
-        _Callable = collections.abc.Callable
-    else:
-        _Callable = collections.Callable
 
-    def callable(x):
-        return isinstance(x, _Callable)
+def is_callable(x):
+    return isinstance(x, Callable)
 
-    def execfile(fname, glob, loc=None):
-        loc = loc if (loc is not None) else glob
-        with open(fname) as fil:
-            txt = fil.read()
-        exec(compile(txt, fname, 'exec'), glob, loc)
 
-    unicode = str
-    bytes = bytes
-    from io import StringIO
-else:
-    PY3 = False
-    callable = callable
-    execfile = execfile
-    bytes = str
-    unicode = unicode
+def execfile(fname, glob, loc=None):
+    loc = loc if (loc is not None) else glob
 
-    from StringIO import StringIO
+    exec(
+        compile(
+            open(
+                fname,
+                'r',
+                encoding='utf-8',
+            ).read(),
+            fname,
+            'exec',
+        ),
+        glob,
+        loc,
+    )

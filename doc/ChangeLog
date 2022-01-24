@@ -1,3 +1,9 @@
+
+2021-01-24 Bassem Girgis <brgirgis -at- gmail.com>
+
+- Many cleanups using pull requests from https://github.com/pyreadline/pyreadline
+- Drop support for python version less than 3.5
+
 2021-01-23 Bassem Girgis <brgirgis -at- gmail.com>
 
 - Migrate to pyreadline3/pyreadline3.
