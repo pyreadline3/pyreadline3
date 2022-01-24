@@ -89,5 +89,6 @@
     "sdist",
     "setuptools",
     "Stenarson"
-  ]
+  ],
+  "editor.formatOnSave": true
 }

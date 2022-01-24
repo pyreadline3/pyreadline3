@@ -2,7 +2,6 @@ from __future__ import absolute_import, print_function, unicode_literals
 
 import sys
 
-success = True
 in_ironpython = "IronPython" in sys.version
 if in_ironpython:
     try:
