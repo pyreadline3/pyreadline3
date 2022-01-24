@@ -11,10 +11,11 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
     strategy:
       matrix:
-        python-version: ['3.5', '3.6', '3.7', '3.8', '3.9', '3.10']
+        os: [windows-2016, windows-2019, windows-2022]
+        python-version: ["3.5", "3.6", "3.7", "3.8", "3.9", "3.10"]
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 30
 
     steps:
