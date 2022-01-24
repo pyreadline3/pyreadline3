@@ -94,7 +94,7 @@ class BaseReadline(object):
                 else:
                     log('bad set "%s"' % string)
                 return
-            m = re.compile(r'\s*(.+)\s*:\s*([-a-zA-Z]+)\s*$').match(string)
+            m = re.compile(r'\s*(\S+)\s*:\s*([-a-zA-Z]+)\s*$').match(string)
             if m:
                 key = m.group(1)
                 func_name = m.group(2)
@@ -105,7 +105,8 @@ class BaseReadline(object):
                     log('unknown func key="%s" func="%s"' % (key, func_name))
                     if self.debug:
                         print(
-                            'pyreadline3 parse_and_bind error, unknown function to bind: "%s"' %
+                            'pyreadline3 parse_and_bind error, unknown '
+                            'function to bind: "%s"' %
                             func_name)
                     return
                 self.mode._bind_key(key, func)
