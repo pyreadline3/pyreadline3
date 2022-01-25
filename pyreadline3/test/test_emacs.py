@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # *****************************************************************************
-#       Copyright (C) 2006  Michael Graz. <mgraz@plan10.com>
-#       Copyright (C) 2006  Michael Graz. <mgraz@plan10.com>
+#       Copyright (C) 2006-2020  Michael Graz. <mgraz@plan10.com>
+#       Copyright (C) 2020 Bassem Girgis. <brgirgis@gmail.com>
 #
 #  Distributed under the terms of the BSD License.  The full license is in
 #  the file COPYING, distributed as part of this software.
@@ -12,11 +12,13 @@ import sys
 import unittest
 
 import pyreadline3.logger as logger
-from pyreadline3 import keysyms
-from pyreadline3.lineeditor import lineobj
 from pyreadline3.logger import log
-from pyreadline3.modes.emacs import *
-from pyreadline3.test.common import *
+from pyreadline3.modes.emacs import EmacsMode
+from pyreadline3.test.common import (
+    MockConsole,
+    MockReadline,
+    keytext_to_keyinfo_and_event,
+)
 
 sys.path.insert(0, '../..')
 
@@ -30,7 +32,7 @@ class EmacsModeTest (EmacsMode):
     tested_commands = {}
 
     def __init__(self):
-        EmacsMode.__init__(self, MockReadline())
+        super().__init__(MockReadline())
         self.mock_console = MockConsole()
         self.init_editing_mode(None)
         self.lst_completions = []
@@ -332,7 +334,7 @@ class TestsHistory (unittest.TestCase):
         r.input('Up')
         self.assert_line(r, 'ako', 3)
 
-    def test_history_3(self):
+    def test_history_4(self):
         r = EmacsModeTest()
         r.add_history('aaaa')
         r.add_history('aaba')
@@ -353,7 +355,7 @@ class TestsHistory (unittest.TestCase):
         r = EmacsModeTest()
         completerobj = rlcompleter.Completer()
 
-        def _nop(val, word):
+        def _nop(_, word):
             return word
         completerobj._callable_postfix = _nop
         r.completer = completerobj.complete
@@ -386,6 +388,10 @@ class TestsHistory (unittest.TestCase):
 
 
 if __name__ == '__main__':
+    class Tester(unittest.TestProgram):
+        def __init__(self):
+            super().__init__(exit=False)
+
     Tester()
     tested = sorted(EmacsModeTest.tested_commands.keys())
 #    print(" Tested functions ".center(60,"-"))

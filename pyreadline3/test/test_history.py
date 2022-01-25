@@ -1,19 +1,21 @@
 # -*- coding: UTF-8 -*-
-# Copyright (C) 2007 Jörgen Stenarson. <>
+# *****************************************************************************
+#       Copyright (C) 2006-2020 Jorgen Stenarson. <jorgen.stenarson@bostream.nu>
+#       Copyright (C) 2020 Bassem Girgis. <brgirgis@gmail.com>
+#
+#  Distributed under the terms of the BSD License.  The full license is in
+#  the file COPYING, distributed as part of this software.
+# *****************************************************************************
 from __future__ import absolute_import, print_function, unicode_literals
 
 import sys
 import unittest
 
-import pyreadline3.lineeditor.history as history
 import pyreadline3.logger
 from pyreadline3.lineeditor import lineobj
 from pyreadline3.lineeditor.history import LineHistory
-from pyreadline3.logger import log
 
 sys.path.append('../..')
-#from pyreadline3.modes.vi import *
-#from pyreadline3 import keysyms
 
 pyreadline3.logger.sock_silent = False
 
@@ -35,42 +37,42 @@ class Test_prev_next_history(unittest.TestCase):
     def test_previous_history(self):
         hist = self.q
         assert hist.history_cursor == 6
-        l = RL("")
-        hist.previous_history(l)
-        assert l.get_line_text() == "ako"
-        hist.previous_history(l)
-        assert l.get_line_text() == "bbb"
-        hist.previous_history(l)
-        assert l.get_line_text() == "akca"
-        hist.previous_history(l)
-        assert l.get_line_text() == "aaca"
-        hist.previous_history(l)
-        assert l.get_line_text() == "aaba"
-        hist.previous_history(l)
-        assert l.get_line_text() == "aaaa"
-        hist.previous_history(l)
-        assert l.get_line_text() == "aaaa"
+        t_line = RL("")
+        hist.previous_history(t_line)
+        assert t_line.get_line_text() == "ako"
+        hist.previous_history(t_line)
+        assert t_line.get_line_text() == "bbb"
+        hist.previous_history(t_line)
+        assert t_line.get_line_text() == "akca"
+        hist.previous_history(t_line)
+        assert t_line.get_line_text() == "aaca"
+        hist.previous_history(t_line)
+        assert t_line.get_line_text() == "aaba"
+        hist.previous_history(t_line)
+        assert t_line.get_line_text() == "aaaa"
+        hist.previous_history(t_line)
+        assert t_line.get_line_text() == "aaaa"
 
     def test_next_history(self):
         hist = self.q
         hist.beginning_of_history()
         assert hist.history_cursor == 0
-        l = RL("")
-        hist.next_history(l)
-        assert l.get_line_text() == "aaba"
-        hist.next_history(l)
-        assert l.get_line_text() == "aaca"
-        hist.next_history(l)
-        assert l.get_line_text() == "akca"
-        hist.next_history(l)
-        assert l.get_line_text() == "bbb"
-        hist.next_history(l)
-        assert l.get_line_text() == "ako"
-        hist.next_history(l)
-        assert l.get_line_text() == "ako"
+        t_line = RL("")
+        hist.next_history(t_line)
+        assert t_line.get_line_text() == "aaba"
+        hist.next_history(t_line)
+        assert t_line.get_line_text() == "aaca"
+        hist.next_history(t_line)
+        assert t_line.get_line_text() == "akca"
+        hist.next_history(t_line)
+        assert t_line.get_line_text() == "bbb"
+        hist.next_history(t_line)
+        assert t_line.get_line_text() == "ako"
+        hist.next_history(t_line)
+        assert t_line.get_line_text() == "ako"
 
 
-class Test_prev_next_history(unittest.TestCase):
+class Test_prev_next_history1(unittest.TestCase):
     t = "test text"
 
     def setUp(self):
@@ -134,7 +136,7 @@ class Test_history_search_incr_fwd_backwd(unittest.TestCase):
 
 class Test_empty_history_search_incr_fwd_backwd(unittest.TestCase):
     def setUp(self):
-        self.q = q = LineHistory()
+        self.q = LineHistory()
 
     def test_backward_1(self):
         q = self.q
@@ -153,4 +155,4 @@ class Test_empty_history_search_incr_fwd_backwd(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main()
 
-    l = lineobj.ReadLineTextBuffer("First Second Third")
+    # l = lineobj.ReadLineTextBuffer("First Second Third")

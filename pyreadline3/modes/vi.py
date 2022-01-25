@@ -12,9 +12,7 @@ from __future__ import absolute_import, print_function, unicode_literals
 
 import os
 
-import pyreadline3.lineeditor.history as history
 import pyreadline3.lineeditor.lineobj as lineobj
-import pyreadline3.logger as logger
 from pyreadline3.logger import log
 
 from . import basemode
@@ -24,7 +22,8 @@ class ViMode(basemode.BaseMode):
     mode = "vi"
 
     def __init__(self, rlobj):
-        super(ViMode, self).__init__(rlobj)
+        super().__init__(rlobj)
+
         self.__vi_insert_mode = None
 
     def __repr__(self):
@@ -183,7 +182,8 @@ class ViMode(basemode.BaseMode):
             del self._vi_undo_stack[self._vi_undo_cursor + 1:]
         # tpl_undo = (self.l_buffer.point, self.l_buffer[:], )
         tpl_undo = (self.l_buffer.point, self.l_buffer.line_buffer[:], )
-        if not self._vi_undo_stack or self._vi_undo_stack[self._vi_undo_cursor][1] != tpl_undo[1]:
+        if not self._vi_undo_stack or \
+                self._vi_undo_stack[self._vi_undo_cursor][1] != tpl_undo[1]:
             self._vi_undo_stack.append(tpl_undo)
             self._vi_undo_cursor += 1
 
@@ -253,7 +253,11 @@ class ViMode(basemode.BaseMode):
 
     def vi_search_again_forward(self):
         self.vi_search(
-            list(range(self._vi_search_position + 1, len(self._history.history))))
+            list(range(
+                self._vi_search_position + 1,
+                len(self._history.history)
+            ))
+        )
 
     def vi_up(self, e):
         if self._history.history_cursor == len(self._history.history):
@@ -418,7 +422,8 @@ class ViCommand:
                 if self.readline.l_buffer.point < len(
                         self.readline.l_buffer.line_buffer):
                     # self.readline.l_buffer[self.l_buffer.point]=char
-                    self.readline.l_buffer.line_buffer[self.readline.l_buffer.point] = char
+                    self.readline.l_buffer.line_buffer[
+                        self.readline.l_buffer.point] = char
                 else:
                     # self.readline.l_buffer.insert_text(char)
                     self.readline.l_buffer.line_buffer.append(char)
@@ -576,7 +581,7 @@ class ViCommand:
             count = self.get_multiplier()
         else:
             count = 0
-        # Create the ViCommand object after getting multipler from self
+        # Create the ViCommand object after getting multiplier from self
         # Side effect of the ViCommand creation is resetting of global
         # multipliers
         vi_cmd = ViCommand(self.readline)
@@ -605,7 +610,8 @@ class ViCommand:
         completions = self.readline._get_completions()
         if completions:
             text = ' '.join(completions) + ' '
-            self.readline.l_buffer.line_buffer[self.readline.begidx: self.readline.endidx + 1] = list(
+            self.readline.l_buffer.line_buffer[
+                self.readline.begidx: self.readline.endidx + 1] = list(
                 text)
             prefix_len = self.readline.endidx - self.readline.begidx
             self.readline.l_buffer.point += len(text) - prefix_len
@@ -872,7 +878,9 @@ class ViCommand:
         return max(0, count - 1)
 
     def has_multiplier(self):
-        return self.override_multiplier or self.readline._vi_multiplier1 or self.readline._vi_multiplier2
+        return self.override_multiplier or \
+            self.readline._vi_multiplier1 or \
+            self.readline._vi_multiplier2
 
     def get_multiplier(self):
         if self.override_multiplier:
@@ -913,11 +921,16 @@ class ViCommand:
 
     def yank(self):
         if self.pos_motion > self.readline.l_buffer.point:
-            s = self.readline.l_buffer.line_buffer[self.readline.l_buffer.point: self.pos_motion + self.delete_right]
+            s = self.readline.l_buffer.line_buffer[
+                self.readline.l_buffer.point:
+                self.pos_motion + self.delete_right
+            ]
         else:
             index = max(0, self.pos_motion - self.delete_left)
-            s = self.readline.l_buffer.line_buffer[index:
-                                                   self.readline.l_buffer.point + self.delete_right]
+            s = self.readline.l_buffer.line_buffer[
+                index:
+                self.readline.l_buffer.point + self.delete_right
+            ]
         self.readline._vi_yank_buffer = s
 
     def delete(self):
@@ -928,15 +941,20 @@ class ViCommand:
 #         del self.readline.l_buffer[point:pm]
 #         return
         if self.pos_motion > self.readline.l_buffer.point:
-            del self.readline.l_buffer.line_buffer[self.readline.l_buffer.point: self.pos_motion + self.delete_right]
+            del self.readline.l_buffer.line_buffer[
+                self.readline.l_buffer.point:
+                self.pos_motion + self.delete_right
+            ]
             if self.readline.l_buffer.point > len(
                     self.readline.l_buffer.line_buffer):
                 self.readline.l_buffer.point = len(
                     self.readline.l_buffer.line_buffer)
         else:
             index = max(0, self.pos_motion - self.delete_left)
-            del self.readline.l_buffer.line_buffer[index:
-                                                   self.readline.l_buffer.point + self.delete_right]
+            del self.readline.l_buffer.line_buffer[
+                index:
+                self.readline.l_buffer.point + self.delete_right
+            ]
             self.readline.l_buffer.point = index
 
     def delete_end_of_line(self):
@@ -1008,7 +1026,7 @@ class ViExternalEditor:
         return tempfile.mktemp(prefix='readline-', suffix='.py')
 
     def file_open(self, filename, mode):
-        return file(filename, mode)
+        return open(filename, mode)
 
     def file_remove(self, filename):
         os.remove(filename)

@@ -9,22 +9,11 @@
 # *****************************************************************************
 from __future__ import absolute_import, print_function, unicode_literals
 
-import pyreadline3.lineeditor.history as history
 import pyreadline3.lineeditor.lineobj as lineobj
-import pyreadline3.logger as logger
 from pyreadline3.lineeditor.lineobj import Point
 from pyreadline3.logger import log
-from pyreadline3.unicode_helper import ensure_unicode
 
 from . import basemode
-
-
-def format(keyinfo):
-    if len(keyinfo[-1]) != 1:
-        k = keyinfo + (-1,)
-    else:
-        k = keyinfo + (ord(keyinfo[-1]),)
-    return "(%s,%s,%s,%s,%x)" % k
 
 
 class IncrementalSearchPromptMode(object):

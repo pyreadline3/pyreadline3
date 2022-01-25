@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # *****************************************************************************
-#       Copyright (C) 2006  Michael Graz. <mgraz@plan10.com>
+#       Copyright (C) 2006-2020  Michael Graz. <mgraz@plan10.com>
+#       Copyright (C) 2020 Bassem Girgis. <brgirgis@gmail.com>
 #
 #  Distributed under the terms of the BSD License.  The full license is in
 #  the file COPYING, distributed as part of this software.
@@ -11,12 +12,27 @@ import sys
 import unittest
 from io import StringIO
 
-import pyreadline3.logger as logger
-from pyreadline3 import keysyms
-from pyreadline3.lineeditor import lineobj
-from pyreadline3.logger import log
-from pyreadline3.modes.vi import *
-from pyreadline3.test.common import *
+from pyreadline3.modes.vi import (
+    ViExternalEditor,
+    ViMode,
+    vi_is_word,
+    vi_pos_back_long,
+    vi_pos_back_short,
+    vi_pos_end_long,
+    vi_pos_end_short,
+    vi_pos_find_char_backward,
+    vi_pos_find_char_forward,
+    vi_pos_matching,
+    vi_pos_to_char_backward,
+    vi_pos_to_char_forward,
+    vi_pos_word_long,
+    vi_pos_word_short,
+)
+from pyreadline3.test.common import (
+    MockConsole,
+    MockReadline,
+    keytext_to_keyinfo_and_event,
+)
 
 sys.path.insert(0, '../..')
 
@@ -27,7 +43,7 @@ class ViModeTest(ViMode):
     tested_commands = {}
 
     def __init__(self):
-        ViMode.__init__(self, MockReadline())
+        super().__init__(MockReadline())
         self.mock_console = MockConsole()
         self.init_editing_mode(None)
         self.vi_set_insert_mode(True)
@@ -76,7 +92,8 @@ class ViExternalEditorTest (ViExternalEditor):
     def __init__(self, line):
         self.sio_write = StringIO()
         self.sio_read = StringIO('qwerty after')
-        ViExternalEditor.__init__(self, line)
+
+        super().__init__(line)
 
     def get_tempfile(self):
         return 'temp.py'
@@ -2163,6 +2180,10 @@ class Tests (unittest.TestCase):
 # ----------------------------------------------------------------------
 
 if __name__ == '__main__':
+    class Tester(unittest.TestProgram):
+        def __init__(self):
+            super().__init__(exit=False)
+
     Tester()
 
     tested = sorted(ViModeTest.tested_commands.keys())

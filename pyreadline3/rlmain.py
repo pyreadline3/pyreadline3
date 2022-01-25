@@ -9,7 +9,6 @@
 # *****************************************************************************
 from __future__ import absolute_import, print_function, unicode_literals
 
-''' an attempt to implement readline for Python in Python using ctypes'''
 import os
 import re
 import sys
@@ -31,6 +30,9 @@ from .logger import log
 from .modes import editingmodes
 from .py3k_compat import execfile, is_callable
 
+# an attempt to implement readline for Python in Python using ctypes
+
+
 if is_ironpython:  # ironpython does not provide a prompt string to readline
     import System
     default_prompt = ">>> "
@@ -43,10 +45,11 @@ class MockConsoleError(Exception):
 
 
 class MockConsole(object):
-    """object used during refactoring. Should raise errors when someone tries to use it.
+    """object used during refactoring. Should raise errors when someone tries
+       to use it.
     """
 
-    def __setattr__(self, x):
+    def __setattr__(self, _name, _value):
         raise MockConsoleError(
             "Should not try to get attributes from MockConsole")
 
@@ -437,7 +440,8 @@ class Readline(BaseReadline):
     """
 
     def __init__(self):
-        BaseReadline.__init__(self)
+        super().__init__()
+
         self.console = console.Console()
         self.selection_color = self.console.saveattr << 4
         self.command_color = None
@@ -446,10 +450,9 @@ class Readline(BaseReadline):
 
         # variables you can control with parse_and_bind
 
-#  To export as readline interface
+    #  To export as readline interface
 
-
-# Internal functions
+    # Internal functions
 
     def _bell(self):
         '''ring the bell if requested.'''

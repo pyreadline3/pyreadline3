@@ -23,7 +23,7 @@ class NotEmacsMode(basemode.BaseMode):
     mode = "notemacs"
 
     def __init__(self, rlobj):
-        super(NotEmacsMode, self).__init__(rlobj)
+        super().__init__(rlobj)
 
     def __repr__(self):
         return "<NotEmacsMode>"

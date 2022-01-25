@@ -466,7 +466,8 @@ class TextLine(object):
 
 class ReadLineTextBuffer(TextLine):
     def __init__(self, txtstr, point=None, mark=None):
-        super(ReadLineTextBuffer, self).__init__(txtstr, point, mark)
+        super().__init__(txtstr, point, mark)
+
         self.enable_win32_clipboard = True
         self.selection_mark = -1
         self.enable_selection = True

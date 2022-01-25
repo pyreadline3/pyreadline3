@@ -1,18 +1,15 @@
 # -*- coding: utf-8 -*-
 # *****************************************************************************
-#       Copyright (C) 2006  Michael Graz. <mgraz@plan10.com>
+#       Copyright (C) 2006-2020  Michael Graz. <mgraz@plan10.com>
+#       Copyright (C) 2020 Bassem Girgis. <brgirgis@gmail.com>
 #
 #  Distributed under the terms of the BSD License.  The full license is in
 #  the file COPYING, distributed as part of this software.
 # *****************************************************************************
 from __future__ import absolute_import, print_function, unicode_literals
 
-import unittest
-
 from pyreadline3 import keysyms
-from pyreadline3.keysyms.common import make_KeyPress_from_keydescr
-from pyreadline3.lineeditor import lineobj
-from pyreadline3.modes.emacs import *
+from pyreadline3.lineeditor import history, lineobj
 
 
 class MockReadline:
@@ -73,12 +70,3 @@ def keytext_to_keyinfo_and_event(keytext):
     else:
         event = Event(keyinfo.tuple()[3])
     return keyinfo, event
-
-
-# override runTests from from main in unittest to remove sys.exit call
-class Tester(unittest.TestProgram):
-    def runTests(self):
-        if self.testRunner is None:
-            self.testRunner = unittest.TextTestRunner(verbosity=self.verbosity)
-        result = self.testRunner.run(self.test)
-#       sys.exit(not result.wasSuccessful())
