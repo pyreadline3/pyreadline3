@@ -7,8 +7,6 @@ import unittest
 from pyreadline3.lineeditor import lineobj
 
 sys.path.append('../..')
-#from pyreadline3.modes.vi import *
-#from pyreadline3 import keysyms
 
 # ----------------------------------------------------------------------
 
@@ -17,18 +15,18 @@ sys.path.append('../..')
 
 class Test_copy (unittest.TestCase):
     def test_copy1(self):
-        l = lineobj.ReadLineTextBuffer("first second")
-        q = l.copy()
-        self.assertEqual(q.get_line_text(), l.get_line_text())
-        self.assertEqual(q.point, l.point)
-        self.assertEqual(q.mark, l.mark)
+        t_line = lineobj.ReadLineTextBuffer("first second")
+        q = t_line.copy()
+        self.assertEqual(q.get_line_text(), t_line.get_line_text())
+        self.assertEqual(q.point, t_line.point)
+        self.assertEqual(q.mark, t_line.mark)
 
     def test_copy2(self):
-        l = lineobj.ReadLineTextBuffer("first second", point=5)
-        q = l.copy()
-        self.assertEqual(q.get_line_text(), l.get_line_text())
-        self.assertEqual(q.point, l.point)
-        self.assertEqual(q.mark, l.mark)
+        t_line = lineobj.ReadLineTextBuffer("first second", point=5)
+        q = t_line.copy()
+        self.assertEqual(q.get_line_text(), t_line.get_line_text())
+        self.assertEqual(q.point, t_line.point)
+        self.assertEqual(q.mark, t_line.mark)
 
 
 class Test_linepos (unittest.TestCase):
@@ -36,39 +34,39 @@ class Test_linepos (unittest.TestCase):
 
     def test_NextChar(self):
         t = self.t
-        l = lineobj.ReadLineTextBuffer(t)
+        t_line = lineobj.ReadLineTextBuffer(t)
         for i in range(len(t)):
-            self.assertEqual(i, l.point)
-            l.point = lineobj.NextChar
+            self.assertEqual(i, t_line.point)
+            t_line.point = lineobj.NextChar
         # advance past end of buffer
-        l.point = lineobj.NextChar
-        self.assertEqual(len(t), l.point)
+        t_line.point = lineobj.NextChar
+        self.assertEqual(len(t), t_line.point)
 
     def test_PrevChar(self):
         t = self.t
-        l = lineobj.ReadLineTextBuffer(t, point=len(t))
+        t_line = lineobj.ReadLineTextBuffer(t, point=len(t))
         for i in range(len(t)):
-            self.assertEqual(len(t) - i, l.point)
-            l.point = lineobj.PrevChar
+            self.assertEqual(len(t) - i, t_line.point)
+            t_line.point = lineobj.PrevChar
         # advance past beginning of buffer
-        l.point = lineobj.PrevChar
-        self.assertEqual(0, l.point)
+        t_line.point = lineobj.PrevChar
+        self.assertEqual(0, t_line.point)
 
     def test_EndOfLine(self):
         t = self.t
-        l = lineobj.ReadLineTextBuffer(t, point=len(t))
+        t_line = lineobj.ReadLineTextBuffer(t, point=len(t))
         for i in range(len(t)):
-            l.point = i
-            l.point = lineobj.EndOfLine
-            self.assertEqual(len(t), l.point)
+            t_line.point = i
+            t_line.point = lineobj.EndOfLine
+            self.assertEqual(len(t), t_line.point)
 
     def test_StartOfLine(self):
         t = self.t
-        l = lineobj.ReadLineTextBuffer(t, point=len(t))
+        t_line = lineobj.ReadLineTextBuffer(t, point=len(t))
         for i in range(len(t)):
-            l.point = i
-            l.point = lineobj.StartOfLine
-            self.assertEqual(0, l.point)
+            t_line.point = i
+            t_line.point = lineobj.StartOfLine
+            self.assertEqual(0, t_line.point)
 
 
 class Tests_linepos2(Test_linepos):
@@ -98,9 +96,9 @@ class Test_movement (unittest.TestCase):
                 "     #"),
         ]
         for cmd, text, init_point, expected_point in tests:
-            l = lineobj.ReadLineTextBuffer(text, get_point_pos(init_point))
-            l.point = cmd
-            self.assertEqual(get_point_pos(expected_point), l.point)
+            t_line = lineobj.ReadLineTextBuffer(text, get_point_pos(init_point))
+            t_line.point = cmd
+            self.assertEqual(get_point_pos(expected_point), t_line.point)
 
     def test_PrevChar(self):
         cmd = lineobj.PrevChar
@@ -120,9 +118,9 @@ class Test_movement (unittest.TestCase):
                 "#     "),
         ]
         for cmd, text, init_point, expected_point in tests:
-            l = lineobj.ReadLineTextBuffer(text, get_point_pos(init_point))
-            l.point = cmd
-            self.assertEqual(get_point_pos(expected_point), l.point)
+            t_line = lineobj.ReadLineTextBuffer(text, get_point_pos(init_point))
+            t_line.point = cmd
+            self.assertEqual(get_point_pos(expected_point), t_line.point)
 
     def test_PrevWordStart(self):
         cmd = lineobj.PrevWordStart
@@ -146,9 +144,9 @@ class Test_movement (unittest.TestCase):
                 "#                  "),
         ]
         for cmd, text, init_point, expected_point in tests:
-            l = lineobj.ReadLineTextBuffer(text, get_point_pos(init_point))
-            l.point = cmd
-            self.assertEqual(get_point_pos(expected_point), l.point)
+            t_line = lineobj.ReadLineTextBuffer(text, get_point_pos(init_point))
+            t_line.point = cmd
+            self.assertEqual(get_point_pos(expected_point), t_line.point)
 
     def test_NextWordStart(self):
         cmd = lineobj.NextWordStart
@@ -172,9 +170,9 @@ class Test_movement (unittest.TestCase):
                 "                  #"),
         ]
         for cmd, text, init_point, expected_point in tests:
-            l = lineobj.ReadLineTextBuffer(text, get_point_pos(init_point))
-            l.point = cmd
-            self.assertEqual(get_point_pos(expected_point), l.point)
+            t_line = lineobj.ReadLineTextBuffer(text, get_point_pos(init_point))
+            t_line.point = cmd
+            self.assertEqual(get_point_pos(expected_point), t_line.point)
 
     def test_NextWordEnd(self):
         cmd = lineobj.NextWordEnd
@@ -198,9 +196,9 @@ class Test_movement (unittest.TestCase):
                 "                  #"),
         ]
         for cmd, text, init_point, expected_point in tests:
-            l = lineobj.ReadLineTextBuffer(text, get_point_pos(init_point))
-            l.point = cmd
-            self.assertEqual(get_point_pos(expected_point), l.point)
+            t_line = lineobj.ReadLineTextBuffer(text, get_point_pos(init_point))
+            t_line.point = cmd
+            self.assertEqual(get_point_pos(expected_point), t_line.point)
 
     def test_PrevWordEnd(self):
         cmd = lineobj.PrevWordEnd
@@ -224,9 +222,9 @@ class Test_movement (unittest.TestCase):
                 "#                  "),
         ]
         for cmd, text, init_point, expected_point in tests:
-            l = lineobj.ReadLineTextBuffer(text, get_point_pos(init_point))
-            l.point = cmd
-            self.assertEqual(get_point_pos(expected_point), l.point)
+            t_line = lineobj.ReadLineTextBuffer(text, get_point_pos(init_point))
+            t_line.point = cmd
+            self.assertEqual(get_point_pos(expected_point), t_line.point)
 
     def test_WordEnd_1(self):
         cmd = lineobj.WordEnd
@@ -246,9 +244,9 @@ class Test_movement (unittest.TestCase):
                 "                  #"),
         ]
         for cmd, text, init_point, expected_point in tests:
-            l = lineobj.ReadLineTextBuffer(text, get_point_pos(init_point))
-            l.point = cmd
-            self.assertEqual(get_point_pos(expected_point), l.point)
+            t_line = lineobj.ReadLineTextBuffer(text, get_point_pos(init_point))
+            t_line.point = cmd
+            self.assertEqual(get_point_pos(expected_point), t_line.point)
 
     def test_WordEnd_2(self):
         cmd = lineobj.WordEnd
@@ -266,8 +264,8 @@ class Test_movement (unittest.TestCase):
         ]
 
         for cmd, text, init_point in tests:
-            l = lineobj.ReadLineTextBuffer(text, get_point_pos(init_point))
-            self.assertRaises(lineobj.NotAWordError, cmd, l)
+            t_line = lineobj.ReadLineTextBuffer(text, get_point_pos(init_point))
+            self.assertRaises(lineobj.NotAWordError, cmd, t_line)
 
     def test_WordStart_1(self):
         cmd = lineobj.WordStart
@@ -287,9 +285,9 @@ class Test_movement (unittest.TestCase):
                 "             #     "),
         ]
         for cmd, text, init_point, expected_point in tests:
-            l = lineobj.ReadLineTextBuffer(text, get_point_pos(init_point))
-            l.point = cmd
-            self.assertEqual(get_point_pos(expected_point), l.point)
+            t_line = lineobj.ReadLineTextBuffer(text, get_point_pos(init_point))
+            t_line.point = cmd
+            self.assertEqual(get_point_pos(expected_point), t_line.point)
 
     def test_WordStart_2(self):
         cmd = lineobj.WordStart
@@ -307,8 +305,8 @@ class Test_movement (unittest.TestCase):
         ]
 
         for cmd, text, init_point in tests:
-            l = lineobj.ReadLineTextBuffer(text, get_point_pos(init_point))
-            self.assertRaises(lineobj.NotAWordError, cmd, l)
+            t_line = lineobj.ReadLineTextBuffer(text, get_point_pos(init_point))
+            self.assertRaises(lineobj.NotAWordError, cmd, t_line)
 
     def test_StartOfLine(self):
         cmd = lineobj.StartOfLine
@@ -328,9 +326,9 @@ class Test_movement (unittest.TestCase):
                 "#                  "),
         ]
         for cmd, text, init_point, expected_point in tests:
-            l = lineobj.ReadLineTextBuffer(text, get_point_pos(init_point))
-            l.point = cmd
-            self.assertEqual(get_point_pos(expected_point), l.point)
+            t_line = lineobj.ReadLineTextBuffer(text, get_point_pos(init_point))
+            t_line.point = cmd
+            self.assertEqual(get_point_pos(expected_point), t_line.point)
 
     def test_EndOfLine(self):
         cmd = lineobj.EndOfLine
@@ -350,9 +348,9 @@ class Test_movement (unittest.TestCase):
                 "                  #"),
         ]
         for cmd, text, init_point, expected_point in tests:
-            l = lineobj.ReadLineTextBuffer(text, get_point_pos(init_point))
-            l.point = cmd
-            self.assertEqual(get_point_pos(expected_point), l.point)
+            t_line = lineobj.ReadLineTextBuffer(text, get_point_pos(init_point))
+            t_line.point = cmd
+            self.assertEqual(get_point_pos(expected_point), t_line.point)
 
     def test_Point(self):
         cmd = lineobj.Point
@@ -369,8 +367,8 @@ class Test_movement (unittest.TestCase):
                 18),
         ]
         for cmd, text, p in tests:
-            l = lineobj.ReadLineTextBuffer(text, p)
-            self.assertEqual(p, cmd(l))
+            t_line = lineobj.ReadLineTextBuffer(text, p)
+            self.assertEqual(p, cmd(t_line))
 
 
 # ----------------------------------------------------------------------
@@ -390,5 +388,3 @@ def get_mark_pos(mstr):
 
 if __name__ == '__main__':
     unittest.main()
-
-    l = lineobj.ReadLineTextBuffer("First Second Third")

@@ -154,5 +154,3 @@ class Test_empty_history_search_incr_fwd_backwd(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-
-    # l = lineobj.ReadLineTextBuffer("First Second Third")

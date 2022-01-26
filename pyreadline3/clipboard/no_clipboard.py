@@ -8,13 +8,13 @@
 # *****************************************************************************
 from __future__ import absolute_import, print_function, unicode_literals
 
-mybuffer = ""
+_global_clipboard_buffer = ""
 
 
 def GetClipboardText():
-    return mybuffer
+    return _global_clipboard_buffer
 
 
 def SetClipboardText(text):
-    global mybuffer
-    mybuffer = text
+    global _global_clipboard_buffer
+    _global_clipboard_buffer = text

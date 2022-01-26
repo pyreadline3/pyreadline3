@@ -629,7 +629,8 @@ class Tests (unittest.TestCase):
     def test_delete_find_char_forward_two_multipliers(self):
         r = ViModeTest()
         r._set_line(
-            '0123456789012345678901234567890123456789012345678901234567890123456789')
+            '012345678901234567890123456789'
+            '0123456789012345678901234567890123456789')
         r.input('Escape')
         r.input('"0"')
         r.input('"2d3f4"')
@@ -1913,7 +1914,12 @@ class Tests (unittest.TestCase):
         r = ViModeTest()
         r._set_line('aaa')
         r.input('Escape')
-        # print('xx', sys._getframe().f_lineno, r._vi_undo_cursor, r._vi_undo_stack)
+        # print(
+        #     'xx',
+        #     sys._getframe().f_lineno,
+        #     r._vi_undo_cursor,
+        #     r._vi_undo_stack,
+        # )
         r.input('"0rz"')
         self.assertEqual(r.line, 'zaa')
         r.input('"u"')

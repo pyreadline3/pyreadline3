@@ -86,13 +86,13 @@ class EmacsModeTest (EmacsMode):
 class TestsKeyinfo (unittest.TestCase):
 
     def test_keyinfo(self):
-        keyinfo, event = keytext_to_keyinfo_and_event('"d"')
+        _, event = keytext_to_keyinfo_and_event('"d"')
         self.assertEqual('d', event.char)
-        keyinfo, event = keytext_to_keyinfo_and_event('"D"')
+        _, event = keytext_to_keyinfo_and_event('"D"')
         self.assertEqual('D', event.char)
-        keyinfo, event = keytext_to_keyinfo_and_event('"$"')
+        _, event = keytext_to_keyinfo_and_event('"$"')
         self.assertEqual('$', event.char)
-        keyinfo, event = keytext_to_keyinfo_and_event('Escape')
+        _, event = keytext_to_keyinfo_and_event('Escape')
         self.assertEqual('\x1b', event.char)
 
 
