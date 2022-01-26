@@ -65,7 +65,7 @@ Here is the example config file shipped with pyreadline3:
 .. literalinclude:: ../../pyreadline3/configuration/pyreadlineconfig.ini
 
 pyreadline3 with python interpreter
-----------------------------------
+-----------------------------------
 
 In your startup file (pointed to by environment variable PYTHONSTARTUP) add:
 
@@ -74,7 +74,7 @@ In your startup file (pointed to by environment variable PYTHONSTARTUP) add:
 This file is included in the doc directory of the distribution.
 
 pyreadline3 with IronPython
---------------------------
+---------------------------
 
 *THIS HAS NOT BEEN TESTED FOR A WHILE*
 
@@ -88,7 +88,7 @@ source code to make PythonCommandLine a public class that we can override.
 
 
 pyreadline3 with IPython
------------------------
+------------------------
 
 In IPython pyreadline3 is automatically used if available.
 

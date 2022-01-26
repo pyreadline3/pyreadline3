@@ -9,16 +9,12 @@
 # *****************************************************************************
 from __future__ import absolute_import, print_function, unicode_literals
 
-import ctypes
 from ctypes import windll
-
-from pyreadline3.logger import log
 
 from . import winconstants as c32
 from .common import KeyPress
 
 # table for translating virtual keys to X windows key symbols
-
 
 code2sym_map = {
     c32.VK_CANCEL: 'cancel',

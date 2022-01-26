@@ -31,5 +31,5 @@ if exist "%PROJECT_PY_VER_ENV_ACTIVATE%" (
 "%PROJECT_PYTHON_BASE_EXE%" -m venv "%PROJECT_PY_VER_ENV_DIR% "
 call "%PROJECT_PY_VER_ENV_ACTIVATE%"
 python -m pip install -U pip setuptools wheel --no-warn-script-location
-python -m pip install -U pytest autopep8 flake8 pylint --no-warn-script-location
+python -m pip install -U pytest autopep8 flake8 pylint Sphinx --no-warn-script-location
 :: python -m pip uninstall pathlib -y

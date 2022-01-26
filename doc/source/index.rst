@@ -3,7 +3,7 @@
    contain the root `toctree` directive.
 
 Welcome to pyreadline3's documentation!
-======================================
+=======================================
 
 Contents:
 

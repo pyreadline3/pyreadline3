@@ -8,8 +8,8 @@ license, included below.
 Individual authors are the holders of the copyright for their code and are
 listed in each file.
 
-Some files may be licensed under different conditions. Ultimately each file 
-indicates clearly the conditions under which its author/authors have 
+Some files may be licensed under different conditions. Ultimately each file
+indicates clearly the conditions under which its author/authors have
 decided to publish the code.
 
 ## pyreadline3 license
@@ -39,7 +39,6 @@ b. Redistributions in binary form must reproduce the above copyright
 c. Neither the name of the copyright holders nor the names of any
      contributors to this software may be used to endorse or promote products
      derived from this software without specific prior written permission.
-
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
