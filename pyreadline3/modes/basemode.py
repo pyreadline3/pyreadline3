@@ -600,4 +600,4 @@ def left_align(s, maxlen):
         # too bad, we remove the color
         return stripped[:maxlen]
     padding = maxlen - len(stripped)
-    return s + ' '*
+    return s + ' '*padding
