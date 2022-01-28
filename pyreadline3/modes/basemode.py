@@ -234,8 +234,7 @@ class BaseMode(object):
                     break
             text = ensure_str(''.join(buf[self.begidx:self.endidx]))
             log('file complete text="%s"' % ensure_unicode(text))
-            completions = list(map(ensure_unicode, glob.glob(
-                os.path.expanduser(text) + '*'.encode('ascii'))))
+            completions = list(map(ensure_unicode, glob.glob(os.path.expanduser(text) + '*'.encode('ascii'))))
             if self.mark_directories == 'on':
                 mc = []
                 for f in completions:
@@ -251,7 +250,7 @@ class BaseMode(object):
         if not completions:
             return
         self.console.write('\n')
-        wmax = max(map(len, completions))
+        wmax = max(map(stripped_len, completions))
         w, h = self.console.size()
         cols = max(1, int((w - 1) / (wmax + 1)))
         rows = int(math.ceil(float(len(completions)) / cols))
@@ -260,7 +259,8 @@ class BaseMode(object):
             for col in range(cols):
                 i = col * rows + row
                 if i < len(completions):
-                    self.console.write(completions[i].ljust(wmax + 1))
+                    s = left_align(completions[i], wmax+1)
+                    self.console.write(s)
             self.console.write('\n')
         if is_ironpython:
             self.prompt = sys.ps1
@@ -579,3 +579,23 @@ def commonprefix(m):
                     return ''
                 break
     return prefix
+		
+STRIPCOLOR_REGEX = re.compile(r"\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[m|K]")
+			
+def stripcolor(s):
+    """Strip the ANSI sequences from a string"""
+    return STRIPCOLOR_REGEX.sub('', s)
+
+def stripped_len(s):
+    """Return the real length of a string which possibly contains ANSI sequences. 
+    (I.e. the amount of characters which are actually displayed on the screen."""
+    return len(stripcolor(s))
+
+def left_align(s, maxlen):
+    """As str.ljust, but considering ANSI sequences"""
+    stripped = stripcolor(s)
+    if len(stripped) > maxlen:
+        # too bad, we remove the color
+        return stripped[:maxlen]
+    padding = maxlen - len(stripped)
+    return s + ' '*
