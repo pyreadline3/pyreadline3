@@ -188,8 +188,7 @@ class BaseMode(object):
         self.exit_dispatch[keyinfo] = None
 
     def init_editing_mode(self, e):  # (C-e)
-        """When in vi command mode, this causes a switch to emacs editing
-        mode."""
+        """When in vi command mode, this causes a switch to emacs editing mode."""
 
         raise NotImplementedError
     # completion commands
@@ -209,6 +208,8 @@ class BaseMode(object):
                     self.begidx += 1
                     break
             text = ensure_str(''.join(buf[self.begidx:self.endidx]))
+            if (len(text) == 0):
+                return
             log('complete text="%s"' % ensure_unicode(text))
             i = 0
             while True:
@@ -285,6 +286,7 @@ class BaseMode(object):
                 else:
                     self._bell()
         else:
+            self.insert_text('    ')
             self._bell()
         self.finalize()
 
