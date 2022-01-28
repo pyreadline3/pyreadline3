@@ -27,7 +27,7 @@ def ensure_unicode(text):
         try:
             return text.decode(pyreadline_codepage, "replace")
         except (LookupError, TypeError):
-            return text.decode("ascii", "replace")
+            return text.decode(errors="replace")
     return text
 
 
@@ -37,7 +37,7 @@ def ensure_str(text):
         try:
             return text.encode(pyreadline_codepage, "replace")
         except (LookupError, TypeError):
-            return text.encode("ascii", "replace")
+            return text.encode(errors="replace")
     return text
 
 
