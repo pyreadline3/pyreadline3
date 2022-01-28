@@ -13,7 +13,7 @@ import os
 import sys
 
 from pyreadline3.logger import log
-from pyreadline3.unicode_helper import ensure_str, ensure_unicode, pyreadline_codepage
+from pyreadline3.unicode_helper import ensure_str, ensure_unicode
 
 if "pyreadline3" in sys.modules:
     pyreadline3 = sys.modules["pyreadline3"]
@@ -86,7 +86,7 @@ class LineHistory(object):
             filename = self.history_filename
         try:
             with io.open(
-                filename, 'rt', encoding=pyreadline_codepage, errors='replace'
+                filename, 'rt', errors='replace'
             ) as fd:
                 for line in fd:
                     self.add_history(lineobj.ReadLineTextBuffer(line.rstrip()))
@@ -99,7 +99,7 @@ class LineHistory(object):
         if filename is None:
             filename = self.history_filename
         with io.open(
-            filename, 'wt', encoding=pyreadline_codepage, errors='replace'
+            filename, 'wt', errors='replace'
         ) as fp:
             for line in self.history[-self.history_length:]:
                 fp.writeln(line.get_line_text())
