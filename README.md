@@ -42,7 +42,7 @@ pip install pyreadline3
 
 ```
 git clone https://github.com/pyreadline3/pyreadline3.git
-git cd pyreadline3
+cd pyreadline3
 python -m pip install https://codeload.github.com/pyreadline3/pyreadline3/tar.gz/refs/tags/v3.4.1
 ```
 
@@ -55,7 +55,7 @@ python -m pip install https://codeload.github.com/pyreadline3/pyreadline3/tar.gz
 
 ```
 git clone https://github.com/pyreadline3/pyreadline3.git
-git cd pyreadline3
+cd pyreadline3
 git push -f origin master
 ```
 
@@ -65,7 +65,7 @@ git push -f origin master
 
 ```
 git clone https://github.com/pyreadline3/pyreadline3.git
-git cd pyreadline3
+cd pyreadline3
 python setup.py sdist bdist_wheel
 ```
 
