@@ -41,7 +41,7 @@ pip install pyreadline3
 <b>2. Install from git repository</b>
 
 ```
-git clone https://github.com/athrvvvv/windows-readline.git](https://github.com/pyreadline3/pyreadline3.git
+git clone https://github.com/pyreadline3/pyreadline3.git
 git cd pyreadline3
 python -m pip install https://codeload.github.com/pyreadline3/pyreadline3/tar.gz/refs/tags/v3.4.1
 ```
@@ -54,7 +54,7 @@ python -m pip install https://codeload.github.com/pyreadline3/pyreadline3/tar.gz
 > ### Contributing
 
 ```
-git clone https://github.com/athrvvvv/windows-readline.git](https://github.com/pyreadline3/pyreadline3.git
+git clone https://github.com/pyreadline3/pyreadline3.git
 git cd pyreadline3
 git push -f origin master
 ```
@@ -64,7 +64,7 @@ git push -f origin master
 > ### Building package
 
 ```
-git clone https://github.com/athrvvvv/windows-readline.git](https://github.com/pyreadline3/pyreadline3.git
+git clone https://github.com/pyreadline3/pyreadline3.git
 git cd pyreadline3
 python setup.py sdist bdist_wheel
 ```
