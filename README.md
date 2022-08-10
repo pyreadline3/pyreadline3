@@ -66,7 +66,7 @@ git push -f origin master
 ```
 git clone https://github.com/athrvvvv/windows-readline.git](https://github.com/pyreadline3/pyreadline3.git
 git cd pyreadline3
-python sdist bdist_wheel
+python setup.py sdist bdist_wheel
 ```
 
 > **Warning**
