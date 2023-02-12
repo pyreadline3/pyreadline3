@@ -17,7 +17,10 @@ It has been tested for use with Windows 10.
 
 Version 3.4+ of pyreadline3 runs on Python 3.5+.
 
-`pyreadline3` is available on PyPI and can be installed with simple `pip install pyreadline3`.
+`pyreadline3` is available on PyPI and can be installed with
+```shell
+pip install pyreadline3
+```
 
 ## Features
 
