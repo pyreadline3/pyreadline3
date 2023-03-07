@@ -1,5 +1,6 @@
 # pyreadline3
 
+[![PyPi Badge](https://img.shields.io/pypi/v/pyreadline3)](https://pypi.org/project/pyreadline3/) 
 ![Publish](https://github.com/pyreadline3/pyreadline3/workflows/Publish/badge.svg)
 ![Test](https://github.com/pyreadline3/pyreadline3/workflows/Test/badge.svg)
 [![Downloads](https://static.pepy.tech/personalized-badge/pyreadline3?period=week&units=international_system&left_color=black&right_color=orange&left_text=Last%20Week)](https://pepy.tech/project/pyreadline3)
@@ -15,6 +16,11 @@ It is not complete.
 It has been tested for use with Windows 10.
 
 Version 3.4+ of pyreadline3 runs on Python 3.5+.
+
+`pyreadline3` is available on PyPI and can be installed with
+```shell
+pip install pyreadline3
+```
 
 ## Features
 
