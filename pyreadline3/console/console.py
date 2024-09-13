@@ -541,7 +541,8 @@ class Console(object):
                 else:
                     return e
             elif ((e.type == 'KeyRelease') and
-                  (e.keyinfo == KeyPress('S', False, True, False, 'S'))):
+                  (e.keyinfo == KeyPress('S', False, True, False, 'S') or
+                   e.keyinfo == KeyPress('C', False, True, False, 'C'))):
                 log("getKeypress:%s,%s,%s" % (e.keyinfo, e.keycode, e.type))
                 return e
 
