@@ -11,7 +11,7 @@
 
 
 """
-from __future__ import absolute_import, print_function, unicode_literals
+
 
 import pyreadline3.logger as log
 import Tkinter
@@ -69,7 +69,8 @@ class App:
             width=50,
             height=40,
             justify=Tkinter.LEFT,
-            anchor=Tkinter.NW)
+            anchor=Tkinter.NW,
+        )
         self.text.pack(side=Tkinter.LEFT)
         master.bind("<Key>", self.handler)
         self.locals = {}
@@ -93,12 +94,13 @@ class App:
             self.readline_setup(self.prompt)
         self._update_line()
 
-    def readline_setup(self, prompt=''):
+    def readline_setup(self, prompt=""):
         self.RL.readline_setup(prompt)
 
     def _update_line(self):
-        self.textvar.set("\n".join(
-            self.lines + [self.prompt + " " + self.RL.get_line_buffer()]))
+        self.textvar.set(
+            "\n".join(self.lines + [self.prompt + " " + self.RL.get_line_buffer()])
+        )
 
 
 root = Tkinter.Tk()

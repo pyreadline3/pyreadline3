@@ -1,6 +1,3 @@
-from __future__ import absolute_import, print_function, unicode_literals
-
-
 class baseconsole(object):
     def __init__(self):
         pass
@@ -9,18 +6,18 @@ class baseconsole(object):
         raise NotImplementedError
 
     def pos(self, x=None, y=None):
-        '''Move or query the window cursor.'''
+        """Move or query the window cursor."""
         raise NotImplementedError
 
     def size(self):
         raise NotImplementedError
 
-    def rectangle(self, rect, attr=None, fill=' '):
-        '''Fill Rectangle.'''
+    def rectangle(self, rect, attr=None, fill=" "):
+        """Fill Rectangle."""
         raise NotImplementedError
 
     def write_scrolling(self, text, attr=None):
-        '''write text at current cursor position while watching for scrolling.
+        """write text at current cursor position while watching for scrolling.
 
         If the window scrolls because you are at the bottom of the screen
         buffer, all positions that you are storing will be shifted by the
@@ -32,18 +29,18 @@ class baseconsole(object):
         so that it will know when the screen buffer is scrolled. It
         returns the number of lines that the buffer scrolled.
 
-        '''
+        """
         raise NotImplementedError
 
     def getkeypress(self):
-        '''Return next key press event from the queue, ignoring others.'''
+        """Return next key press event from the queue, ignoring others."""
         raise NotImplementedError
 
     def write(self, text):
         raise NotImplementedError
 
-    def page(self, attr=None, fill=' '):
-        '''Fill the entire screen.'''
+    def page(self, attr=None, fill=" "):
+        """Fill the entire screen."""
         raise NotImplementedError
 
     def isatty(self):

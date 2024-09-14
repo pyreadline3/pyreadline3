@@ -4,8 +4,6 @@ Example script using the callback interface of readline.
 :author: strank
 """
 
-from __future__ import absolute_import, print_function, unicode_literals
-
 __docformat__ = "restructuredtext en"
 
 import msvcrt

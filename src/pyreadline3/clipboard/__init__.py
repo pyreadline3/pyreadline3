@@ -1,5 +1,3 @@
-from __future__ import absolute_import, print_function, unicode_literals
-
 from pyreadline3.py3k_compat import is_ironpython
 
 if is_ironpython:
@@ -48,6 +46,7 @@ def make_list_of_list(txt):
                 except ValueError:
                     return x
         return x
+
     ut = []
     flag = False
     for rad in [x for x in txt.split("\r\n") if x != ""]:

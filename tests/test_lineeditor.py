@@ -1,19 +1,20 @@
 # Copyright (C) 2006  Michael Graz. <mgraz@plan10.com>
-from __future__ import absolute_import, print_function, unicode_literals
+
 
 import sys
 import unittest
 
 from pyreadline3.lineeditor import lineobj
 
-sys.path.append('../..')
+sys.path.append("../..")
 
 # ----------------------------------------------------------------------
 
 
 # ----------------------------------------------------------------------
 
-class Test_copy (unittest.TestCase):
+
+class Test_copy(unittest.TestCase):
     def test_copy1(self):
         t_line = lineobj.ReadLineTextBuffer("first second")
         q = t_line.copy()
@@ -29,7 +30,7 @@ class Test_copy (unittest.TestCase):
         self.assertEqual(q.mark, t_line.mark)
 
 
-class Test_linepos (unittest.TestCase):
+class Test_linepos(unittest.TestCase):
     t = "test text"
 
     def test_NextChar(self):
@@ -77,23 +78,14 @@ class Tests_linepos3(Test_linepos):
     t = ""
 
 
-class Test_movement (unittest.TestCase):
+class Test_movement(unittest.TestCase):
     def test_NextChar(self):
         cmd = lineobj.NextChar
         tests = [
             # "First"
-            (cmd,
-             "First",
-             "#     ",
-             " #    "),
-            (cmd,
-                "First",
-                "    # ",
-                "     #"),
-            (cmd,
-                "First",
-                "     #",
-                "     #"),
+            (cmd, "First", "#     ", " #    "),
+            (cmd, "First", "    # ", "     #"),
+            (cmd, "First", "     #", "     #"),
         ]
         for cmd, text, init_point, expected_point in tests:
             t_line = lineobj.ReadLineTextBuffer(text, get_point_pos(init_point))
@@ -104,18 +96,9 @@ class Test_movement (unittest.TestCase):
         cmd = lineobj.PrevChar
         tests = [
             # "First"
-            (cmd,
-             "First",
-             "     #",
-             "    # "),
-            (cmd,
-                "First",
-                " #   ",
-                "#    "),
-            (cmd,
-                "First",
-                "#     ",
-                "#     "),
+            (cmd, "First", "     #", "    # "),
+            (cmd, "First", " #   ", "#    "),
+            (cmd, "First", "#     ", "#     "),
         ]
         for cmd, text, init_point, expected_point in tests:
             t_line = lineobj.ReadLineTextBuffer(text, get_point_pos(init_point))
@@ -126,22 +109,10 @@ class Test_movement (unittest.TestCase):
         cmd = lineobj.PrevWordStart
         tests = [
             # "First Second Third"
-            (cmd,
-             "First Second Third",
-             "                  #",
-             "             #     "),
-            (cmd,
-                "First Second Third",
-                "             #     ",
-                "      #            "),
-            (cmd,
-                "First Second Third",
-                "     #             ",
-                "#                  "),
-            (cmd,
-                "First Second Third",
-                "#                  ",
-                "#                  "),
+            (cmd, "First Second Third", "                  #", "             #     "),
+            (cmd, "First Second Third", "             #     ", "      #            "),
+            (cmd, "First Second Third", "     #             ", "#                  "),
+            (cmd, "First Second Third", "#                  ", "#                  "),
         ]
         for cmd, text, init_point, expected_point in tests:
             t_line = lineobj.ReadLineTextBuffer(text, get_point_pos(init_point))
@@ -152,22 +123,10 @@ class Test_movement (unittest.TestCase):
         cmd = lineobj.NextWordStart
         tests = [
             # "First Second Third"
-            (cmd,
-             "First Second Third",
-             "#                 ",
-             "      #           "),
-            (cmd,
-                "First Second Third",
-                "    #             ",
-                "      #           "),
-            (cmd,
-                "First Second Third",
-                "      #            ",
-                "             #     "),
-            (cmd,
-                "First Second Third",
-                "              #    ",
-                "                  #"),
+            (cmd, "First Second Third", "#                 ", "      #           "),
+            (cmd, "First Second Third", "    #             ", "      #           "),
+            (cmd, "First Second Third", "      #            ", "             #     "),
+            (cmd, "First Second Third", "              #    ", "                  #"),
         ]
         for cmd, text, init_point, expected_point in tests:
             t_line = lineobj.ReadLineTextBuffer(text, get_point_pos(init_point))
@@ -178,22 +137,10 @@ class Test_movement (unittest.TestCase):
         cmd = lineobj.NextWordEnd
         tests = [
             # "First Second Third"
-            (cmd,
-             "First Second Third",
-             "#                 ",
-             "     #            "),
-            (cmd,
-                "First Second Third",
-                "    #             ",
-                "     #            "),
-            (cmd,
-                "First Second Third",
-                "      #            ",
-                "            #      "),
-            (cmd,
-                "First Second Third",
-                "              #    ",
-                "                  #"),
+            (cmd, "First Second Third", "#                 ", "     #            "),
+            (cmd, "First Second Third", "    #             ", "     #            "),
+            (cmd, "First Second Third", "      #            ", "            #      "),
+            (cmd, "First Second Third", "              #    ", "                  #"),
         ]
         for cmd, text, init_point, expected_point in tests:
             t_line = lineobj.ReadLineTextBuffer(text, get_point_pos(init_point))
@@ -204,22 +151,10 @@ class Test_movement (unittest.TestCase):
         cmd = lineobj.PrevWordEnd
         tests = [
             # "First Second Third"
-            (cmd,
-             "First Second Third",
-             "                  #",
-             "            #      "),
-            (cmd,
-                "First Second Third",
-                "            #      ",
-                "     #             "),
-            (cmd,
-                "First Second Third",
-                "     #             ",
-                "#                  "),
-            (cmd,
-                "First Second Third",
-                "#                  ",
-                "#                  "),
+            (cmd, "First Second Third", "                  #", "            #      "),
+            (cmd, "First Second Third", "            #      ", "     #             "),
+            (cmd, "First Second Third", "     #             ", "#                  "),
+            (cmd, "First Second Third", "#                  ", "#                  "),
         ]
         for cmd, text, init_point, expected_point in tests:
             t_line = lineobj.ReadLineTextBuffer(text, get_point_pos(init_point))
@@ -230,18 +165,9 @@ class Test_movement (unittest.TestCase):
         cmd = lineobj.WordEnd
         tests = [
             # "First Second Third"
-            (cmd,
-             "First Second Third",
-             "#                  ",
-             "     #             "),
-            (cmd,
-                "First Second Third",
-                " #                 ",
-                "     #             "),
-            (cmd,
-                "First Second Third",
-                "             #     ",
-                "                  #"),
+            (cmd, "First Second Third", "#                  ", "     #             "),
+            (cmd, "First Second Third", " #                 ", "     #             "),
+            (cmd, "First Second Third", "             #     ", "                  #"),
         ]
         for cmd, text, init_point, expected_point in tests:
             t_line = lineobj.ReadLineTextBuffer(text, get_point_pos(init_point))
@@ -252,15 +178,9 @@ class Test_movement (unittest.TestCase):
         cmd = lineobj.WordEnd
         tests = [
             # "First Second Third"
-            (cmd,
-             "First Second Third",
-             "     #             "),
-            (cmd,
-                "First Second Third",
-                "            #      "),
-            (cmd,
-                "First Second Third",
-                "                  #"),
+            (cmd, "First Second Third", "     #             "),
+            (cmd, "First Second Third", "            #      "),
+            (cmd, "First Second Third", "                  #"),
         ]
 
         for cmd, text, init_point in tests:
@@ -271,18 +191,9 @@ class Test_movement (unittest.TestCase):
         cmd = lineobj.WordStart
         tests = [
             # "First Second Third"
-            (cmd,
-             "First Second Third",
-             "#                  ",
-             "#                  "),
-            (cmd,
-                "First Second Third",
-                " #                 ",
-                "#                  "),
-            (cmd,
-                "First Second Third",
-                "               #   ",
-                "             #     "),
+            (cmd, "First Second Third", "#                  ", "#                  "),
+            (cmd, "First Second Third", " #                 ", "#                  "),
+            (cmd, "First Second Third", "               #   ", "             #     "),
         ]
         for cmd, text, init_point, expected_point in tests:
             t_line = lineobj.ReadLineTextBuffer(text, get_point_pos(init_point))
@@ -293,15 +204,9 @@ class Test_movement (unittest.TestCase):
         cmd = lineobj.WordStart
         tests = [
             # "First Second Third"
-            (cmd,
-             "First Second Third",
-             "     #             "),
-            (cmd,
-                "First Second Third",
-                "            #      "),
-            (cmd,
-                "First Second Third",
-                "                  #"),
+            (cmd, "First Second Third", "     #             "),
+            (cmd, "First Second Third", "            #      "),
+            (cmd, "First Second Third", "                  #"),
         ]
 
         for cmd, text, init_point in tests:
@@ -312,18 +217,9 @@ class Test_movement (unittest.TestCase):
         cmd = lineobj.StartOfLine
         tests = [
             # "First Second Third"
-            (cmd,
-             "First Second Third",
-             "#                 ",
-             "#                 "),
-            (cmd,
-                "First Second Third",
-                "         #         ",
-                "#                  "),
-            (cmd,
-                "First Second Third",
-                "                  #",
-                "#                  "),
+            (cmd, "First Second Third", "#                 ", "#                 "),
+            (cmd, "First Second Third", "         #         ", "#                  "),
+            (cmd, "First Second Third", "                  #", "#                  "),
         ]
         for cmd, text, init_point, expected_point in tests:
             t_line = lineobj.ReadLineTextBuffer(text, get_point_pos(init_point))
@@ -334,18 +230,9 @@ class Test_movement (unittest.TestCase):
         cmd = lineobj.EndOfLine
         tests = [
             # "First Second Third"
-            (cmd,
-             "First Second Third",
-             "#                 ",
-             "                  #"),
-            (cmd,
-                "First Second Third",
-                "         #         ",
-                "                  #"),
-            (cmd,
-                "First Second Third",
-                "                  #",
-                "                  #"),
+            (cmd, "First Second Third", "#                 ", "                  #"),
+            (cmd, "First Second Third", "         #         ", "                  #"),
+            (cmd, "First Second Third", "                  #", "                  #"),
         ]
         for cmd, text, init_point, expected_point in tests:
             t_line = lineobj.ReadLineTextBuffer(text, get_point_pos(init_point))
@@ -356,15 +243,9 @@ class Test_movement (unittest.TestCase):
         cmd = lineobj.Point
         tests = [
             # "First Second Third"
-            (cmd,
-             "First Second Third",
-             0),
-            (cmd,
-                "First Second Third",
-                12),
-            (cmd,
-                "First Second Third",
-                18),
+            (cmd, "First Second Third", 0),
+            (cmd, "First Second Third", 12),
+            (cmd, "First Second Third", 18),
         ]
         for cmd, text, p in tests:
             t_line = lineobj.ReadLineTextBuffer(text, p)
@@ -373,6 +254,7 @@ class Test_movement (unittest.TestCase):
 
 # ----------------------------------------------------------------------
 # utility functions
+
 
 def get_point_pos(pstr):
     return pstr.index("#")
@@ -383,8 +265,10 @@ def get_mark_pos(mstr):
         return mstr.index("#")
     except ValueError:
         return -1
+
+
 # ----------------------------------------------------------------------
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

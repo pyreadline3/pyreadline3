@@ -1,5 +1,3 @@
-from __future__ import absolute_import, print_function, unicode_literals
-
 FOREGROUND_BLUE = 0x0001
 FOREGROUND_GREEN = 0x0002
 FOREGROUND_RED = 0x0004

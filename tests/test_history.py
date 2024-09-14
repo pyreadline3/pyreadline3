@@ -6,7 +6,7 @@
 #  Distributed under the terms of the BSD License.  The full license is in
 #  the file COPYING, distributed as part of this software.
 # *****************************************************************************
-from __future__ import absolute_import, print_function, unicode_literals
+
 
 import sys
 import unittest
@@ -15,7 +15,7 @@ import pyreadline3.logger
 from pyreadline3.lineeditor import lineobj
 from pyreadline3.lineeditor.history import LineHistory
 
-sys.path.append('../..')
+sys.path.append("../..")
 
 pyreadline3.logger.sock_silent = False
 
@@ -152,5 +152,5 @@ class Test_empty_history_search_incr_fwd_backwd(unittest.TestCase):
 
 # ----------------------------------------------------------------------
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

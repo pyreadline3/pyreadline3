@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import, print_function, unicode_literals
+
 
 """Release data for the pyreadline3 project.
 
@@ -16,21 +16,20 @@ $Id$"""
 
 # Name of the package for release purposes.  This is the name which labels
 # the tarballs and RPMs made by distutils, so it's best to lowercase it.
-name = 'pyreadline3'
+name = "pyreadline3"
 
 # For versions with substrings (like 0.6.16.svn), use an extra . to separate
 # the new substring.  We have to avoid using either dashes or underscores,
 # because bdist_rpm does not accept dashes (an RPM) convention, and
 # bdist_deb does not accept underscores (a Debian convention).
 
-branch = ''
+branch = ""
 
-version = '3.5.0'
+version = "3.5.0"
 
 description = "A python implementation of GNU readline."
 
-long_description = \
-    """
+long_description = """
 The `pyreadline3` package is based on the stale package `pyreadline` located
 at https://github.com/pyreadline/pyreadline.
 The original `pyreadline` package is a python implementation of GNU `readline`
@@ -58,26 +57,26 @@ The latest development version is always available at the project git
 repository https://github.com/pyreadline3/pyreadline3
 """
 
-license_name = 'BSD'
+license_name = "BSD"
 
 authors = {
-    'Bassem': ('Bassem Girgis', 'brgirgis@gmail.com'),
-    'Jorgen': ('Jorgen Stenarson', 'jorgen.stenarson@kroywen.se'),
-    'Gary': ('Gary Bishop', ''),
-    'Jack': ('Jack Trainor', ''),
+    "Bassem": ("Bassem Girgis", "brgirgis@gmail.com"),
+    "Jorgen": ("Jorgen Stenarson", "jorgen.stenarson@kroywen.se"),
+    "Gary": ("Gary Bishop", ""),
+    "Jack": ("Jack Trainor", ""),
 }
 
-url = 'https://pypi.python.org/pypi/pyreadline3/'
-download_url = 'https://pypi.python.org/pypi/pyreadline3/'
+url = "https://pypi.python.org/pypi/pyreadline3/"
+download_url = "https://pypi.python.org/pypi/pyreadline3/"
 platforms = [
-    'Windows XP/2000/NT',
-    'Windows 95/98/ME',
+    "Windows XP/2000/NT",
+    "Windows 95/98/ME",
 ]
 
 keywords = [
-    'readline',
-    'pyreadline',
-    'pyreadline3',
+    "readline",
+    "pyreadline",
+    "pyreadline3",
 ]
 
 classifiers = [
@@ -85,17 +84,13 @@ classifiers = [
     #   3 - Alpha
     #   4 - Beta
     #   5 - Production/Stable
-    'Development Status :: 5 - Production/Stable',
-
-    'Environment :: Console',
-
-    'Operating System :: Microsoft :: Windows',
-
-    'License :: OSI Approved :: BSD License',
-
-    'Programming Language :: Python :: 3.8',
-    'Programming Language :: Python :: 3.9',
-    'Programming Language :: Python :: 3.10',
-    'Programming Language :: Python :: 3.11',
-    'Programming Language :: Python :: 3.12',
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Operating System :: Microsoft :: Windows",
+    "License :: OSI Approved :: BSD License",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
 ]

@@ -6,7 +6,7 @@
 #  Distributed under the terms of the BSD License.  The full license is in
 #  the file COPYING, distributed as part of this software.
 # *****************************************************************************
-from __future__ import absolute_import, print_function, unicode_literals
+
 
 import pyreadline3.clipboard as clipboard
 from pyreadline3.unicode_helper import biter, ensure_unicode
@@ -24,6 +24,7 @@ class NotAWordError(IndexError):
 def quote_char(c):
     if ord(c) > 0:
         return c
+
 
 # ############# Line positioner ########################
 
@@ -57,10 +58,7 @@ PrevChar = PrevChar()
 
 class NextWordStart(LinePositioner):
     def __call__(self, line):
-        return line.next_start_segment(
-            line.line_buffer,
-            line.is_word_token)[
-            line.point]
+        return line.next_start_segment(line.line_buffer, line.is_word_token)[line.point]
 
 
 NextWordStart = NextWordStart()
@@ -68,10 +66,7 @@ NextWordStart = NextWordStart()
 
 class NextWordEnd(LinePositioner):
     def __call__(self, line):
-        return line.next_end_segment(
-            line.line_buffer,
-            line.is_word_token)[
-            line.point]
+        return line.next_end_segment(line.line_buffer, line.is_word_token)[line.point]
 
 
 NextWordEnd = NextWordEnd()
@@ -79,10 +74,7 @@ NextWordEnd = NextWordEnd()
 
 class PrevWordStart(LinePositioner):
     def __call__(self, line):
-        return line.prev_start_segment(
-            line.line_buffer,
-            line.is_word_token)[
-            line.point]
+        return line.prev_start_segment(line.line_buffer, line.is_word_token)[line.point]
 
 
 PrevWordStart = PrevWordStart()
@@ -90,11 +82,10 @@ PrevWordStart = PrevWordStart()
 
 class WordStart(LinePositioner):
     def __call__(self, line):
-        if line.is_word_token(
-            line.get_line_text()[
-                Point(line):Point(line) + 1]):
+        if line.is_word_token(line.get_line_text()[Point(line) : Point(line) + 1]):
             if Point(line) > 0 and line.is_word_token(
-                    line.get_line_text()[Point(line) - 1:Point(line)]):
+                line.get_line_text()[Point(line) - 1 : Point(line)]
+            ):
                 return PrevWordStart(line)
             else:
                 return line.point
@@ -107,12 +98,10 @@ WordStart = WordStart()
 
 class WordEnd(LinePositioner):
     def __call__(self, line):
-        if line.is_word_token(
-            line.get_line_text()[
-                Point(line):Point(line) + 1]):
+        if line.is_word_token(line.get_line_text()[Point(line) : Point(line) + 1]):
             if line.is_word_token(
-                line.get_line_text()[
-                    Point(line) + 1:Point(line) + 2]):
+                line.get_line_text()[Point(line) + 1 : Point(line) + 2]
+            ):
                 return NextWordEnd(line)
             else:
                 return line.point
@@ -125,10 +114,7 @@ WordEnd = WordEnd()
 
 class PrevWordEnd(LinePositioner):
     def __call__(self, line):
-        return line.prev_end_segment(
-            line.line_buffer,
-            line.is_word_token)[
-            line.point]
+        return line.prev_end_segment(line.line_buffer, line.is_word_token)[line.point]
 
 
 PrevWordEnd = PrevWordEnd()
@@ -137,10 +123,10 @@ PrevWordEnd = PrevWordEnd()
 class PrevSpace(LinePositioner):
     def __call__(self, line):
         point = line.point
-        if line[point - 1:point].get_line_text() == " ":
-            while point > 0 and line[point - 1:point].get_line_text() == " ":
+        if line[point - 1 : point].get_line_text() == " ":
+            while point > 0 and line[point - 1 : point].get_line_text() == " ":
                 point -= 1
-        while point > 0 and line[point - 1:point].get_line_text() != " ":
+        while point > 0 and line[point - 1 : point].get_line_text() != " ":
             point -= 1
         return point
 
@@ -179,9 +165,13 @@ class Mark(LinePositioner):
 
 k = Mark()
 
-all_positioners = sorted([(value.__class__.__name__, value)
-                          for key, value in globals().items()
-                          if isinstance(value, LinePositioner)])
+all_positioners = sorted(
+    [
+        (value.__class__.__name__, value)
+        for key, value in globals().items()
+        if isinstance(value, LinePositioner)
+    ]
+)
 
 # ############## LineSlice #################
 
@@ -232,6 +222,7 @@ PointSlice = PointSlice()
 
 
 # ##############  TextLine  ######################
+
 
 class TextLine(object):
     def __init__(self, txtstr, point=None, mark=None):
@@ -294,7 +285,10 @@ class TextLine(object):
 
     def __repr__(self):
         return 'TextLine("%s",point=%s,mark=%s)' % (
-            self.line_buffer, self.point, self.mark)
+            self.line_buffer,
+            self.point,
+            self.mark,
+        )
 
     def copy(self):
         return self.__class__(self)
@@ -302,35 +296,35 @@ class TextLine(object):
     def set_point(self, value):
         if isinstance(value, LinePositioner):
             value = value(self)
-        assert (value <= len(self.line_buffer))
+        assert value <= len(self.line_buffer)
         if value > len(self.line_buffer):
             value = len(self.line_buffer)
         self._point = value
 
     def get_point(self):
         return self._point
+
     point = property(get_point, set_point)
 
     def visible_line_width(self, position=Point):
         """Return the visible width of the text up to position."""
         extra_char_width = len(
-            [
-                None
-                for c in self[:position].line_buffer
-                if 0x2013 <= ord(c) <= 0xFFFD
-            ]
+            [None for c in self[:position].line_buffer if 0x2013 <= ord(c) <= 0xFFFD]
         )
-        return len(self[:position].quoted_text()) + \
-            self[:position].line_buffer.count("\t") * 7 + extra_char_width
+        return (
+            len(self[:position].quoted_text())
+            + self[:position].line_buffer.count("\t") * 7
+            + extra_char_width
+        )
 
     def quoted_text(self):
         quoted = [quote_char(c) for c in self.line_buffer]
-        return ''.join(map(ensure_unicode, quoted))
+        return "".join(map(ensure_unicode, quoted))
 
     def get_line_text(self):
         buf = self.line_buffer
         buf = list(map(ensure_unicode, buf))
-        return ''.join(buf)
+        return "".join(buf)
 
     def set_line(self, text, cursor=None):
         self.line_buffer = [c for c in str(text)]
@@ -474,9 +468,12 @@ class ReadLineTextBuffer(TextLine):
         self.kill_ring = []
 
     def __repr__(self):
-        return 'ReadLineTextBuffer'\
-               '("%s",point=%s,mark=%s,selection_mark=%s)' %\
-            (self.line_buffer, self.point, self.mark, self.selection_mark)
+        return "ReadLineTextBuffer" '("%s",point=%s,mark=%s,selection_mark=%s)' % (
+            self.line_buffer,
+            self.point,
+            self.mark,
+            self.selection_mark,
+        )
 
     def insert_text(self, char, argument=1):
         self.delete_selection()
@@ -603,10 +600,10 @@ class ReadLineTextBuffer(TextLine):
     def delete_selection(self):
         if self.enable_selection and self.selection_mark >= 0:
             if self.selection_mark < self.point:
-                del self[self.selection_mark:self.point]
+                del self[self.selection_mark : self.point]
                 self.selection_mark = -1
             else:
-                del self[self.point:self.selection_mark]
+                del self[self.point : self.selection_mark]
                 self.selection_mark = -1
             return True
         else:
@@ -650,12 +647,13 @@ class ReadLineTextBuffer(TextLine):
     def delete_current_word(self):
         if not self.delete_selection():
             del self[CurrentWord]
-        self.selection_mark = - 1
+        self.selection_mark = -1
 
     def delete_horizontal_space(self):
         if self[Point] in " \t":
             del self[PrevWordEnd:NextWordStart]
         self.selection_mark = -1
+
     # Case
 
     def upcase_word(self):
@@ -681,6 +679,7 @@ class ReadLineTextBuffer(TextLine):
             self.point = p
         except NotAWordError:
             pass
+
     # Transpose
 
     def transpose_chars(self):
@@ -713,8 +712,8 @@ class ReadLineTextBuffer(TextLine):
     # Kill
 
     def kill_line(self):
-        self.add_to_kill_ring(self[self.point:])
-        del self.line_buffer[self.point:]
+        self.add_to_kill_ring(self[self.point :])
+        del self.line_buffer[self.point :]
 
     def kill_whole_line(self):
         self.add_to_kill_ring(self[:])
@@ -774,7 +773,7 @@ class ReadLineTextBuffer(TextLine):
         pass
 
     def copy_region_to_clipboard(self):  # ()
-        '''Copy the text in the region to the windows clipboard.'''
+        """Copy the text in the region to the windows clipboard."""
         if self.enable_win32_clipboard:
             mark = min(self.mark, len(self.line_buffer))
             cursor = min(self.point, len(self.line_buffer))
@@ -786,9 +785,12 @@ class ReadLineTextBuffer(TextLine):
             clipboard.SetClipboardText(toclipboard)
 
     def copy_selection_to_clipboard(self):  # ()
-        '''Copy the text in the region to the windows clipboard.'''
-        if self.enable_win32_clipboard and self.enable_selection and \
-                self.selection_mark >= 0:
+        """Copy the text in the region to the windows clipboard."""
+        if (
+            self.enable_win32_clipboard
+            and self.enable_selection
+            and self.selection_mark >= 0
+        ):
             selection_mark = min(self.selection_mark, len(self.line_buffer))
             cursor = min(self.point, len(self.line_buffer))
             if self.selection_mark == -1:
@@ -801,6 +803,7 @@ class ReadLineTextBuffer(TextLine):
     def cut_selection_to_clipboard(self):  # ()
         self.copy_selection_to_clipboard()
         self.delete_selection()
+
     # Paste
 
     # Kill ring
@@ -828,6 +831,7 @@ def show_pos(buff, pos, chr="."):
             return chr
         else:
             return " "
+
     return "".join([choice(pos == idx) for idx in range(l_n + 1)])
 
 

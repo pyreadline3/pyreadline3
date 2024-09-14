@@ -32,7 +32,7 @@
 # hence this contribution.
 #
 ##########################################################################
-from __future__ import absolute_import, print_function, unicode_literals
+
 
 import ctypes
 import ctypes.wintypes as wintypes
@@ -113,9 +113,11 @@ def SetClipboardText(text):
     hGlobalMem = GlobalAlloc(GHND, c_size_t(bufferSize))
     GlobalLock.restype = c_void_p
     lpGlobalMem = GlobalLock(hGlobalMem)
-    _strncpy(cast(lpGlobalMem, c_wchar_p),
-             cast(addressof(buffer), c_wchar_p),
-             c_size_t(bufferSize))
+    _strncpy(
+        cast(lpGlobalMem, c_wchar_p),
+        cast(addressof(buffer), c_wchar_p),
+        c_size_t(bufferSize),
+    )
     GlobalUnlock(c_int(hGlobalMem))
     if OpenClipboard(0):
         EmptyClipboard()
@@ -123,6 +125,6 @@ def SetClipboardText(text):
         CloseClipboard()
 
 
-if __name__ == '__main__':
-    txt = GetClipboardText()                            # display last text clipped
+if __name__ == "__main__":
+    txt = GetClipboardText()  # display last text clipped
     print(txt)

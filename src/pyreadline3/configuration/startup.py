@@ -1,9 +1,10 @@
 # -*- coding: UTF-8 -*-
 # Example snippet to use in a PYTHONSTARTUP file
-from __future__ import absolute_import, print_function, unicode_literals
+
 
 try:
     import atexit
+
     # pyreadline3.rlmain.config_path=r"c:\xxx\pyreadlineconfig.ini"
     import readline
 
@@ -26,6 +27,7 @@ else:
 
     def nop(val, word):
         return word
+
     completer_obj._callable_postfix = nop
     readline.set_completer(completer_obj.complete)
 

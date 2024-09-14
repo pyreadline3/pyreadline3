@@ -6,7 +6,7 @@
 #  Distributed under the terms of the BSD License.  The full license is in
 #  the file COPYING, distributed as part of this software.
 # *****************************************************************************
-from __future__ import absolute_import, print_function, unicode_literals
+
 
 import re
 
@@ -31,11 +31,7 @@ def markwords(in_str, is_wordfun):
 
 
 def split_words(in_str, is_wordfun):
-    return [
-        x
-        for x in word_pattern.split(markwords(in_str, is_wordfun))
-        if x != ""
-    ]
+    return [x for x in word_pattern.split(markwords(in_str, is_wordfun)) if x != ""]
 
 
 def mark_start_segment(in_str, is_segment):
@@ -44,6 +40,7 @@ def mark_start_segment(in_str, is_segment):
             return "s" + s[1:]
         else:
             return s
+
     return "".join(map(mark_start, split_words(in_str, is_segment)))
 
 
@@ -53,6 +50,7 @@ def mark_end_segment(in_str, is_segment):
             return s[:-1] + "s"
         else:
             return s
+
     return "".join(map(mark_start, split_words(in_str, is_segment)))
 
 
@@ -61,16 +59,11 @@ def mark_start_segment_index(in_str, is_segment):
 
 
 def mark_end_segment_index(in_str, is_segment):
-    return [
-        x +
-        1 for x in str_find_all(
-            mark_end_segment(
-                in_str,
-                is_segment),
-            "s")]
+    return [x + 1 for x in str_find_all(mark_end_segment(in_str, is_segment), "s")]
 
 
 # ###############  Following are used in lineobj  ###########################
+
 
 def is_word_token(in_str):
     return not is_non_word_token(in_str)
@@ -87,10 +80,9 @@ def next_start_segment(in_str, is_segment):
     in_str = "".join(in_str)
     result = []
     for start in mark_start_segment_index(in_str, is_segment):
-        result[len(result):start] = [start for x in range(start - len(result))]
-    result[len(result):len(in_str)] = [
-        len(in_str)
-        for x in range(len(in_str) - len(result) + 1)
+        result[len(result) : start] = [start for x in range(start - len(result))]
+    result[len(result) : len(in_str)] = [
+        len(in_str) for x in range(len(in_str) - len(result) + 1)
     ]
     return result
 
@@ -99,10 +91,9 @@ def next_end_segment(in_str, is_segment):
     in_str = "".join(in_str)
     result = []
     for start in mark_end_segment_index(in_str, is_segment):
-        result[len(result):start] = [start for x in range(start - len(result))]
-    result[len(result):len(in_str)] = [
-        len(in_str)
-        for x in range(len(in_str) - len(result) + 1)
+        result[len(result) : start] = [start for x in range(start - len(result))]
+    result[len(result) : len(in_str)] = [
+        len(in_str) for x in range(len(in_str) - len(result) + 1)
     ]
     return result
 
@@ -112,11 +103,11 @@ def prev_start_segment(in_str, is_segment):
     result = []
     prev = 0
     for start in mark_start_segment_index(in_str, is_segment):
-        result[len(result):start +
-               1] = [prev for x in range(start - len(result) + 1)]
+        result[len(result) : start + 1] = [prev for x in range(start - len(result) + 1)]
         prev = start
-    result[len(result):len(in_str)] = [
-        prev for x in range(len(in_str) - len(result) + 1)]
+    result[len(result) : len(in_str)] = [
+        prev for x in range(len(in_str) - len(result) + 1)
+    ]
     return result
 
 
@@ -125,11 +116,9 @@ def prev_end_segment(in_str, is_segment):
     result = []
     prev = 0
     for start in mark_end_segment_index(in_str, is_segment):
-        result[len(result):start +
-               1] = [prev for x in range(start - len(result) + 1)]
+        result[len(result) : start + 1] = [prev for x in range(start - len(result) + 1)]
         prev = start
-    result[len(result):len(in_str)] = [
-        len(in_str)
-        for x in range(len(in_str) - len(result) + 1)
+    result[len(result) : len(in_str)] = [
+        len(in_str) for x in range(len(in_str) - len(result) + 1)
     ]
     return result

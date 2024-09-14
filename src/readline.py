@@ -2,7 +2,7 @@
 # this file is needed in site-packages to emulate readline
 # necessary for rlcompleter since it relies on the existence
 # of a readline module
-from __future__ import absolute_import, print_function, unicode_literals
+
 
 from pyreadline3.rlmain import Readline
 

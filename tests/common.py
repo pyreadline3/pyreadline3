@@ -6,7 +6,7 @@
 #  Distributed under the terms of the BSD License.  The full license is in
 #  the file COPYING, distributed as part of this software.
 # *****************************************************************************
-from __future__ import absolute_import, print_function, unicode_literals
+
 
 from pyreadline3 import keysyms
 from pyreadline3.lineeditor import history, lineobj
@@ -27,14 +27,14 @@ class MockReadline:
         pass
 
     def insert_text(self, string):
-        '''Insert text into the command line.'''
+        """Insert text into the command line."""
         self.l_buffer.insert_text(string)
 
 
 class MockConsole:
     def __init__(self):
         self.bell_count = 0
-        self.text = ''
+        self.text = ""
 
     def size(self):
         return (1, 1)
@@ -52,13 +52,13 @@ class MockConsole:
 class Event:
     def __init__(self, char):
         if char == "escape":
-            self.char = '\x1b'
+            self.char = "\x1b"
         elif char == "backspace":
-            self.char = '\x08'
+            self.char = "\x08"
         elif char == "tab":
-            self.char = '\t'
+            self.char = "\t"
         elif char == "space":
-            self.char = ' '
+            self.char = " "
         else:
             self.char = char
 

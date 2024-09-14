@@ -6,7 +6,7 @@
 #  Distributed under the terms of the BSD License.  The full license is in
 #  the file COPYING, distributed as part of this software.
 # *****************************************************************************
-from __future__ import absolute_import, print_function, unicode_literals
+
 
 import logging
 import logging.handlers
@@ -18,10 +18,10 @@ host = "localhost"
 port = logging.handlers.DEFAULT_TCP_LOGGING_PORT
 
 
-pyreadline_logger = logging.getLogger('PYREADLINE')
+pyreadline_logger = logging.getLogger("PYREADLINE")
 pyreadline_logger.setLevel(logging.DEBUG)
 pyreadline_logger.propagate = False
-formatter = logging.Formatter(str('%(message)s'))
+formatter = logging.Formatter(str("%(message)s"))
 file_handler = None
 
 

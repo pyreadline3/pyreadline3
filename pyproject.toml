@@ -7,8 +7,8 @@ name = "pyreadline3"
 authors = [
     { name = "Bassem Girgis", email = "brgirgis@gmail.com" },
     { name = "Jorgen Stenarson", email = "jorgen.stenarson@kroywen.se" },
-    { name = "Gary Bishop" },
-    { name = "Jack Trainor" },
+    { name = "Gary Bishop", email = "unknwon@unknown.com" },
+    { name = "Jack Trainor", email = "unknwon@unknown.com" },
 ]
 maintainers = [{ name = "Bassem Girgis", email = "brgirgis@gmail.com" }]
 description = "A python implementation of GNU readline."

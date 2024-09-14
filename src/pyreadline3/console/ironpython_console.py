@@ -7,7 +7,7 @@
 #  Distributed under the terms of the BSD License.  The full license is in
 #  the file COPYING, distributed as part of this software.
 # *****************************************************************************
-from __future__ import absolute_import, print_function, unicode_literals
+
 
 import os
 import re
@@ -25,8 +25,8 @@ from pyreadline3.logger import log
 
 from .event import Event
 
-'''Cursor control and color for the .NET console.
-'''
+"""Cursor control and color for the .NET console.
+"""
 
 #
 # Ironpython requires a patch to work do:
@@ -68,37 +68,43 @@ ansicolor = {
     "1;34": color.Blue,
     "1;35": color.Magenta,
     "1;36": color.Cyan,
-    "1;37": color.White
+    "1;37": color.White,
 }
 
 winattr = {
-    "black": 0, "darkgray": 0 + 8,
-    "darkred": 4, "red": 4 + 8,
-    "darkgreen": 2, "green": 2 + 8,
-    "darkyellow": 6, "yellow": 6 + 8,
-    "darkblue": 1, "blue": 1 + 8,
-    "darkmagenta": 5, "magenta": 5 + 8,
-    "darkcyan": 3, "cyan": 3 + 8,
-    "gray": 7, "white": 7 + 8,
+    "black": 0,
+    "darkgray": 0 + 8,
+    "darkred": 4,
+    "red": 4 + 8,
+    "darkgreen": 2,
+    "green": 2 + 8,
+    "darkyellow": 6,
+    "yellow": 6 + 8,
+    "darkblue": 1,
+    "blue": 1 + 8,
+    "darkmagenta": 5,
+    "magenta": 5 + 8,
+    "darkcyan": 3,
+    "cyan": 3 + 8,
+    "gray": 7,
+    "white": 7 + 8,
 }
 
 
 class Console(object):
-    '''Console driver for Windows.
-
-    '''
+    """Console driver for Windows."""
 
     def __init__(self, newbuffer=0):
-        '''Initialize the Console object.
+        """Initialize the Console object.
 
         newbuffer=1 will allocate a new buffer so the old content will be restored
         on exit.
-        '''
+        """
         self.serial = 0
         self.attr = System.Console.ForegroundColor
         self.saveattr = winattr[str(System.Console.ForegroundColor).lower()]
         self.savebg = System.Console.BackgroundColor
-        log('initial attr=%s' % self.attr)
+        log("initial attr=%s" % self.attr)
 
     def _get(self):
         top = System.Console.WindowTop
@@ -113,12 +119,12 @@ class Console(object):
     del _get, _set
 
     def __del__(self):
-        '''Cleanup the console when finished.'''
+        """Cleanup the console when finished."""
         # I don't think this ever gets called
         pass
 
     def pos(self, x=None, y=None):
-        '''Move or query the window cursor.'''
+        """Move or query the window cursor."""
         if x is not None:
             System.Console.CursorLeft = x
         else:
@@ -130,20 +136,20 @@ class Console(object):
         return x, y
 
     def home(self):
-        '''Move to home.'''
+        """Move to home."""
         self.pos(0, 0)
 
-# Map ANSI color escape sequences into Windows Console Attributes
+    # Map ANSI color escape sequences into Windows Console Attributes
 
-    terminal_escape = re.compile('(\001?\033\\[[0-9;]*m\002?)')
-    escape_parts = re.compile('\001?\033\\[([0-9;]*)m\002?')
+    terminal_escape = re.compile("(\001?\033\\[[0-9;]*m\002?)")
+    escape_parts = re.compile("\001?\033\\[([0-9;]*)m\002?")
 
     # This pattern should match all characters that change the cursor position differently
     # than a normal character.
-    motion_char_re = re.compile('([\n\r\t\010\007])')
+    motion_char_re = re.compile("([\n\r\t\010\007])")
 
     def write_scrolling(self, text, attr=None):
-        '''write text at current cursor position while watching for scrolling.
+        """write text at current cursor position while watching for scrolling.
 
         If the window scrolls because you are at the bottom of the screen
         buffer, all positions that you are storing will be shifted by the
@@ -155,7 +161,7 @@ class Console(object):
         so that it will know when the screen buffer is scrolled. It
         returns the number of lines that the buffer scrolled.
 
-        '''
+        """
         x, y = self.pos()
         w, h = self.size()
         scroll = 0  # the result
@@ -165,19 +171,19 @@ class Console(object):
         for chunk in chunks:
             n = self.write_color(chunk, attr)
             if len(chunk) == 1:  # the funny characters will be alone
-                if chunk[0] == '\n':  # newline
+                if chunk[0] == "\n":  # newline
                     x = 0
                     y += 1
-                elif chunk[0] == '\r':  # carriage return
+                elif chunk[0] == "\r":  # carriage return
                     x = 0
-                elif chunk[0] == '\t':  # tab
+                elif chunk[0] == "\t":  # tab
                     x = 8 * (int(x / 8) + 1)
                     if x > w:  # newline
                         x -= w
                         y += 1
-                elif chunk[0] == '\007':  # bell
+                elif chunk[0] == "\007":  # bell
                     pass
-                elif chunk[0] == '\010':
+                elif chunk[0] == "\010":
                     x -= 1
                     if x < 0:
                         y -= 1  # backed up 1 line
@@ -199,28 +205,40 @@ class Console(object):
                     y = h - 1
         return scroll
 
-    trtable = {0: color.Black, 4: color.DarkRed, 2: color.DarkGreen,
-               6: color.DarkYellow, 1: color.DarkBlue, 5: color.DarkMagenta,
-               3: color.DarkCyan, 7: color.Gray, 8: color.DarkGray,
-               4 + 8: color.Red, 2 + 8: color.Green, 6 + 8: color.Yellow,
-               1 + 8: color.Blue, 5 + 8: color.Magenta, 3 + 8: color.Cyan,
-               7 + 8: color.White}
+    trtable = {
+        0: color.Black,
+        4: color.DarkRed,
+        2: color.DarkGreen,
+        6: color.DarkYellow,
+        1: color.DarkBlue,
+        5: color.DarkMagenta,
+        3: color.DarkCyan,
+        7: color.Gray,
+        8: color.DarkGray,
+        4 + 8: color.Red,
+        2 + 8: color.Green,
+        6 + 8: color.Yellow,
+        1 + 8: color.Blue,
+        5 + 8: color.Magenta,
+        3 + 8: color.Cyan,
+        7 + 8: color.White,
+    }
 
     def write_color(self, text, attr=None):
-        '''write text at current cursor position and interpret color escapes.
+        """write text at current cursor position and interpret color escapes.
 
         return the number of characters written.
-        '''
+        """
         log('write_color("%s", %s)' % (text, attr))
         chunks = self.terminal_escape.split(text)
-        log('chunks=%s' % repr(chunks))
+        log("chunks=%s" % repr(chunks))
         bg = self.savebg
         n = 0  # count the characters we actually write, omitting the escapes
         if attr is None:  # use attribute from initial console
             attr = self.attr
         try:
-            fg = self.trtable[(0x000f & attr)]
-            bg = self.trtable[(0x00f0 & attr) >> 4]
+            fg = self.trtable[(0x000F & attr)]
+            bg = self.trtable[(0x00F0 & attr) >> 4]
         except TypeError:
             fg = attr
 
@@ -236,7 +254,7 @@ class Console(object):
         return n
 
     def write_plain(self, text, attr=None):
-        '''write text at current cursor position.'''
+        """write text at current cursor position."""
         log('write("%s", %s)' % (text, attr))
         if attr is None:
             attr = self.attr
@@ -246,10 +264,12 @@ class Console(object):
         return len(text)
 
     if "EMACS" in os.environ:
+
         def write_color(self, text, attr=None):
             junk = c_int(0)
             self.WriteFile(self.hout, text, len(text), byref(junk), None)
             return len(text)
+
         write_plain = write_color
 
     # make this class look like a file object
@@ -257,7 +277,7 @@ class Console(object):
         log('write("%s")' % text)
         return self.write_color(text)
 
-    #write = write_scrolling
+    # write = write_scrolling
 
     def isatty(self):
         return True
@@ -265,12 +285,12 @@ class Console(object):
     def flush(self):
         pass
 
-    def page(self, attr=None, fill=' '):
-        '''Fill the entire screen.'''
+    def page(self, attr=None, fill=" "):
+        """Fill the entire screen."""
         System.Console.Clear()
 
     def text(self, x, y, text, attr=None):
-        '''Write text at the given position.'''
+        """Write text at the given position."""
         self.pos(x, y)
         self.write_color(text, attr)
 
@@ -284,29 +304,29 @@ class Console(object):
         self.pos(*pos)
         self.WindowTop = oldtop
 
-    def rectangle(self, rect, attr=None, fill=' '):
-        '''Fill Rectangle.'''
+    def rectangle(self, rect, attr=None, fill=" "):
+        """Fill Rectangle."""
         oldtop = self.WindowTop
         oldpos = self.pos()
-        #raise NotImplementedError
+        # raise NotImplementedError
         x0, y0, x1, y1 = rect
         if attr is None:
             attr = self.attr
         if fill:
             rowfill = fill[:1] * abs(x1 - x0)
         else:
-            rowfill = ' ' * abs(x1 - x0)
+            rowfill = " " * abs(x1 - x0)
         for y in range(y0, y1):
             System.Console.SetCursorPosition(x0, y)
             self.write_color(rowfill, attr)
         self.pos(*oldpos)
 
-    def scroll(self, rect, dx, dy, attr=None, fill=' '):
-        '''Scroll a rectangle.'''
+    def scroll(self, rect, dx, dy, attr=None, fill=" "):
+        """Scroll a rectangle."""
         raise NotImplementedError
 
     def scroll_window(self, lines):
-        '''Scroll the window by the indicated number of lines.'''
+        """Scroll the window by the indicated number of lines."""
         top = self.WindowTop + lines
         if top < 0:
             top = 0
@@ -315,7 +335,7 @@ class Console(object):
         self.WindowTop = top
 
     def getkeypress(self):
-        '''Return next key press event from the queue, ignoring others.'''
+        """Return next key press event from the queue, ignoring others."""
         ck = System.ConsoleKey
         while True:
             e = System.Console.ReadKey(True)
@@ -330,14 +350,14 @@ class Console(object):
                 return event(self, e)
 
     def title(self, txt=None):
-        '''Set/get title.'''
+        """Set/get title."""
         if txt:
             System.Console.Title = txt
         else:
             return System.Console.Title
 
     def size(self, width=None, height=None):
-        '''Set/get window size.'''
+        """Set/get window size."""
         sc = System.Console
         if width is not None and height is not None:
             sc.BufferWidth, sc.BufferHeight = width, height
@@ -350,24 +370,24 @@ class Console(object):
             return sc.WindowWidth - 1, sc.WindowHeight - 1
 
     def cursor(self, visible=True, size=None):
-        '''Set cursor on or off.'''
+        """Set cursor on or off."""
         System.Console.CursorVisible = visible
 
     def bell(self):
         System.Console.Beep()
 
     def next_serial(self):
-        '''Get next event serial number.'''
+        """Get next event serial number."""
         self.serial += 1
         return self.serial
 
 
 class event(Event):
-    '''Represent events from the console.'''
+    """Represent events from the console."""
 
     def __init__(self, console, input):
-        '''Initialize an event from the Windows input structure.'''
-        self.type = '??'
+        """Initialize an event from the Windows input structure."""
+        self.type = "??"
         self.serial = console.next_serial()
         self.width = 0
         self.height = 0
@@ -385,6 +405,7 @@ class event(Event):
 def make_event_from_keydescr(keydescr):
     def input():
         return 1
+
     input.KeyChar = "a"
     input.Key = System.ConsoleKey.A
     input.Modifiers = System.ConsoleModifiers.Shift
@@ -421,23 +442,25 @@ def install_readline(hook):
 
         def WriteLine(self, text, style):
             System.Console.WriteLine(text)
+
     IronPythonConsole.PythonCommandLine.MyConsole = IronPythonWrapper()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     import sys
     import time
+
     c = Console(0)
     sys.stdout = c
     sys.stderr = c
     c.page()
     c.pos(5, 10)
-    c.write('hi there')
+    c.write("hi there")
     c.title("Testing console")
-#    c.bell()
+    #    c.bell()
     print()
     print("size", c.size())
-    print('  some printed output')
+    print("  some printed output")
     for i in range(10):
         e = c.getkeypress()
         print(e.Key, chr(e.KeyChar), ord(e.KeyChar), e.Modifiers)

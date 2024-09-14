@@ -8,7 +8,7 @@
 #  the file COPYING, distributed as part of this software.
 # *****************************************************************************
 # table for translating virtual keys to X windows key symbols
-from __future__ import absolute_import, print_function, unicode_literals
+
 
 try:
     set
@@ -19,26 +19,85 @@ from pyreadline3.unicode_helper import ensure_unicode
 
 validkey = set(
     [
-        'cancel', 'backspace', 'tab', 'clear',
-        'return', 'shift_l', 'control_l', 'alt_l',
-        'pause', 'caps_lock', 'escape', 'space',
-        'prior', 'next', 'end', 'home',
-        'left', 'up', 'right', 'down',
-        'select', 'print', 'execute', 'snapshot',
-        'insert', 'delete', 'help', 'f1',
-        'f2', 'f3', 'f4', 'f5',
-        'f6', 'f7', 'f8', 'f9',
-        'f10', 'f11', 'f12', 'f13',
-        'f14', 'f15', 'f16', 'f17',
-        'f18', 'f19', 'f20', 'f21',
-        'f22', 'f23', 'f24', 'num_lock',
-        'scroll_lock', 'vk_apps', 'vk_processkey', 'vk_attn',
-        'vk_crsel', 'vk_exsel', 'vk_ereof', 'vk_play',
-        'vk_zoom', 'vk_noname', 'vk_pa1', 'vk_oem_clear',
-        'numpad0', 'numpad1', 'numpad2', 'numpad3',
-        'numpad4', 'numpad5', 'numpad6', 'numpad7',
-        'numpad8', 'numpad9', 'divide', 'multiply',
-        'add', 'subtract', 'vk_decimal'
+        "cancel",
+        "backspace",
+        "tab",
+        "clear",
+        "return",
+        "shift_l",
+        "control_l",
+        "alt_l",
+        "pause",
+        "caps_lock",
+        "escape",
+        "space",
+        "prior",
+        "next",
+        "end",
+        "home",
+        "left",
+        "up",
+        "right",
+        "down",
+        "select",
+        "print",
+        "execute",
+        "snapshot",
+        "insert",
+        "delete",
+        "help",
+        "f1",
+        "f2",
+        "f3",
+        "f4",
+        "f5",
+        "f6",
+        "f7",
+        "f8",
+        "f9",
+        "f10",
+        "f11",
+        "f12",
+        "f13",
+        "f14",
+        "f15",
+        "f16",
+        "f17",
+        "f18",
+        "f19",
+        "f20",
+        "f21",
+        "f22",
+        "f23",
+        "f24",
+        "num_lock",
+        "scroll_lock",
+        "vk_apps",
+        "vk_processkey",
+        "vk_attn",
+        "vk_crsel",
+        "vk_exsel",
+        "vk_ereof",
+        "vk_play",
+        "vk_zoom",
+        "vk_noname",
+        "vk_pa1",
+        "vk_oem_clear",
+        "numpad0",
+        "numpad1",
+        "numpad2",
+        "numpad3",
+        "numpad4",
+        "numpad5",
+        "numpad6",
+        "numpad7",
+        "numpad8",
+        "numpad9",
+        "divide",
+        "multiply",
+        "add",
+        "subtract",
+        "vk_decimal",
     ]
 )
 
@@ -50,20 +109,12 @@ escape_sequence_to_special_key = {
 
 
 class KeyPress(object):
-    def __init__(
-            self,
-            char="",
-            shift=False,
-            control=False,
-            meta=False,
-            keyname=""):
+    def __init__(self, char="", shift=False, control=False, meta=False, keyname=""):
         if control or meta or shift:
             char = char.upper()
-        self.info = dict(char=char,
-                         shift=shift,
-                         control=control,
-                         meta=meta,
-                         keyname=keyname)
+        self.info = dict(
+            char=char, shift=shift, control=control, meta=meta, keyname=keyname
+        )
 
     def create(name):
         def get(self):
@@ -71,7 +122,9 @@ class KeyPress(object):
 
         def set(self, value):
             self.info[name] = value
+
         return property(get, set)
+
     char = create("char")
     shift = create("shift")
     control = create("control")
@@ -106,27 +159,27 @@ def make_KeyPress_from_keydescr(keydescr):
 
     while True:
         lkeyname = keydescr.lower()
-        if lkeyname.startswith('control-'):
+        if lkeyname.startswith("control-"):
             keyinfo.control = True
             keydescr = keydescr[8:]
-        elif lkeyname.startswith('ctrl-'):
+        elif lkeyname.startswith("ctrl-"):
             keyinfo.control = True
             keydescr = keydescr[5:]
-        elif keydescr.lower().startswith('\\c-'):
+        elif keydescr.lower().startswith("\\c-"):
             keyinfo.control = True
             keydescr = keydescr[3:]
-        elif keydescr.lower().startswith('\\m-'):
+        elif keydescr.lower().startswith("\\m-"):
             keyinfo.meta = True
             keydescr = keydescr[3:]
         elif keydescr in escape_sequence_to_special_key:
             keydescr = escape_sequence_to_special_key[keydescr]
-        elif lkeyname.startswith('meta-'):
+        elif lkeyname.startswith("meta-"):
             keyinfo.meta = True
             keydescr = keydescr[5:]
-        elif lkeyname.startswith('alt-'):
+        elif lkeyname.startswith("alt-"):
             keyinfo.meta = True
             keydescr = keydescr[4:]
-        elif lkeyname.startswith('shift-'):
+        elif lkeyname.startswith("shift-"):
             keyinfo.shift = True
             keydescr = keydescr[6:]
         else:

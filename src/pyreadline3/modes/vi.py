@@ -8,7 +8,7 @@
 #  Distributed under the terms of the BSD License.  The full license is in
 #  the file COPYING, distributed as part of this software.
 # *****************************************************************************
-from __future__ import absolute_import, print_function, unicode_literals
+
 
 import os
 
@@ -32,6 +32,7 @@ class ViMode(basemode.BaseMode):
     def process_keyevent(self, keyinfo):
         def nop(e):
             pass
+
         keytuple = keyinfo.tuple()
 
         # Process exit keys. Only exit on empty line
@@ -55,8 +56,8 @@ class ViMode(basemode.BaseMode):
     # Methods below here are bindable emacs functions
 
     def init_editing_mode(self, e):  # (M-C-j)
-        '''Initialize vi editingmode'''
-        self.show_all_if_ambiguous = 'on'
+        """Initialize vi editingmode"""
+        self.show_all_if_ambiguous = "on"
         self.key_dispatch = {}
         self.__vi_insert_mode = None
         self._vi_command = None
@@ -64,37 +65,38 @@ class ViMode(basemode.BaseMode):
         self._vi_key_find_char = None
         self._vi_key_find_direction = True
         self._vi_yank_buffer = None
-        self._vi_multiplier1 = ''
-        self._vi_multiplier2 = ''
+        self._vi_multiplier1 = ""
+        self._vi_multiplier2 = ""
         self._vi_undo_stack = []
         self._vi_undo_cursor = -1
         self._vi_current = None
-        self._vi_search_text = ''
+        self._vi_search_text = ""
         self._vi_search_position = 0
         self.vi_save_line()
         self.vi_set_insert_mode(True)
         # make ' ' to ~ self insert
-        for c in range(ord(' '), 127):
-            self._bind_key('%s' % chr(c), self.vi_key)
-        self._bind_key('BackSpace', self.vi_backspace)
-        self._bind_key('Escape', self.vi_escape)
-        self._bind_key('Return', self.vi_accept_line)
+        for c in range(ord(" "), 127):
+            self._bind_key("%s" % chr(c), self.vi_key)
+        self._bind_key("BackSpace", self.vi_backspace)
+        self._bind_key("Escape", self.vi_escape)
+        self._bind_key("Return", self.vi_accept_line)
 
-        self._bind_key('Left', self.backward_char)
-        self._bind_key('Right', self.forward_char)
-        self._bind_key('Home', self.beginning_of_line)
-        self._bind_key('End', self.end_of_line)
-        self._bind_key('Delete', self.delete_char)
+        self._bind_key("Left", self.backward_char)
+        self._bind_key("Right", self.forward_char)
+        self._bind_key("Home", self.beginning_of_line)
+        self._bind_key("End", self.end_of_line)
+        self._bind_key("Delete", self.delete_char)
 
-        self._bind_key('Control-d', self.vi_eof)
-        self._bind_key('Control-z', self.vi_eof)
-        self._bind_key('Control-r', self.vi_redo)
-        self._bind_key('Up', self.vi_arrow_up)
-        self._bind_key('Control-p', self.vi_up)
-        self._bind_key('Down', self.vi_arrow_down)
-        self._bind_key('Control-n', self.vi_down)
-        self._bind_key('Tab', self.vi_complete)
-#        self._bind_key('Control-e', self.emacs)
+        self._bind_key("Control-d", self.vi_eof)
+        self._bind_key("Control-z", self.vi_eof)
+        self._bind_key("Control-r", self.vi_redo)
+        self._bind_key("Up", self.vi_arrow_up)
+        self._bind_key("Control-p", self.vi_up)
+        self._bind_key("Down", self.vi_arrow_down)
+        self._bind_key("Control-n", self.vi_down)
+        self._bind_key("Tab", self.vi_complete)
+
+    #        self._bind_key('Control-e', self.emacs)
 
     def vi_key(self, e):
         if not self._vi_command:
@@ -110,6 +112,7 @@ class ViMode(basemode.BaseMode):
 
     def vi_get_is_insert_mode(self):
         return self.__vi_insert_mode
+
     vi_is_insert_mode = property(vi_get_is_insert_mode)
 
     def vi_escape(self, e):
@@ -132,13 +135,14 @@ class ViMode(basemode.BaseMode):
             self._vi_do_backspace(self._vi_command)
 
     def _vi_do_backspace(self, vi_cmd):
-        if self.vi_is_insert_mode or (
-                self._vi_command and self._vi_command.is_search):
+        if self.vi_is_insert_mode or (self._vi_command and self._vi_command.is_search):
             if self.l_buffer.point > 0:
                 self.l_buffer.point -= 1
                 if self.l_buffer.overwrite:
                     try:
-                        prev = self._vi_undo_stack[self._vi_undo_cursor][1][self.l_buffer.point]
+                        prev = self._vi_undo_stack[self._vi_undo_cursor][1][
+                            self.l_buffer.point
+                        ]
                         self.l_buffer.line_buffer[self.l_buffer.point] = prev
                     except IndexError:
                         del self.l_buffer.line_buffer[self.l_buffer.point]
@@ -173,17 +177,25 @@ class ViMode(basemode.BaseMode):
             self.cursor_size = 100
 
     def vi_undo_restart(self):
-        tpl_undo = (self.l_buffer.point, self.l_buffer.line_buffer[:], )
+        tpl_undo = (
+            self.l_buffer.point,
+            self.l_buffer.line_buffer[:],
+        )
         self._vi_undo_stack = [tpl_undo]
         self._vi_undo_cursor = 0
 
     def vi_save_line(self):
         if self._vi_undo_stack and self._vi_undo_cursor >= 0:
-            del self._vi_undo_stack[self._vi_undo_cursor + 1:]
+            del self._vi_undo_stack[self._vi_undo_cursor + 1 :]
         # tpl_undo = (self.l_buffer.point, self.l_buffer[:], )
-        tpl_undo = (self.l_buffer.point, self.l_buffer.line_buffer[:], )
-        if not self._vi_undo_stack or \
-                self._vi_undo_stack[self._vi_undo_cursor][1] != tpl_undo[1]:
+        tpl_undo = (
+            self.l_buffer.point,
+            self.l_buffer.line_buffer[:],
+        )
+        if (
+            not self._vi_undo_stack
+            or self._vi_undo_stack[self._vi_undo_cursor][1] != tpl_undo[1]
+        ):
             self._vi_undo_stack.append(tpl_undo)
             self._vi_undo_cursor += 1
 
@@ -234,7 +246,7 @@ class ViMode(basemode.BaseMode):
         return False
 
     def vi_search_first(self):
-        text = ''.join(self.l_buffer.line_buffer[1:])
+        text = "".join(self.l_buffer.line_buffer[1:])
         if text:
             self._vi_search_text = text
             self._vi_search_position = len(self._history.history) - 1
@@ -253,10 +265,7 @@ class ViMode(basemode.BaseMode):
 
     def vi_search_again_forward(self):
         self.vi_search(
-            list(range(
-                self._vi_search_position + 1,
-                len(self._history.history)
-            ))
+            list(range(self._vi_search_position + 1, len(self._history.history)))
         )
 
     def vi_up(self, e):
@@ -313,16 +322,16 @@ class ViMode(basemode.BaseMode):
 
 # vi input states
 # sequence of possible states are in the order below
-_VI_BEGIN = 'vi_begin'
-_VI_MULTI1 = 'vi_multi1'
-_VI_ACTION = 'vi_action'
-_VI_MULTI2 = 'vi_multi2'
-_VI_MOTION = 'vi_motion'
-_VI_MOTION_ARGUMENT = 'vi_motion_argument'
-_VI_REPLACE_ONE = 'vi_replace_one'
-_VI_TEXT = 'vi_text'
-_VI_SEARCH = 'vi_search'
-_VI_END = 'vi_end'
+_VI_BEGIN = "vi_begin"
+_VI_MULTI1 = "vi_multi1"
+_VI_ACTION = "vi_action"
+_VI_MULTI2 = "vi_multi2"
+_VI_MOTION = "vi_motion"
+_VI_MOTION_ARGUMENT = "vi_motion_argument"
+_VI_REPLACE_ONE = "vi_replace_one"
+_VI_TEXT = "vi_text"
+_VI_SEARCH = "vi_search"
+_VI_END = "vi_end"
 
 # vi helper class
 
@@ -343,22 +352,22 @@ class ViCommand:
         self.is_star = False
         self.delete_left = 0
         self.delete_right = 0
-        self.readline._vi_multiplier1 = ''
-        self.readline._vi_multiplier2 = ''
+        self.readline._vi_multiplier1 = ""
+        self.readline._vi_multiplier2 = ""
         self.set_override_multiplier(0)
         self.skip_multipler = False
         self.tabstop = 4
         self.dct_fcn = {
-            ord('$'): self.key_dollar,
-            ord('^'): self.key_hat,
-            ord(';'): self.key_semicolon,
-            ord(','): self.key_comma,
-            ord('%'): self.key_percent,
-            ord('.'): self.key_dot,
-            ord('/'): self.key_slash,
-            ord('*'): self.key_star,
-            ord('|'): self.key_bar,
-            ord('~'): self.key_tilde,
+            ord("$"): self.key_dollar,
+            ord("^"): self.key_hat,
+            ord(";"): self.key_semicolon,
+            ord(","): self.key_comma,
+            ord("%"): self.key_percent,
+            ord("."): self.key_dot,
+            ord("/"): self.key_slash,
+            ord("*"): self.key_star,
+            ord("|"): self.key_bar,
+            ord("~"): self.key_tilde,
             8: self.key_backspace,
         }
 
@@ -368,19 +377,19 @@ class ViCommand:
             self.readline.vi_save_line()
             self.state = _VI_TEXT
         if self.state == _VI_SEARCH:
-            if char == '\x08':  # backspace
+            if char == "\x08":  # backspace
                 self.key_backspace(char)
             else:
                 self.set_text(char)
             return
         if self.state == _VI_TEXT:
-            if char == '\x1b':  # escape
+            if char == "\x1b":  # escape
                 self.escape(char)
-            elif char == '\x09':  # tab
+            elif char == "\x09":  # tab
                 ts = self.tabstop
-                ws = ' ' * (ts - (self.readline.l_buffer.point % ts))
+                ws = " " * (ts - (self.readline.l_buffer.point % ts))
                 self.set_text(ws)
-            elif char == '\x08':  # backspace
+            elif char == "\x08":  # backspace
                 self.key_backspace(char)
             else:
                 self.set_text(char)
@@ -394,7 +403,7 @@ class ViCommand:
         try:
             fcn_instance = self.dct_fcn[ord(char)]
         except BaseException:
-            fcn_instance = getattr(self, 'key_%s' % char, None)
+            fcn_instance = getattr(self, "key_%s" % char, None)
         if fcn_instance:
             fcn_instance(char)
             return
@@ -415,40 +424,42 @@ class ViCommand:
         for char in text:
             if not self.char_isprint(char):
                 continue
-#             self.readline.l_buffer.insert_text(char)
-#             continue
-#             #overwrite in l_buffer obj
+            #             self.readline.l_buffer.insert_text(char)
+            #             continue
+            #             #overwrite in l_buffer obj
             if self.is_overwrite:
                 if self.readline.l_buffer.point < len(
-                        self.readline.l_buffer.line_buffer):
+                    self.readline.l_buffer.line_buffer
+                ):
                     # self.readline.l_buffer[self.l_buffer.point]=char
-                    self.readline.l_buffer.line_buffer[
-                        self.readline.l_buffer.point] = char
+                    self.readline.l_buffer.line_buffer[self.readline.l_buffer.point] = (
+                        char
+                    )
                 else:
                     # self.readline.l_buffer.insert_text(char)
                     self.readline.l_buffer.line_buffer.append(char)
             else:
                 # self.readline.l_buffer.insert_text(char)
                 self.readline.l_buffer.line_buffer.insert(
-                    self.readline.l_buffer.point, char)
+                    self.readline.l_buffer.point, char
+                )
             self.readline.l_buffer.point += 1
 
     def replace_one(self, char):
-        if char == '\x1b':  # escape
+        if char == "\x1b":  # escape
             self.end()
             return
         self.is_edit = True
         self.readline.vi_save_line()
         times = self.get_multiplier()
         cursor = self.readline.l_buffer.point
-        self.readline.l_buffer.line_buffer[cursor: cursor +
-                                           times] = char * times
+        self.readline.l_buffer.line_buffer[cursor : cursor + times] = char * times
         if times > 1:
-            self.readline.l_buffer.point += (times - 1)
+            self.readline.l_buffer.point += times - 1
         self.end()
 
     def char_isprint(self, char):
-        return ord(char) >= ord(' ') and ord(char) <= ord('~')
+        return ord(char) >= ord(" ") and ord(char) <= ord("~")
 
     def key_dollar(self, char):
         self.motion = self.motion_end_in_line
@@ -470,7 +481,7 @@ class ViCommand:
     def key_digit(self, char):
         if self.state in [_VI_BEGIN, _VI_MULTI1]:
             self.readline._vi_multiplier1 += char
-            self.readline._vi_multiplier2 = ''
+            self.readline._vi_multiplier2 = ""
             self.state = _VI_MULTI1
         elif self.state in [_VI_ACTION, _VI_MULTI2]:
             self.readline._vi_multiplier2 += char
@@ -564,7 +575,7 @@ class ViCommand:
         self.set_motion_argument(self.readline._vi_key_find_char)
 
     def key_percent(self, char):
-        '''find matching <([{}])>'''
+        """find matching <([{}])>"""
         self.motion = self.motion_matching
         self.delete_right = 1
         self.state = _VI_MOTION
@@ -599,7 +610,7 @@ class ViCommand:
 
     def key_slash(self, char):
         self.readline.vi_save_line()
-        self.readline.l_buffer.line_buffer = ['/']
+        self.readline.l_buffer.line_buffer = ["/"]
         self.readline.l_buffer.point = 1
         self.state = _VI_SEARCH
 
@@ -609,10 +620,10 @@ class ViCommand:
         self.readline.vi_save_line()
         completions = self.readline._get_completions()
         if completions:
-            text = ' '.join(completions) + ' '
+            text = " ".join(completions) + " "
             self.readline.l_buffer.line_buffer[
-                self.readline.begidx: self.readline.endidx + 1] = list(
-                text)
+                self.readline.begidx : self.readline.endidx + 1
+            ] = list(text)
             prefix_len = self.readline.endidx - self.readline.begidx
             self.readline.l_buffer.point += len(text) - prefix_len
             self.readline.vi_set_insert_mode(True)
@@ -632,10 +643,12 @@ class ViCommand:
             try:
                 c = self.readline.l_buffer.line_buffer[self.readline.l_buffer.point]
                 if c.isupper():
-                    self.readline.l_buffer.line_buffer[self.readline.l_buffer.point] = c.lower(
+                    self.readline.l_buffer.line_buffer[self.readline.l_buffer.point] = (
+                        c.lower()
                     )
                 elif c.islower():
-                    self.readline.l_buffer.line_buffer[self.readline.l_buffer.point] = c.upper(
+                    self.readline.l_buffer.line_buffer[self.readline.l_buffer.point] = (
+                        c.upper()
                     )
                 self.readline.l_buffer.point += 1
             except IndexError:
@@ -660,8 +673,7 @@ class ViCommand:
         else:
             self.key_h(char)
         self.readline._vi_do_backspace(self)
-        if self.state == _VI_SEARCH and not (
-                self.readline.l_buffer.line_buffer):
+        if self.state == _VI_SEARCH and not (self.readline.l_buffer.line_buffer):
             self.state = _VI_BEGIN
 
     def key_l(self, char):
@@ -722,7 +734,7 @@ class ViCommand:
         i2 = self.readline.l_buffer.point + self.get_multiplier()
         self.skip_multipler = True
         self.readline.vi_set_insert_mode(True)
-        del self.readline.l_buffer.line_buffer[i1: i2]
+        del self.readline.l_buffer.line_buffer[i1:i2]
         self.state = _VI_TEXT
 
     def key_S(self, char):
@@ -740,7 +752,7 @@ class ViCommand:
     def key_C(self, char):
         self.is_edit = True
         self.readline.vi_set_insert_mode(True)
-        del self.readline.l_buffer.line_buffer[self.readline.l_buffer.point:]
+        del self.readline.l_buffer.line_buffer[self.readline.l_buffer.point :]
         self.state = _VI_TEXT
 
     def key_r(self, char):
@@ -768,8 +780,8 @@ class ViCommand:
         self.readline.vi_save_line()
         self.readline.l_buffer.point += 1
         self.readline.l_buffer.insert_text(
-            self.readline._vi_yank_buffer *
-            self.get_multiplier())
+            self.readline._vi_yank_buffer * self.get_multiplier()
+        )
         self.readline.l_buffer.point -= 1
         self.state = _VI_END
 
@@ -779,8 +791,8 @@ class ViCommand:
         self.is_edit = True
         self.readline.vi_save_line()
         self.readline.l_buffer.insert_text(
-            self.readline._vi_yank_buffer *
-            self.get_multiplier())
+            self.readline._vi_yank_buffer * self.get_multiplier()
+        )
         self.readline.l_buffer.point -= 1
         self.state = _VI_END
 
@@ -805,14 +817,17 @@ class ViCommand:
 
     def state_is_end(self):
         return self.state == _VI_END
+
     is_end = property(state_is_end)
 
     def state_is_search(self):
         return self.state == _VI_SEARCH
+
     is_search = property(state_is_search)
 
     def state_is_replace_one(self):
         return self.state == _VI_REPLACE_ONE
+
     is_replace_one = property(state_is_replace_one)
 
     def do_search(self):
@@ -878,18 +893,20 @@ class ViCommand:
         return max(0, count - 1)
 
     def has_multiplier(self):
-        return self.override_multiplier or \
-            self.readline._vi_multiplier1 or \
-            self.readline._vi_multiplier2
+        return (
+            self.override_multiplier
+            or self.readline._vi_multiplier1
+            or self.readline._vi_multiplier2
+        )
 
     def get_multiplier(self):
         if self.override_multiplier:
             return int(self.override_multiplier)
-        if self.readline._vi_multiplier1 == '':
+        if self.readline._vi_multiplier1 == "":
             m1 = 1
         else:
             m1 = int(self.readline._vi_multiplier1)
-        if self.readline._vi_multiplier2 == '':
+        if self.readline._vi_multiplier2 == "":
             m2 = 1
         else:
             m2 = int(self.readline._vi_multiplier2)
@@ -904,7 +921,8 @@ class ViCommand:
                 self.readline.l_buffer.line_buffer,
                 self.readline.l_buffer.point,
                 self.get_multiplier(),
-                char=self.motion_argument)
+                char=self.motion_argument,
+            )
             if self.pos_motion < 0:
                 self.error()
                 return
@@ -916,44 +934,37 @@ class ViCommand:
         if self.pos_motion <= len(self.readline.l_buffer.line_buffer):
             self.readline.l_buffer.point = self.pos_motion
         else:
-            self.readline.l_buffer.point = len(
-                self.readline.l_buffer.line_buffer) - 1
+            self.readline.l_buffer.point = len(self.readline.l_buffer.line_buffer) - 1
 
     def yank(self):
         if self.pos_motion > self.readline.l_buffer.point:
             s = self.readline.l_buffer.line_buffer[
-                self.readline.l_buffer.point:
-                self.pos_motion + self.delete_right
+                self.readline.l_buffer.point : self.pos_motion + self.delete_right
             ]
         else:
             index = max(0, self.pos_motion - self.delete_left)
             s = self.readline.l_buffer.line_buffer[
-                index:
-                self.readline.l_buffer.point + self.delete_right
+                index : self.readline.l_buffer.point + self.delete_right
             ]
         self.readline._vi_yank_buffer = s
 
     def delete(self):
         self.readline.vi_save_line()
         self.yank()
-#         point=lineobj.Point(self.readline.l_buffer)
-#         pm=self.pos_motion
-#         del self.readline.l_buffer[point:pm]
-#         return
+        #         point=lineobj.Point(self.readline.l_buffer)
+        #         pm=self.pos_motion
+        #         del self.readline.l_buffer[point:pm]
+        #         return
         if self.pos_motion > self.readline.l_buffer.point:
             del self.readline.l_buffer.line_buffer[
-                self.readline.l_buffer.point:
-                self.pos_motion + self.delete_right
+                self.readline.l_buffer.point : self.pos_motion + self.delete_right
             ]
-            if self.readline.l_buffer.point > len(
-                    self.readline.l_buffer.line_buffer):
-                self.readline.l_buffer.point = len(
-                    self.readline.l_buffer.line_buffer)
+            if self.readline.l_buffer.point > len(self.readline.l_buffer.line_buffer):
+                self.readline.l_buffer.point = len(self.readline.l_buffer.line_buffer)
         else:
             index = max(0, self.pos_motion - self.delete_left)
             del self.readline.l_buffer.line_buffer[
-                index:
-                self.readline.l_buffer.point + self.delete_right
+                index : self.readline.l_buffer.point + self.delete_right
             ]
             self.readline.l_buffer.point = index
 
@@ -1001,29 +1012,30 @@ class ViCommand:
 
     def end(self):
         self.state = _VI_END
-        if self.readline.l_buffer.point >= len(
-                self.readline.l_buffer.line_buffer):
+        if self.readline.l_buffer.point >= len(self.readline.l_buffer.line_buffer):
             self.readline.l_buffer.point = max(
-                0, len(self.readline.l_buffer.line_buffer) - 1)
+                0, len(self.readline.l_buffer.line_buffer) - 1
+            )
 
 
 class ViExternalEditor:
     def __init__(self, line):
         if isinstance(line, type([])):
-            line = ''.join(line)
+            line = "".join(line)
         file_tmp = self.get_tempfile()
-        fp_tmp = self.file_open(file_tmp, 'w')
+        fp_tmp = self.file_open(file_tmp, "w")
         fp_tmp.write(line)
         fp_tmp.close()
         self.run_editor(file_tmp)
-        fp_tmp = self.file_open(file_tmp, 'r')
+        fp_tmp = self.file_open(file_tmp, "r")
         self.result = fp_tmp.read()
         fp_tmp.close()
         self.file_remove(file_tmp)
 
     def get_tempfile(self):
         import tempfile
-        return tempfile.mktemp(prefix='readline-', suffix='.py')
+
+        return tempfile.mktemp(prefix="readline-", suffix=".py")
 
     def file_open(self, filename, mode):
         return open(filename, mode)
@@ -1033,12 +1045,15 @@ class ViExternalEditor:
 
     def get_editor(self):
         try:
-            return os.environ['EDITOR']
+            return os.environ["EDITOR"]
         except KeyError:
-            return 'notepad'  # ouch
+            return "notepad"  # ouch
 
     def run_editor(self, filename):
-        cmd = '%s %s' % (self.get_editor(), filename, )
+        cmd = "%s %s" % (
+            self.get_editor(),
+            filename,
+        )
         self.run_command(cmd)
 
     def run_command(self, command):
@@ -1049,12 +1064,19 @@ class ViEvent:
     def __init__(self, char):
         self.char = char
 
+
 # vi standalone functions
 
 
 def vi_is_word(char):
-    log('xx vi_is_word: type(%s), %s' % (type(char), char, ))
-    return char.isalpha() or char.isdigit() or char == '_'
+    log(
+        "xx vi_is_word: type(%s), %s"
+        % (
+            type(char),
+            char,
+        )
+    )
+    return char.isalpha() or char.isdigit() or char == "_"
 
 
 def vi_is_space(char):
@@ -1127,8 +1149,8 @@ def vi_pos_end_long(line, index=0, count=1):
         return max(0, len(line) - 1)
 
 
-class vi_list (list):
-    '''This is a list that cannot have a negative index'''
+class vi_list(list):
+    """This is a list that cannot have a negative index"""
 
     def __getitem__(self, key):
         try:
@@ -1213,15 +1235,19 @@ def vi_pos_to_char_backward(line, char, index=0, count=1):
 
 
 _vi_dct_matching = {
-    '<': ('>', +1), '>': ('<', -1),
-    '(': (')', +1), ')': ('(', -1),
-    '[': (']', +1), ']': ('[', -1),
-    '{': ('}', +1), '}': ('{', -1),
+    "<": (">", +1),
+    ">": ("<", -1),
+    "(": (")", +1),
+    ")": ("(", -1),
+    "[": ("]", +1),
+    "]": ("[", -1),
+    "{": ("}", +1),
+    "}": ("{", -1),
 }
 
 
 def vi_pos_matching(line, index=0):
-    '''find matching <([{}])>'''
+    """find matching <([{}])>"""
     anchor = None
     target = None
     delta = 1
