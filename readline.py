@@ -85,3 +85,4 @@ else:
     console.install_readline(rl.readline)
 
 __all__.append("rl")
+__doc__ = "Importing this module enables command line editing using pyreadline3 for Widnows systems"
