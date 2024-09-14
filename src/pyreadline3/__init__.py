@@ -10,6 +10,7 @@
 from __future__ import absolute_import, print_function, unicode_literals
 
 from platform import system
+from importlib.metadata import version, PackageNotFoundError
 
 from . import (
     clipboard,
@@ -24,7 +25,13 @@ from .rlmain import *
 
 _S = system()
 
-if _S.lower() != 'windows':
-    raise RuntimeError('pyreadline3 is for Windows only, not {}.'.format(_S))
+if _S.lower() != "windows":
+    raise RuntimeError("pyreadline3 is for Windows only, not {}.".format(_S))
 
 del system, _S
+
+try:
+    __version__ = version("pyreadline3")
+except PackageNotFoundError:
+    # package is not installed
+    pass
