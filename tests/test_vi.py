@@ -8,7 +8,6 @@
 # *****************************************************************************
 from __future__ import absolute_import, print_function, unicode_literals
 
-import sys
 import unittest
 from io import StringIO
 
@@ -28,13 +27,13 @@ from pyreadline3.modes.vi import (
     vi_pos_word_long,
     vi_pos_word_short,
 )
-from pyreadline3.test.common import (
+from .common import (
     MockConsole,
     MockReadline,
     keytext_to_keyinfo_and_event,
 )
 
-sys.path.insert(0, '../..')
+
 
 # ----------------------------------------------------------------------
 

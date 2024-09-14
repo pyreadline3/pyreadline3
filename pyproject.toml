@@ -1,0 +1,62 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm", "setuptools-git-versioning"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyreadline3"
+authors = [
+    { name = "Bassem Girgis", email = "brgirgis@gmail.com" },
+    { name = "Jorgen Stenarson", email = "jorgen.stenarson@kroywen.se" },
+    { name = "Gary Bishop" },
+    { name = "Jack Trainor" },
+]
+maintainers = [{ name = "Bassem Girgis", email = "brgirgis@gmail.com" }]
+description = "A python implementation of GNU readline."
+readme = { file = "README.md", content-type = "text/markdown" }
+requires-python = ">=3.8"
+keywords = ['readline', 'pyreadline', 'pyreadline3']
+license = { text = "BSD" }
+classifiers = [
+    'Development Status :: 5 - Production/Stable',
+
+    'Environment :: Console',
+
+    'Operating System :: Microsoft :: Windows',
+
+    'License :: OSI Approved :: BSD License',
+
+    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
+    'Programming Language :: Python :: 3.10',
+    'Programming Language :: Python :: 3.11',
+    'Programming Language :: Python :: 3.12',
+]
+dependencies = []
+dynamic = ["version"]
+
+[project.urls]
+Homepage = "https://github.com/pyreadline3/pyreadline3"
+Documentation = "https://github.com/pyreadline3/pyreadline3"
+Repository = "https://github.com/pyreadline3/pyreadline3.git"
+Issues = "https://github.com/pyreadline3/pyreadline3/issues"
+Changelog = "https://github.com/pyreadline3/pyreadline3/blob/master/doc/ChangeLog"
+
+[project.optional-dependencies]
+dev = ["pytest", "build", "twine"]
+
+[tool.setuptools-git-versioning]
+#version_format = "{tag}.dev{commitcount}+{gitsha}"
+
+[tool.setuptools]
+py-modules = ["readline"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["*"]
+
+[tool.setuptools.package-data]
+"*" = ["pyreadlineconfig.ini"]
+
+[tool.setuptools.dynamic]
+#version = { attr = "pyreadline3.__version__" }
+readme = { file = ["README.md"] }

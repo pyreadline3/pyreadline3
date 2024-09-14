@@ -1,0 +1,11 @@
+{
+    "recommendations": [
+        "ms-python.flake8",
+        "ms-python.isort",
+        "ms-python.vscode-pylance",
+        "ms-python.python",
+        "ms-python.debugpy",
+        "tamasfe.even-better-toml",
+        "ms-python.black-formatter"
+    ]
+}

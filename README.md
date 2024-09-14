@@ -15,7 +15,7 @@ It is based on the `ctypes` based UNC `readline` package by Gary Bishop.
 It is not complete.
 It has been tested for use with Windows 10.
 
-Version 3.4+ of pyreadline3 runs on Python 3.5+.
+Version 3.4+ of pyreadline3 runs on Python 3.8+.
 
 `pyreadline3` is available on PyPI and can be installed with
 ```shell
