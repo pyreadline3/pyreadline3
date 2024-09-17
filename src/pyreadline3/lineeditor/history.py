@@ -91,7 +91,7 @@ class LineHistory(object):
         with io.open(filename, "wt", errors="replace") as fp:
             fp.writelines(
                 tuple(
-                    line.get_line_text()+'\n'
+                    line.get_line_text()+"\n"
                     for line in self.history[-self.history_length :]
                 )
             )
