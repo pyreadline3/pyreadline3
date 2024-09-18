@@ -15,6 +15,7 @@ import sys
 import time
 from glob import glob
 
+import pyreadline3
 import pyreadline3.clipboard as clipboard
 import pyreadline3.console as console
 import pyreadline3.lineeditor.history as history
@@ -24,7 +25,6 @@ from pyreadline3.keysyms.common import make_KeyPress_from_keydescr
 from pyreadline3.py3k_compat import is_ironpython
 from pyreadline3.unicode_helper import ensure_str, ensure_unicode
 
-from . import release
 from .error import GetSetError, ReadlineError
 from .logger import log
 from .modes import editingmodes
@@ -407,8 +407,7 @@ class BaseReadline(object):
             self.command_color = self._color_trtable.get(color.lower(), 7)
 
         loc = {
-            "branch": release.branch,
-            "version": release.version,
+            "version": pyreadline3.__version__,
             "mode": mode,
             "modes": modes,
             "set_mode": setmode,
