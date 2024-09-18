@@ -8,5 +8,14 @@
     },
     "editor.formatOnSave": true,
     "files.trimFinalNewlines": true,
-    "files.insertFinalNewline": true
+    "files.insertFinalNewline": true,
+    "cSpell.words": [
+        "combatible",
+        "ctypes",
+        "pyreadline",
+        "pytest",
+        "readline",
+        "venv",
+        "virtualenv"
+    ]
 }

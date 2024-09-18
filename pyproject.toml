@@ -42,7 +42,7 @@ Issues = "https://github.com/pyreadline3/pyreadline3/issues"
 Changelog = "https://github.com/pyreadline3/pyreadline3/blob/master/doc/ChangeLog"
 
 [project.optional-dependencies]
-dev = ["build", "flake8", "pytest", "twine"]
+dev = ["build", "flake8", "mypy", "pytest", "twine"]
 
 [tool.setuptools]
 py-modules = ["readline"]

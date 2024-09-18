@@ -6,6 +6,7 @@
         "ms-python.python",
         "ms-python.debugpy",
         "tamasfe.even-better-toml",
-        "ms-python.black-formatter"
+        "ms-python.black-formatter",
+        "streetsidesoftware.code-spell-checker"
     ]
 }
