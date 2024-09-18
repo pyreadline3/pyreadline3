@@ -9,7 +9,7 @@
 
 The `pyreadline3` package is based on the stale package `pyreadline` located
 [here](https://github.com/pyreadline/pyreadline).
-The original `pyreadline` package is a python implementation of GNU `readline`
+The original `pyreadline` package is a Python implementation of GNU `readline`
 functionality.
 It is based on the `ctypes` based UNC `readline` package by Gary Bishop.
 It is not complete.
@@ -18,9 +18,9 @@ It has been tested for use with Windows 10.
 Version 3.4+ of pyreadline3 runs on Python 3.8+.
 
 `pyreadline3` is available on PyPI and can be installed with
-```shell
-pip install pyreadline3
-```
+
+    pip install pyreadline3
+
 
 ## Features
 
@@ -35,3 +35,43 @@ pip install pyreadline3
 
 The latest development version is always available at the project git
 [repository](https://github.com/pyreadline3/pyreadline3)
+
+## Development
+
+To clone the library for development:
+
+    git clone git@github.com:pyreadline3/pyreadline3.git
+
+or 
+
+    git clone https://github.com/pyreadline3/pyreadline3.git
+
+### Build The Virtual Environment
+
+The current earliest Python version supported is `3.8`. You need to be able to create a virtual environment at this version to make sure any changes you make is combatible.
+
+If you are using `conda`:
+
+    conda create --prefix=.venv python=3.8 --yes
+
+If you are using `venv`, make sure you have the right base package:
+
+    >> python --version
+    Python 3.8.x
+
+Once you verify your base Python, you can then create a virtual environment using:
+
+
+    virtualenv -p py3.8 .venv
+
+### Setup
+
+Once you have created your virtual environment and made sure it is active in your current command line:
+
+    pip install -e .[dev]
+
+This should all the dependencies you need for developing into the library and also allow you to run the unit tests:
+
+    pytest
+
+### Debugging 
