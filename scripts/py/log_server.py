@@ -11,7 +11,7 @@
 import logging
 import logging.handlers
 import socket
-import struct
+from typing import Optional
 
 from pyreadline3.unicode_helper import ensure_unicode
 
@@ -22,41 +22,43 @@ except ImportError:
     print("problem")
 
 
-port = logging.handlers.DEFAULT_TCP_LOGGING_PORT
-host = "localhost"
+PORT_NUMBER = logging.handlers.DEFAULT_TCP_LOGGING_PORT
+HOST_NAME = ""
 
 
-def check_key():
+def check_key() -> Optional[str]:
     if msvcrt is None:
-        return False
-    else:
-        if msvcrt.kbhit():
-            q = ensure_unicode(msvcrt.getch())
-            return q
+        return None
+
+    if msvcrt.kbhit():
+        q = ensure_unicode(msvcrt.getch())
+        return q
+
     return ""
 
 
-singleline = False
+def main() -> None:
+    print("Starting TCP log_server on port:", PORT_NUMBER)
+    print("Press q to quit log_server")
+    print("Press c to clear screen")
 
-
-def main():
-    print("Starting TCP logserver on port:", port)
-    print("Press q to quit logserver", port)
-    print("Press c to clear screen", port)
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-    s.bind(("", port))
+    s.bind((HOST_NAME, PORT_NUMBER))
     s.settimeout(1)
+
     while True:
         try:
-            data, addr = s.recvfrom(100000)
+            data, _ = s.recvfrom(100000)
             print(data, end="")
         except socket.timeout:
             key = check_key().lower()
+
             if "q" == key:
-                print("Quitting logserver")
+                print("Quitting log_server ... bye")
                 break
-            elif "c" == key:
+
+            if "c" == key:
                 print("\n" * 100)
 
 

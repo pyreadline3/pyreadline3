@@ -8,13 +8,12 @@
 # *****************************************************************************
 
 """ Mockup of gui-use of pyreadline3
-
-
 """
 
 
+import tkinter
+
 import pyreadline3.logger as log
-import Tkinter
 from pyreadline3.keysyms.common import KeyPress
 from pyreadline3.rlmain import BaseReadline
 
@@ -33,7 +32,7 @@ translate = {
 }
 
 
-def KeyPress_from_event(event):
+def key_press_from_event(event: tkinter.Event) -> KeyPress:
     keysym = event.keysym.lower()
     char = event.char
     if keysym in translate:
@@ -53,30 +52,30 @@ def KeyPress_from_event(event):
 
 
 class App:
-    def __init__(self, master):
-        self.frame = frame = Tkinter.Frame(master)
+    def __init__(self, master: tkinter.Tk) -> None:
+        self.frame = frame = tkinter.Frame(master)
         frame.pack()
         self.lines = ["Hello"]
         self.RL = BaseReadline()
         self.RL.read_inputrc()
         self.prompt = ">>>"
         self.readline_setup(self.prompt)
-        self.textvar = Tkinter.StringVar()
+        self.textvar = tkinter.StringVar()
         self._update_line()
-        self.text = Tkinter.Label(
+        self.text = tkinter.Label(
             frame,
             textvariable=self.textvar,
             width=50,
             height=40,
-            justify=Tkinter.LEFT,
-            anchor=Tkinter.NW,
+            justify=tkinter.LEFT,
+            anchor=tkinter.NW,
         )
-        self.text.pack(side=Tkinter.LEFT)
+        self.text.pack(side=tkinter.LEFT)
         master.bind("<Key>", self.handler)
         self.locals = {}
 
-    def handler(self, event):
-        keyevent = KeyPress_from_event(event)
+    def handler(self, event: tkinter.Event) -> None:
+        keyevent = key_press_from_event(event)
         try:
             result = self.RL.process_keyevent(keyevent)
         except EOFError:
@@ -103,7 +102,7 @@ class App:
         )
 
 
-root = Tkinter.Tk()
+root = tkinter.Tk()
 
 display = App(root)
 root.mainloop()

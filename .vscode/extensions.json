@@ -1,12 +1,20 @@
 {
     "recommendations": [
+        "bierner.markdown-mermaid",
+        "davidanson.vscode-markdownlint",
+        "fcrespo82.markdown-table-formatter",
+        "ms-python.autopep8",
         "ms-python.flake8",
         "ms-python.isort",
-        "ms-python.vscode-pylance",
+        "ms-python.pylint",
         "ms-python.python",
-        "ms-python.debugpy",
-        "tamasfe.even-better-toml",
+        "ms-python.vscode-pylance",
         "ms-python.black-formatter",
-        "streetsidesoftware.code-spell-checker"
+        "ms-python.mypy-type-checker",
+        "mutantdino.resourcemonitor",
+        "stkb.rewrap",
+        "streetsidesoftware.code-spell-checker",
+        "tamasfe.even-better-toml",
+        "vscode-icons-team.vscode-icons"
     ]
 }

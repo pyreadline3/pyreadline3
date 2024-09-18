@@ -1,4 +1,29 @@
 {
+    "autopep8.args": [
+        "-a",
+        "-a",
+        "--max-line-length",
+        "80"
+    ],
+    "isort.args": [
+        "--multi-line=3",
+        "--line-width=80",
+        "--trailing-comma"
+    ],
+    "isort.check": true,
+    "[python]": {
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "always"
+        },
+        "editor.detectIndentation": false,
+        "editor.insertSpaces": true,
+        "editor.tabSize": 4,
+        "editor.formatOnSave": true,
+        // "editor.defaultFormatter": "ms-python.autopep8"
+        "editor.defaultFormatter": "ms-python.black-formatter"
+    },
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
     "editor.tabSize": 4,
     "editor.rulers": [
         80
