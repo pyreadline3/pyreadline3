@@ -782,7 +782,7 @@ class ReadLineTextBuffer(TextLine):
             begin = min(cursor, mark)
             end = max(cursor, mark)
             toclipboard = "".join(self.line_buffer[begin:end])
-            clipboard.SetClipboardText(toclipboard)
+            clipboard.set_clipboard_text(toclipboard)
 
     def copy_selection_to_clipboard(self):  # ()
         """Copy the text in the region to the windows clipboard."""
@@ -798,7 +798,7 @@ class ReadLineTextBuffer(TextLine):
             begin = min(cursor, selection_mark)
             end = max(cursor, selection_mark)
             toclipboard = "".join(self.line_buffer[begin:end])
-            clipboard.SetClipboardText(toclipboard)
+            clipboard.set_clipboard_text(toclipboard)
 
     def cut_selection_to_clipboard(self):  # ()
         self.copy_selection_to_clipboard()
@@ -811,7 +811,7 @@ class ReadLineTextBuffer(TextLine):
     def add_to_kill_ring(self, txt):
         self.kill_ring = [txt]
         if kill_ring_to_clipboard:
-            clipboard.SetClipboardText(txt.get_line_text())
+            clipboard.set_clipboard_text(txt.get_line_text())
 
     def paste_from_kill_ring(self):
         if self.kill_ring:

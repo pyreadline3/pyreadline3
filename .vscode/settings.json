@@ -24,6 +24,9 @@
     },
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
+    "[markdown]": {
+        "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
+    },
     "editor.tabSize": 4,
     "editor.rulers": [
         80

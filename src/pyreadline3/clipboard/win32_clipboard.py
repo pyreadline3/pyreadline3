@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # *****************************************************************************
-#       Copyright (C) 2003-2006 Jack Trainor.
-#       Copyright (C) 2006-2020 Jorgen Stenarson. <jorgen.stenarson@bostream.nu>
-#       Copyright (C) 2020 Bassem Girgis. <brgirgis@gmail.com>
+#     Copyright (C) 2003-2006 Jack Trainor.
+#     Copyright (C) 2006-2020 Jorgen Stenarson. <jorgen.stenarson@bostream.nu>
+#     Copyright (C) 2020 Bassem Girgis. <brgirgis@gmail.com>
 #
 #  Distributed under the terms of the BSD License.  The full license is in
 #  the file COPYING, distributed as part of this software.
@@ -27,19 +27,32 @@
 #
 # Here's some sample code solving this problem using ctypes.
 #
-# This is my first work with ctypes.  It's powerful stuff, but passing arguments
-# in and out of functions is tricky.  More sample code would have been helpful,
-# hence this contribution.
+# This is my first work with ctypes.  It's powerful stuff, but passing
+# arguments in and out of functions is tricky.  More sample code would have
+# been helpful, hence this contribution.
 #
 ##########################################################################
 
-
 import ctypes
 import ctypes.wintypes as wintypes
-from ctypes import *
+from ctypes import (
+    addressof,
+    c_buffer,
+    c_char_p,
+    c_int,
+    c_size_t,
+    c_void_p,
+    c_wchar_p,
+    cast,
+    create_unicode_buffer,
+    sizeof,
+    windll,
+    wstring_at,
+)
+from typing import Union
 
 from pyreadline3.keysyms.winconstants import CF_UNICODETEXT, GHND
-from pyreadline3.unicode_helper import ensure_str, ensure_unicode
+from pyreadline3.unicode_helper import ensure_unicode
 
 OpenClipboard = windll.user32.OpenClipboard
 OpenClipboard.argtypes = [wintypes.HWND]
@@ -79,52 +92,66 @@ _strncpy.restype = c_wchar_p
 _strncpy.argtypes = [c_wchar_p, c_wchar_p, c_size_t]
 
 
-def enum():
+def _enum() -> None:
     OpenClipboard(0)
+
     q = EnumClipboardFormats(0)
     while q:
         q = EnumClipboardFormats(q)
+
     CloseClipboard()
 
 
-def getformatname(format):
-    buffer = c_buffer(" " * 100)
+def _get_format_name(format_str: str) -> bytes:
+    buffer = c_buffer(100)
     bufferSize = sizeof(buffer)
+
     OpenClipboard(0)
-    GetClipboardFormatName(format, buffer, bufferSize)
+
+    GetClipboardFormatName(format_str, buffer, bufferSize)
+
     CloseClipboard()
+
     return buffer.value
 
 
-def GetClipboardText():
+def get_clipboard_text() -> str:
     text = ""
+
     if OpenClipboard(0):
-        hClipMem = GetClipboardData(CF_UNICODETEXT)
-        if hClipMem:
-            text = wstring_at(GlobalLock(hClipMem))
-            GlobalUnlock(hClipMem)
+        h_clip_mem = GetClipboardData(CF_UNICODETEXT)
+
+        if h_clip_mem:
+            text = wstring_at(GlobalLock(h_clip_mem))
+            GlobalUnlock(h_clip_mem)
+
         CloseClipboard()
+
     return text
 
 
-def SetClipboardText(text):
+def set_clipboard_text(text: Union[str, bytes]) -> None:
     buffer = create_unicode_buffer(ensure_unicode(text))
-    bufferSize = sizeof(buffer)
-    hGlobalMem = GlobalAlloc(GHND, c_size_t(bufferSize))
+    buffer_size = sizeof(buffer)
+
+    h_global_mem = GlobalAlloc(GHND, c_size_t(buffer_size))
     GlobalLock.restype = c_void_p
-    lpGlobalMem = GlobalLock(hGlobalMem)
+    lp_global_mem = GlobalLock(h_global_mem)
+
     _strncpy(
-        cast(lpGlobalMem, c_wchar_p),
+        cast(lp_global_mem, c_wchar_p),
         cast(addressof(buffer), c_wchar_p),
-        c_size_t(bufferSize),
+        c_size_t(buffer_size),
     )
-    GlobalUnlock(c_int(hGlobalMem))
+
+    GlobalUnlock(c_int(h_global_mem))
+
     if OpenClipboard(0):
         EmptyClipboard()
-        SetClipboardData(CF_UNICODETEXT, hGlobalMem)
+        SetClipboardData(CF_UNICODETEXT, h_global_mem)
         CloseClipboard()
 
 
 if __name__ == "__main__":
-    txt = GetClipboardText()  # display last text clipped
+    txt = get_clipboard_text()  # display last text clipped
     print(txt)

@@ -387,7 +387,7 @@ class NotEmacsMode(basemode.BaseMode):
             begin = min(cursor, mark)
             end = max(cursor, mark)
             toclipboard = "".join(self.l_buffer.line_buffer[begin:end])
-            clipboard.SetClipboardText(str(toclipboard))
+            clipboard.set_clipboard_text(str(toclipboard))
 
     def copy_backward_word(self, e):  # ()
         """Copy the word before point to the kill buffer. The word
