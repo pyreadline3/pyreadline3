@@ -14,12 +14,12 @@ import re
 
 import IronPythonConsole
 import System
+
 from pyreadline3.console.ansi import AnsiState
 from pyreadline3.keysyms import (
-    make_keyinfo,
-    make_KeyPress,
-    make_KeyPress_from_keydescr,
-    make_keysym,
+    make_key_press,
+    make_key_press_from_key_description,
+    make_key_symbol,
 )
 from pyreadline3.logger import log
 
@@ -398,11 +398,11 @@ class event(Event):
         self.state = input.Modifiers
         log("%s,%s,%s" % (input.Modifiers, input.Key, input.KeyChar))
         self.type = "KeyRelease"
-        self.keysym = make_keysym(self.keycode)
-        self.keyinfo = make_KeyPress(self.char, self.state, self.keycode)
+        self.keysym = make_key_symbol(self.keycode)
+        self.keyinfo = make_key_press(self.char, self.state, self.keycode)
 
 
-def make_event_from_keydescr(keydescr):
+def make_event_from_key_description(key_description):
     def input():
         return 1
 
@@ -412,12 +412,12 @@ def make_event_from_keydescr(keydescr):
     input.next_serial = input
     e = event(input, input)
     del input.next_serial
-    keyinfo = make_KeyPress_from_keydescr(keydescr)
+    keyinfo = make_key_press_from_key_description(key_description)
     e.keyinfo = keyinfo
     return e
 
 
-CTRL_C_EVENT = make_event_from_keydescr("Control-c")
+CTRL_C_EVENT = make_event_from_key_description("Control-c")
 
 
 def install_readline(hook):

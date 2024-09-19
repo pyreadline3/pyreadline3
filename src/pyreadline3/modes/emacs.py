@@ -33,22 +33,22 @@ class IncrementalSearchPromptMode(object):
                 fwdtuples.append(ktuple)
 
         log("IncrementalSearchPromptMode %s %s" % (keyinfo, keytuple))
-        if keyinfo.keyname == "backspace":
+        if keyinfo.key_name == "backspace":
             self.subsearch_query = self.subsearch_query[:-1]
             if len(self.subsearch_query) > 0:
                 self.line = self.subsearch_fun(self.subsearch_query)
             else:
                 self._bell()
                 self.line = ""  # empty query means no search result
-        elif keyinfo.keyname in ["return", "escape"]:
+        elif keyinfo.key_name in ["return", "escape"]:
             self._bell()
             self.prompt = self.subsearch_oldprompt
             self.process_keyevent_queue = self.process_keyevent_queue[:-1]
             self._history.history_cursor = len(self._history.history)
-            if keyinfo.keyname == "escape":
+            if keyinfo.key_name == "escape":
                 self.l_buffer.set_line(self.subsearch_old_line)
             return True
-        elif keyinfo.keyname:
+        elif keyinfo.key_name:
             pass
         elif keytuple in revtuples:
             self.subsearch_fun = self._history.reverse_search_history
@@ -109,9 +109,9 @@ class SearchPromptMode(object):
         log("SearchPromptMode %s %s" % (keyinfo, keytuple))
         history = self._history
 
-        if keyinfo.keyname == "backspace":
+        if keyinfo.key_name == "backspace":
             self.non_inc_query = self.non_inc_query[:-1]
-        elif keyinfo.keyname in ["return", "escape"]:
+        elif keyinfo.key_name in ["return", "escape"]:
             if self.non_inc_query:
                 if self.non_inc_direction == -1:
                     res = history.reverse_search_history(self.non_inc_query)
@@ -122,12 +122,12 @@ class SearchPromptMode(object):
             self.prompt = self.non_inc_oldprompt
             self.process_keyevent_queue = self.process_keyevent_queue[:-1]
             self._history.history_cursor = len(self._history.history)
-            if keyinfo.keyname == "escape":
+            if keyinfo.key_name == "escape":
                 self.l_buffer = self.non_inc_oldline
             else:
                 self.l_buffer.set_line(res)
             return False
-        elif keyinfo.keyname:
+        elif keyinfo.key_name:
             pass
         elif keyinfo.control == False and keyinfo.meta == False:
             self.non_inc_query += keyinfo.char
@@ -170,11 +170,11 @@ class DigitArgumentMode(object):
         log("DigitArgumentMode.keyinfo %s" % keyinfo)
         keytuple = keyinfo.tuple()
         log("DigitArgumentMode.keytuple %s %s" % (keyinfo, keytuple))
-        if keyinfo.keyname in ["return"]:
+        if keyinfo.key_name in ["return"]:
             self.prompt = self._digit_argument_oldprompt
             self.process_keyevent_queue = self.process_keyevent_queue[:-1]
             return True
-        elif keyinfo.keyname:
+        elif keyinfo.key_name:
             pass
         elif (
             keyinfo.char in "0123456789"
@@ -266,7 +266,7 @@ class EmacsMode(
             log("exit_dispatch:<%s, %s>" % pars)
             if lineobj.EndOfLine(self.l_buffer) == 0:
                 raise EOFError
-        if keyinfo.keyname or keyinfo.control or keyinfo.meta:
+        if keyinfo.key_name or keyinfo.control or keyinfo.meta:
             default = nop
         else:
             default = self.self_insert

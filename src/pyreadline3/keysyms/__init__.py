@@ -1,14 +1,22 @@
-from pyreadline3.py3k_compat import is_ironpython
+# -*- coding: utf-8 -*-
+# *****************************************************************************
+#     Copyright (C) 2006-2020 Jorgen Stenarson. <jorgen.stenarson@bostream.nu>
+#     Copyright (C) 2020 Bassem Girgis. <brgirgis@gmail.com>
+#
+#  Distributed under the terms of the BSD License.  The full license is in
+#  the file COPYING, distributed as part of this software.
+# *****************************************************************************
 
-from . import winconstants
 
-if is_ironpython:
-    try:
-        from .ironpython_keysyms import *
-    except ImportError as x:
-        raise ImportError("Could not import keysym for local ironpython version") from x
-else:
-    try:
-        from .keysyms import *
-    except ImportError as x:
-        raise ImportError("Could not import keysym for local python version") from x
+from .api import make_key_press, make_key_symbol
+from .key_press import KeyPress
+from .make_key_press_from_key_description import (
+    make_key_press_from_key_description,
+)
+
+__all__ = [
+    "make_key_press",
+    "make_key_symbol",
+    "KeyPress",
+    "make_key_press_from_key_description",
+]

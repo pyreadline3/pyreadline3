@@ -7,21 +7,21 @@
 #  the file COPYING, distributed as part of this software.
 # *****************************************************************************
 
+
 from ..py3k_compat import is_ironpython
 
 if is_ironpython:
     try:
-        from .ironpython_clipboard import get_clipboard_text, set_clipboard_text
-    except ImportError:
-        from .no_clipboard import get_clipboard_text, set_clipboard_text
-
+        from .ironpython_keysyms import make_key_press, make_key_symbol
+    except ImportError as e:
+        raise ImportError("Could not import keysym for local ironpython version") from e
 else:
     try:
-        from .win32_clipboard import get_clipboard_text, set_clipboard_text
-    except ImportError:
-        from .no_clipboard import get_clipboard_text, set_clipboard_text
+        from .keysyms import make_key_press, make_key_symbol
+    except ImportError as e:
+        raise ImportError("Could not import keysym for local python version") from e
 
 __all__ = [
-    "get_clipboard_text",
-    "set_clipboard_text",
+    "make_key_press",
+    "make_key_symbol",
 ]

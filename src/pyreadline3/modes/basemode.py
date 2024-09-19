@@ -19,7 +19,7 @@ import pyreadline3.clipboard as clipboard
 import pyreadline3.lineeditor.history as history
 import pyreadline3.lineeditor.lineobj as lineobj
 from pyreadline3.error import ReadlineError
-from pyreadline3.keysyms.common import make_KeyPress_from_keydescr
+from pyreadline3.keysyms import make_key_press_from_key_description
 from pyreadline3.logger import log
 from pyreadline3.py3k_compat import is_callable, is_ironpython
 from pyreadline3.unicode_helper import ensure_str, ensure_unicode
@@ -173,13 +173,13 @@ class BaseMode(object):
                 "Trying to bind non method to keystroke:%s,%s,%s,%s"
                 % (key, func, type(func), type(self._bind_key))
             )
-        keyinfo = make_KeyPress_from_keydescr(key.lower()).tuple()
+        keyinfo = make_key_press_from_key_description(key.lower()).tuple()
         log(">>>%s -> %s<<<" % (keyinfo, func.__name__))
         self.key_dispatch[keyinfo] = func
 
     def _bind_exit_key(self, key):
         """setup the mapping from key to call the function."""
-        keyinfo = make_KeyPress_from_keydescr(key.lower()).tuple()
+        keyinfo = make_key_press_from_key_description(key.lower()).tuple()
         self.exit_dispatch[keyinfo] = None
 
     def init_editing_mode(self, e):  # (C-e)

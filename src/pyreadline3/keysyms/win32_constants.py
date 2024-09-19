@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+# *****************************************************************************
+#     Copyright (C) 2006-2020 Jorgen Stenarson. <jorgen.stenarson@bostream.nu>
+#     Copyright (C) 2020 Bassem Girgis. <brgirgis@gmail.com>
+#
+#  Distributed under the terms of the BSD License.  The full license is in
+#  the file COPYING, distributed as part of this software.
+# *****************************************************************************
+
 # This file contains constants that are normally found in win32all
 # But included here to avoid the dependency
 
@@ -170,3 +179,85 @@ CF_GDIOBJLAST = 1023
 
 GPTR = 64
 GHND = 66
+
+CODE_TO_SYM_MAP = {
+    VK_CANCEL: "cancel",
+    VK_BACK: "backspace",
+    VK_TAB: "tab",
+    VK_CLEAR: "clear",
+    VK_RETURN: "return",
+    VK_SHIFT: "shift_l",
+    VK_CONTROL: "control_l",
+    VK_MENU: "alt_l",
+    VK_PAUSE: "pause",
+    VK_CAPITAL: "caps_lock",
+    VK_ESCAPE: "escape",
+    VK_SPACE: "space",
+    VK_PRIOR: "prior",
+    VK_NEXT: "next",
+    VK_END: "end",
+    VK_HOME: "home",
+    VK_LEFT: "left",
+    VK_UP: "up",
+    VK_RIGHT: "right",
+    VK_DOWN: "down",
+    VK_SELECT: "select",
+    VK_PRINT: "print",
+    VK_EXECUTE: "execute",
+    VK_SNAPSHOT: "snapshot",
+    VK_INSERT: "insert",
+    VK_DELETE: "delete",
+    VK_HELP: "help",
+    VK_F1: "f1",
+    VK_F2: "f2",
+    VK_F3: "f3",
+    VK_F4: "f4",
+    VK_F5: "f5",
+    VK_F6: "f6",
+    VK_F7: "f7",
+    VK_F8: "f8",
+    VK_F9: "f9",
+    VK_F10: "f10",
+    VK_F11: "f11",
+    VK_F12: "f12",
+    VK_F13: "f13",
+    VK_F14: "f14",
+    VK_F15: "f15",
+    VK_F16: "f16",
+    VK_F17: "f17",
+    VK_F18: "f18",
+    VK_F19: "f19",
+    VK_F20: "f20",
+    VK_F21: "f21",
+    VK_F22: "f22",
+    VK_F23: "f23",
+    VK_F24: "f24",
+    VK_NUMLOCK: "num_lock,",
+    VK_SCROLL: "scroll_lock",
+    VK_APPS: "vk_apps",
+    VK_PROCESSKEY: "vk_processkey",
+    VK_ATTN: "vk_attn",
+    VK_CRSEL: "vk_crsel",
+    VK_EXSEL: "vk_exsel",
+    VK_EREOF: "vk_ereof",
+    VK_PLAY: "vk_play",
+    VK_ZOOM: "vk_zoom",
+    VK_NONAME: "vk_noname",
+    VK_PA1: "vk_pa1",
+    VK_OEM_CLEAR: "vk_oem_clear",
+    VK_NUMPAD0: "numpad0",
+    VK_NUMPAD1: "numpad1",
+    VK_NUMPAD2: "numpad2",
+    VK_NUMPAD3: "numpad3",
+    VK_NUMPAD4: "numpad4",
+    VK_NUMPAD5: "numpad5",
+    VK_NUMPAD6: "numpad6",
+    VK_NUMPAD7: "numpad7",
+    VK_NUMPAD8: "numpad8",
+    VK_NUMPAD9: "numpad9",
+    VK_DIVIDE: "divide",
+    VK_MULTIPLY: "multiply",
+    VK_ADD: "add",
+    VK_SUBTRACT: "subtract",
+    VK_DECIMAL: "vk_decimal",
+}

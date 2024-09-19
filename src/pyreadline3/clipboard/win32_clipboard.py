@@ -33,8 +33,6 @@
 #
 ##########################################################################
 
-import ctypes
-import ctypes.wintypes as wintypes
 from ctypes import (
     addressof,
     c_buffer,
@@ -47,12 +45,13 @@ from ctypes import (
     create_unicode_buffer,
     sizeof,
     windll,
+    wintypes,
     wstring_at,
 )
 from typing import Union
 
-from pyreadline3.keysyms.winconstants import CF_UNICODETEXT, GHND
-from pyreadline3.unicode_helper import ensure_unicode
+from ..keysyms.win32_constants import CF_UNICODETEXT, GHND
+from ..unicode_helper import ensure_unicode
 
 OpenClipboard = windll.user32.OpenClipboard
 OpenClipboard.argtypes = [wintypes.HWND]
@@ -87,7 +86,7 @@ GlobalLock.restype = c_void_p
 GlobalUnlock = windll.kernel32.GlobalUnlock
 GlobalUnlock.argtypes = [c_int]
 
-_strncpy = ctypes.windll.kernel32.lstrcpynW
+_strncpy = windll.kernel32.lstrcpynW
 _strncpy.restype = c_wchar_p
 _strncpy.argtypes = [c_wchar_p, c_wchar_p, c_size_t]
 

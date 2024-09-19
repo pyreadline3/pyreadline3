@@ -7,8 +7,7 @@
 #  the file COPYING, distributed as part of this software.
 # *****************************************************************************
 
-from pyreadline3.unicode_helper import ensure_str
-
+from ..unicode_helper import ensure_str
 from .logger import LOGGER
 
 
