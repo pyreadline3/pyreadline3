@@ -528,12 +528,13 @@ class Readline(BaseReadline):
         else:
             n = c.write_scrolling(ltext, self.command_color)
 
-        x, y = c.pos()  # Preserve one line for Asian IME(Input Method Editor) statusbar
-        w, h = c.size()
-        if (y >= h - 1) or (n > 0):
-            c.scroll_window(-1)
-            c.scroll((0, 0, w, h), 0, -1)
-            n += 1
+        if not os.getenv("PYREADLINE3_WIN32_SCROLLBACK_BUFFER_WORKAROUND"):
+            x, y = c.pos()  # Preserve one line for Asian IME(Input Method Editor) statusbar
+            w, h = c.size()
+            if (y >= h - 1) or (n > 0):
+                c.scroll_window(-1)
+                c.scroll((0, 0, w, h), 0, -1)
+                n += 1
 
         self._update_prompt_pos(n)
         if hasattr(
