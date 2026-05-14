@@ -8,7 +8,7 @@
 # *****************************************************************************
 
 
-from pyreadline3 import keysyms
+from pyreadline3.keysyms import make_key_press_from_key_description
 from pyreadline3.lineeditor import history, lineobj
 
 
@@ -64,7 +64,7 @@ class Event:
 
 
 def keytext_to_keyinfo_and_event(keytext):
-    keyinfo = keysyms.common.make_KeyPress_from_keydescr(keytext)
+    keyinfo = make_key_press_from_key_description(keytext)
     if len(keytext) == 3 and keytext[0] == '"' and keytext[2] == '"':
         event = Event(keytext[1])
     else:

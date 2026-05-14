@@ -9,7 +9,7 @@
 
 from socket import AF_INET, SOCK_DGRAM, socket
 
-from pyreadline3.unicode_helper import ensure_str
+from ..unicode_helper import ensure_str
 
 
 class SocketStream:

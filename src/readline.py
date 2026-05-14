@@ -6,7 +6,11 @@
 
 from pyreadline3.rlmain import Readline
 
+# Backend identifier for CPython compatibility (used by cmd.py, pdb, etc.)
+backend = "pyreadline"
+
 __all__ = [
+    "backend",
     "parse_and_bind",
     "get_line_buffer",
     "insert_text",

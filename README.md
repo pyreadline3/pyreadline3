@@ -1,6 +1,6 @@
 # pyreadline3
 
-[![PyPi Badge](https://img.shields.io/pypi/v/pyreadline3)](https://pypi.org/project/pyreadline3/) 
+[![PyPi Badge](https://img.shields.io/pypi/v/pyreadline3)](https://pypi.org/project/pyreadline3/)
 ![Publish](https://github.com/pyreadline3/pyreadline3/workflows/Publish/badge.svg)
 ![Test](https://github.com/pyreadline3/pyreadline3/workflows/Test/badge.svg)
 [![Downloads](https://static.pepy.tech/personalized-badge/pyreadline3?period=week&units=international_system&left_color=black&right_color=orange&left_text=Last%20Week)](https://pepy.tech/project/pyreadline3)
@@ -20,7 +20,6 @@ Version 3.4+ of pyreadline3 runs on Python 3.8+.
 `pyreadline3` is available on PyPI and can be installed with
 
     pip install pyreadline3
-
 
 ## Features
 
@@ -42,7 +41,7 @@ To clone the library for development:
 
     git clone git@github.com:pyreadline3/pyreadline3.git
 
-or 
+or
 
     git clone https://github.com/pyreadline3/pyreadline3.git
 
@@ -61,7 +60,6 @@ If you are using `venv`, make sure you have the right base package:
 
 Once you verify your base Python, you can then create a virtual environment using:
 
-
     virtualenv -p py3.8 .venv
 
 ### Setup
@@ -74,4 +72,6 @@ This should all the dependencies you need for developing into the library and al
 
     pytest
 
-### Debugging 
+### Debugging
+
+ WIP

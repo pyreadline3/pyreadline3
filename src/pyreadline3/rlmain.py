@@ -21,7 +21,7 @@ import pyreadline3.console as console
 import pyreadline3.lineeditor.history as history
 import pyreadline3.lineeditor.lineobj as lineobj
 import pyreadline3.logger as logger
-from pyreadline3.keysyms.common import make_KeyPress_from_keydescr
+from pyreadline3.keysyms import make_key_press_from_key_description
 from pyreadline3.py3k_compat import is_ironpython
 from pyreadline3.unicode_helper import ensure_str, ensure_unicode
 
@@ -308,7 +308,7 @@ class BaseReadline(object):
                 print("Trying to bind unknown command '%s' to key '%s'" % (name, key))
 
         def un_bind_key(key):
-            keyinfo = make_KeyPress_from_keydescr(key).tuple()
+            keyinfo = make_key_press_from_key_description(key).tuple()
             if keyinfo in modes[mode].key_dispatch:
                 del modes[mode].key_dispatch[keyinfo]
 
@@ -316,7 +316,7 @@ class BaseReadline(object):
             modes[mode]._bind_exit_key(key)
 
         def un_bind_exit_key(key):
-            keyinfo = make_KeyPress_from_keydescr(key).tuple()
+            keyinfo = make_key_press_from_key_description(key).tuple()
             if keyinfo in modes[mode].exit_dispatch:
                 del modes[mode].exit_dispatch[keyinfo]
 
@@ -609,13 +609,13 @@ class Readline(BaseReadline):
 
     def handle_ctrl_c(self):
         from pyreadline3.console.event import Event
-        from pyreadline3.keysyms.common import KeyPress
+        from pyreadline3.keysyms import KeyPress
 
         log("KBDIRQ")
         event = Event(0, 0)
         event.char = "c"
         event.keyinfo = KeyPress(
-            "c", shift=False, control=True, meta=False, keyname=None
+            "c", shift=False, control=True, meta=False, key_name=None
         )
         if self.allow_ctrl_c:
             now = time.time()

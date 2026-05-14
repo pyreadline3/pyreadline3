@@ -24,16 +24,21 @@
     },
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
+    "[markdown]": {
+        "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
+    },
     "editor.tabSize": 4,
     "editor.rulers": [
         80
     ],
+    "editor.formatOnSave": true,
+    "editor.renderWhitespace": "all",
     "files.exclude": {
         "**/__pycache__": true
     },
-    "editor.formatOnSave": true,
     "files.trimFinalNewlines": true,
     "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
     "cSpell.words": [
         "combatible",
         "ctypes",

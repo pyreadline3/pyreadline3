@@ -52,13 +52,38 @@ where = ["src"]
 include = ["*"]
 
 [tool.setuptools.package-data]
-"*" = ["pyreadlineconfig.ini"]
+"*" = ["py.typed", "pyreadlineconfig.ini"]
 
 [tool.setuptools.dynamic]
 readme = { file = ["README.md"] }
 
 [tool.setuptools-git-versioning]
 enabled = true
+
+[tool.pytest.ini_options]
+log_cli = 1
+log_cli_level = "INFO"
+log_cli_format = "%(asctime)s [%(levelname)8s] %(message)s (%(filename)s:%(lineno)s)"
+log_cli_date_format = "%Y-%m-%d %H:%M:%S"
+
+[tool.flake8]
+ignore = ["D", "E1", "E2", "E3", "E5", "W2", "W3", "W5", "E203", "W504", "E712"]
+max-line-length = 80
+exclude = [
+    ".tox",
+    ".nox",
+    ".local",
+    ".git",
+    "__pycache__",
+    ".nox",
+    ".venv",
+    "venv",
+    "env",
+    "build",
+    "dist",
+    ".pytest_cache",
+    "scratch",
+]
 
 [tool.mypy]
 

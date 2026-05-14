@@ -14,7 +14,7 @@
 import tkinter
 
 import pyreadline3.logger as log
-from pyreadline3.keysyms.common import KeyPress
+from pyreadline3.keysyms import KeyPress
 from pyreadline3.rlmain import BaseReadline
 
 log.sock_silent = False
